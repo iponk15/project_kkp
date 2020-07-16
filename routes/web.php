@@ -1,0 +1,141 @@
+<?php
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Auth::routes();
+
+// star routing global function select2
+Route::group(['as' => 'globalfunction.', 'prefix' => 'globalfunction', 'namespace' => 'GlobalFunction'], function(){
+    Route::get('getdata/{table}/{prefix}', 'Select2Controller@getdata')->name('getdata');
+    Route::get('getrole', 'Select2Controller@getrole')->name('getrole');
+    Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
+});
+// end routing global function select2
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/', 'HomeController@index')->name('home');
+
+    // start routing menu users
+    Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'UserController@index')->name('index');
+        Route::post('ktable', 'UserController@ktable')->name('ktable');
+        Route::get('show', 'UserController@show')->name('show');
+        Route::post('store', 'UserController@store')->name('store');
+        Route::get('edit/{id}', 'UserController@edit')->name('edit');
+        Route::post('update/{id}', 'UserController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'UserController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'UserController@delete')->name('delete');
+    });
+    // end routing menu users
+
+    // start routing menu unit kerja
+    Route::group(['as' => 'uker.', 'prefix' => 'uker', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'UkerController@index')->name('index');
+        Route::post('ktable', 'UkerController@ktable')->name('ktable');
+        Route::get('show', 'UkerController@show')->name('show');
+        Route::post('store', 'UkerController@store')->name('store');
+        Route::get('edit/{id}', 'UkerController@edit')->name('edit');
+        Route::post('update/{id}', 'UkerController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'UkerController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'UkerController@delete')->name('delete');
+    });
+    // end routing menu unit kerja
+
+    // start routing menu kategori obat
+    Route::group(['as' => 'katobat.', 'prefix' => 'katobat', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'KatobatController@index')->name('index');
+        Route::post('ktable', 'KatobatController@ktable')->name('ktable');
+        Route::get('show', 'KatobatController@show')->name('show');
+        Route::post('store', 'KatobatController@store')->name('store');
+        Route::get('edit/{id}', 'KatobatController@edit')->name('edit');
+        Route::post('update/{id}', 'KatobatController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'KatobatController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'KatobatController@delete')->name('delete');
+    });
+    // end routing menu kategori obat
+
+    // start routing menu jenis obat
+    Route::group(['as' => 'jenobat.', 'prefix' => 'jenobat', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'JenobatController@index')->name('index');
+        Route::post('ktable', 'JenobatController@ktable')->name('ktable');
+        Route::get('show', 'JenobatController@show')->name('show');
+        Route::post('store', 'JenobatController@store')->name('store');
+        Route::get('edit/{id}', 'JenobatController@edit')->name('edit');
+        Route::post('update/{id}', 'JenobatController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'JenobatController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'JenobatController@delete')->name('delete');
+    });
+    // end routing menu jenis obat\
+
+    // start routing menu jenis obat
+    Route::group(['as' => 'obat.', 'prefix' => 'obat', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'ObatController@index')->name('index');
+        Route::post('ktable', 'ObatController@ktable')->name('ktable');
+        Route::get('show', 'ObatController@show')->name('show');
+        Route::post('store', 'ObatController@store')->name('store');
+        Route::get('edit/{id}', 'ObatController@edit')->name('edit');
+        Route::post('update/{id}', 'ObatController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'ObatController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'ObatController@delete')->name('delete');
+        Route::post('inputStok', 'ObatController@inputStok')->name('inputStok');
+        Route::post('storeStokObat', 'ObatController@storeStokObat')->name('storeStokObat');
+        Route::post('ktableStokObat/{obat_id}', 'ObatController@ktableStokObat')->name('ktableStokObat');
+    });
+    // end routing menu jenis obat
+
+    // start routing menu role
+    Route::group(['as' => 'role.', 'prefix' => 'role', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'RoleController@index')->name('index');
+        Route::post('ktable', 'RoleController@ktable')->name('ktable');
+        Route::get('show', 'RoleController@show')->name('show');
+        Route::post('store', 'RoleController@store')->name('store');
+        Route::get('edit/{id}', 'RoleController@edit')->name('edit');
+        Route::post('update/{id}', 'RoleController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'RoleController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'RoleController@delete')->name('delete');
+    });
+    // end routing menu role
+
+    // start routing menu pasien
+    Route::group(['as' => 'pasien.', 'prefix' => 'pasien', 'namespace' => 'Pasien'], function(){
+        Route::get('index', 'PasienController@index')->name('index');
+        Route::post('ktable', 'PasienController@ktable')->name('ktable');
+        Route::get('show', 'PasienController@show')->name('show');
+        Route::post('store', 'PasienController@store')->name('store');
+        Route::get('edit/{id}', 'PasienController@edit')->name('edit');
+        Route::post('update/{id}', 'PasienController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'PasienController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'PasienController@delete')->name('delete');
+    });
+    // end routing menu pasien
+
+    // start routing menu input pasien
+    Route::group(['as' => 'inputpasien.', 'prefix' => 'inputpasien', 'namespace' => 'Pasien'], function(){
+        Route::get('index', 'InputPasienController@index')->name('index');
+        route::post('pasienbaru', 'InputPasienController@pasienbaru')->name('pasienbaru');
+        route::post('pasienterdaftar', 'InputPasienController@pasienterdaftar')->name('pasienterdaftar');
+        route::post('storePasienBaru', 'InputPasienController@storePasienBaru')->name('storePasienBaru');
+        route::post('updatePasienTerdaftar', 'InputPasienController@updatePasienTerdaftar')->name('updatePasienTerdaftar');
+        route::post('getDataPsien', 'InputPasienController@getDataPsien')->name('getDataPsien');
+    });
+    // end routing menu input pasien
+
+    // start routing menu pasien sedang berobat
+    Route::group(['as' => 'pasienin.', 'prefix' => 'pasienin', 'namespace' => 'Pasien'], function(){
+        Route::get('index', 'PasienInController@index')->name('index');
+        Route::post('ktable', 'PasienInController@ktable')->name('ktable');
+        route::post('formPeriksa/{pasien_id}', 'PasienInController@formPeriksa')->name('formPeriksa');
+    });
+    // end routing menu pasien sedang berobat
+});
