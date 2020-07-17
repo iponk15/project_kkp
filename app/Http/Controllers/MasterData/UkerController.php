@@ -14,7 +14,7 @@ use DB;
 class UkerController extends Controller
 {
     private $route = 'uker';
-    private $path  = 'masterdata.uker';
+    private $path  = 'MasterData.Uker';
 
     function __construct(){
         // put your magic

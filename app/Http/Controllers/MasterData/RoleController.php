@@ -14,7 +14,7 @@ use DB;
 class RoleController extends Controller
 {
     private $route = 'role';
-    private $path  = 'masterdata.role';
+    private $path  = 'MasterData.Role';
 
     function __construct(){
         // put your magic
