@@ -98,13 +98,14 @@ class InputPasienController extends Controller
             $post['pasien_ip']           = \Request::ip();
 
             Pasien::create($post);
+            $lastId = DB::getPdo()->lastInsertId();
             // end create pasein baru
 
             // start create unit kerja
             if(!empty($post['pasien_uker'])){
                 foreach ($post['pasien_uker'] as $value) {
                     $tempUker[] = [
-                        'pasker_pasien_id' => DB::getPdo()->lastInsertId(),
+                        'pasker_pasien_id' => $lastId,
                         'pasker_uker_id'   => $value
                     ];
                 }
@@ -115,7 +116,7 @@ class InputPasienController extends Controller
 
             // start create transaksi pasien
             $psntrans = [
-                'pastrans_pasien_id'    => DB::getPdo()->lastInsertId(),
+                'pastrans_pasien_id'    => $lastId,
                 'pastrans_status'       => '1',
                 'pastrans_created_by'   => Auth::user()->id,
                 'pastrans_created_date' => date('Y-m-d')
