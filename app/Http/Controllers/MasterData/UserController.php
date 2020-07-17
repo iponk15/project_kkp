@@ -14,7 +14,7 @@ use DB;
 class UserController extends Controller
 {
     private $route = 'user';
-    private $path  = 'masterdata.user';
+    private $path  = 'MasterData.User';
 
     public function index(){
         $data = [
