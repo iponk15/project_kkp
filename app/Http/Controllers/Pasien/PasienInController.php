@@ -15,7 +15,7 @@ use DB;
 class PasienInController extends Controller
 {
     private $route = 'pasienin';
-    private $path  = 'pasien.pasienin';
+    private $path  = 'Pasien.PasienIn';
 
     function __construct(){
         // put your magic
