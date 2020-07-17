@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
+use App\Models\Pasien;
 use Validator;
 use Hashids;
 use Auth;
@@ -35,7 +36,7 @@ class PasienInController extends Controller
 
     function ktable(Request $request){
         $post    = $request->input();
-        $getData = PasienTrans::selectRaw('pasien_norekdis, pasien_nama, pasien_tgllahir, pasien_umur, pasien_jk, pastrans_status, pastrans_created_date')->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id');
+        $getData = PasienTrans::selectRaw('pasien_id, pasien_norekdis, pasien_nama, pasien_tgllahir, pasien_umur, pasien_jk, pastrans_status, pastrans_created_date')->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id');
         $jmlData = PasienTrans::selectRaw('count(*) AS jumlah')->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id');
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);
@@ -120,6 +121,18 @@ class PasienInController extends Controller
     }
 
     function formPeriksa($pasien_id){
+        $data = [
+            'pagetitle'    => 'Form Pemeriksaan',
+            'cardTitle'    => 'Form Pemeriksaan',
+            'cardSubTitle' => 'Pasien Sedang Berobat',
+            'cardIcon'     => 'flaticon2-list-3',
+            'breadcrumb'   => [ 'index' => route( $this->route . '.index' ), 'Form Pemeriksaan' => route($this->route . '.formPeriksa', ['pasien_id' => $pasien_id])],
+            'route'        => $this->route,
+            'records'      => Pasien::selectRaw('pasien_norekdis, pasien_nama, pasien_tgllahir, pasien_umur, pasien_email, pasien_jk, pasien_telp, pasien_alamat')
+                ->where('pasien_id', Hashids::decode($pasien_id)[0])
+                ->first()
+        ];
 
+        return view ($this->path.'.formPeriksa', $data);        
     }
 }

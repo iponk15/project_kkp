@@ -135,7 +135,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['as' => 'pasienin.', 'prefix' => 'pasienin', 'namespace' => 'Pasien'], function(){
         Route::get('index', 'PasienInController@index')->name('index');
         Route::post('ktable', 'PasienInController@ktable')->name('ktable');
-        route::post('formPeriksa/{pasien_id}', 'PasienInController@formPeriksa')->name('formPeriksa');
+        route::get('formPeriksa/{pasien_id}', 'PasienInController@formPeriksa')->name('formPeriksa');
     });
     // end routing menu pasien sedang berobat
 });
