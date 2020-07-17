@@ -1,4 +1,4 @@
-@extends(!Request::ajax() ? 'layouts.layout' : 'layouts.layoutajax')
+@extends(!Request::ajax() ? 'layouts.layout' : 'layouts.layoutAjax')
 
 @section('fullcontent')
     @yield('content')
