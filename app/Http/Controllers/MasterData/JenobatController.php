@@ -14,7 +14,7 @@ use DB;
 class JenobatController extends Controller
 {
     private $route = 'jenobat';
-    private $path  = 'masterdata.jenobat';
+    private $path  = 'MasterData.Jenobat';
 
     function __construct(){
         // put your magic

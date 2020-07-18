@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
 use App\Models\PasienUker;
+use App\Models\LogTrans;
 use App\Models\Pasien;
 use Validator;
 use Hashids;
@@ -119,11 +120,25 @@ class InputPasienController extends Controller
                 'pastrans_pasien_id'    => $lastId,
                 'pastrans_status'       => '1',
                 'pastrans_created_by'   => Auth::user()->id,
-                'pastrans_created_date' => date('Y-m-d')
+                'pastrans_created_date' => date('Y-m-d H:i:s')
             ];
 
             PasienTrans::create($psntrans);
+            $lastId = DB::getPdo()->lastInsertId();
             // end create transaksi pasien
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $lastId,
+                'log_subjek'       => 'Pendaftaran',
+                'log_keterangan'   => 'Pasien melakukan pendaftaran',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
 
             DB::commit();
 
@@ -192,7 +207,7 @@ class InputPasienController extends Controller
             $pasien['pasien_alamat']       = $post['pasien_alamat'];
             $pasien['pasien_tgllahir']     = date('Y-m-d', strtotime($post['pasien_tgllahir']));
             $pasien['pasien_updated_by']   = Auth::user()->id ;
-            $pasien['pasien_ip']           = \Request::ip() ;
+            $pasien['pasien_ip']           = \Request::ip();
 
             Pasien::where('pasien_id', Hashids::decode($post['pasien_id'])[0])->update($pasien);
             // end create pasein baru
@@ -217,11 +232,25 @@ class InputPasienController extends Controller
                 'pastrans_pasien_id'    => Hashids::decode($post['pasien_id'])[0],
                 'pastrans_status'       => '1',
                 'pastrans_created_by'   => Auth::user()->id,
-                'pastrans_created_date' => date('Y-m-d')
+                'pastrans_created_date' => date('Y-m-d H:i:s')
             ];
 
             PasienTrans::create($psntrans);
+            $lastId = DB::getPdo()->lastInsertId();
             // end create transaksi pasien
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $lastId,
+                'log_subjek'       => 'Pendaftaran',
+                'log_keterangan'   => 'Pasien melakukan pendaftaran',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
 
             DB::commit();
 

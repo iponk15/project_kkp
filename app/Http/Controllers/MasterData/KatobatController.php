@@ -14,7 +14,7 @@ use DB;
 class KatobatController extends Controller
 {
     private $route = 'katobat';
-    private $path  = 'masterdata.katobat';
+    private $path  = 'MasterData.Katobat';
 
     function __construct(){
         // put your magic

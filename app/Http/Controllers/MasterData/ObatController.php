@@ -15,7 +15,7 @@ use DB;
 class ObatController extends Controller
 {
     private $route = 'obat';
-    private $path  = 'masterdata.obat';
+    private $path  = 'MasterData.Obat';
 
     function __construct(){
         // put your magic

@@ -191,7 +191,8 @@
             <!--begin::Body-->
             <form class="form" id="jenobatFormTambah" method="POST">
                 {{ csrf_field() }}
-                <div class="card-body py-2">
+                <div class="card-body py-5">
+                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Subjective</h3>
                     <div class="form-group">
                         <div class="alert alert-custom alert-light-warning fade mb-5 d-none formAlert" role="alert">
                             <div class="alert-icon"><i class="flaticon-warning"></i></div>
@@ -204,27 +205,119 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3 col-sm-12 text-right">Nama <span class="text-danger"> * </span></label>
-                        <div class="col-lg-4 col-md-9 col-sm-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="jenobat_nama" placeholder="Masukan nama ..." autocomplete="off"/>
-                            </div>
-                            <span class="form-text text-muted"></span>
-                        </div>
-                    </div>
+						<div class="col-lg-4">
+							<label>Keluhan Utama <span class="text-danger"> * </span></label>
+							<textarea placeholder="Keluhan Utama" name="psnrekdis_sbj_kelutm" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+						<div class="col-lg-4">
+							<label>Keluhan Tambahan <span class="text-danger"> * </span></label>
+							<textarea placeholder="Keluhan tambahan" name="psnrekdis_sbj_keltam" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+                        <div class="col-lg-4">
+							<label>Riwayat Penyakit Sekarang</label>
+							<textarea placeholder="Riwayat Penyakit Sekarang" name="psnrekdis_sbj_riwpktskr" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+					</div>
                     <div class="form-group row">
-                        <label class="col-form-label text-right col-lg-3 col-sm-12">Deskripsi <span class="text-danger"> * </span></label>
-                        <div class="col-lg-4 col-md-9 col-sm-12">
-                            <div class="input-group">
-                                <textarea name="jenobat_deskripsi" class="form-control" rows="3" placeholder="Masukan deskripsi ..."></textarea>
+						<div class="col-lg-4">
+							<label>Riwayat Penyakit Dahulu</label>
+							<textarea placeholder="Riwayat Penyakit Dahulu" name="psnrekdis_sbj_riwpktdhl" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+						<div class="col-lg-4">
+							<label>Riwayat Penyakit Keluarga</label>
+							<textarea placeholder="Riwayat Penyakit Keluarga" name="psnrekdis_sbj_riwpktklg" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+                        <div class="col-lg-4">
+							<label>Riwayat Penyakit Alergi</label>
+							<textarea placeholder="Riwayat Penyakit Alergi" name="psnrekdis_sbj_riwpktkalg" class="form-control" rows="2"></textarea>
+							<span class="form-text text-muted"></span>
+						</div>
+					</div>
+                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">2. Objective</h3>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="example">
+                                <div class="example-preview">
+                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">2A. VITAL SIGN</h3>    
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>Tekanan Darah</label>
+                                            <input type="text" class="form-control" name="" placeholder="Tekanan Darah">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>HR</label>
+                                            <input type="text" class="form-control" name="" placeholder="HR">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                    </div>  
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>RR</label>
+                                            <input type="text" class="form-control" name="" placeholder="RR">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Suhu Badan</label>
+                                            <input type="text" class="form-control" name="" placeholder="Suhu Badan">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                    </div>  
+                                </div>
                             </div>
-                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="example">
+                                <div class="example-preview">
+                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">2B. STATUS GIZI</h3>
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>Berat Badan</label>
+                                            <input type="text" class="form-control" name="" placeholder="Berat Badan">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Tinggi Badan</label>
+                                            <input type="text" class="form-control" name="" placeholder="Tinggi Badan">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                    </div>      
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <label>IMT</label>
+                                            <input type="text" class="form-control" name="" placeholder="IMT">
+                                            <span class="form-text text-muted"></span>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
+                            <div class="col-lg-12">
+                                <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_sbj_riwpktdhl" class="form-control" rows="3"></textarea>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
+                            <div class="col-lg-12">
+                                <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_sbj_riwpktklg" class="form-control" rows="3"></textarea>
+                                <span class="form-text text-muted"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-lg-7 ml-lg-auto">
+                        <div class="col-lg-3 ml-lg-auto">
                             <button type="reset" class="btn btn-secondary">Batal</button>
                             <button type="submit" class="btn btn-success mr-2">Simpan</button>
                         </div>
