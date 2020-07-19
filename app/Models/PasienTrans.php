@@ -11,6 +11,7 @@ class PasienTrans extends Model
     protected $primaryKey = 'psntrans_id';
     protected $fillable   = [
         'pastrans_pasien_id',
+        'pastrans_dokter_id',
         'pastrans_status',
         'pastrans_created_by',
         'pastrans_created_date',

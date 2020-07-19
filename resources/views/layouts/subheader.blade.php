@@ -24,7 +24,9 @@
 
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center">
-            
+            @if(!empty($subHeadBtn))
+                {!! $subHeadBtn !!}
+            @endif
         </div>
         <!--end::Toolbar-->
     </div>

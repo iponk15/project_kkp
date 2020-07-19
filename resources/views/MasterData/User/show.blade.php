@@ -105,6 +105,22 @@
                         <span class="form-text text-muted"></span>
                     </div>
                 </div>
+                <div class="form-group row formInputPoli">
+                    <label class="col-form-label text-right col-lg-3 col-sm-12">Poli</label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="input-group">
+                            <select class="form-control slctPoliId" name="poli_id">
+                                <option></option>
+                            </select>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="flaticon-multimedia-2"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div class="row">
@@ -121,6 +137,8 @@
 
     <script>
         $(document).ready(function(){
+            $('.formInputPoli').hide();
+
             var roleOption = {
                 route_to    : '{{ route("globalfunction.getrole") }}',
                 placeholder : 'Select Role',
@@ -128,6 +146,24 @@
             };
 
             global.init_select2('.slctRoleId', roleOption);
+
+            $('.slctRoleId').on('change', function(){
+                var val = $(this).val();
+                
+                if(val == 'KKPDKT'){
+                    $('.formInputPoli').show();
+
+                    var poliOption = {
+                        route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_poli", "prefix" => "poli" ]) }}',
+                        placeholder : 'Select Poli',
+                        allowClear  : true
+                    };
+
+                    global.init_select2('.slctPoliId', poliOption);
+                }else{
+                    $('.formInputPoli').hide();
+                }
+            });
             
             // start form validation submit
             var form   = document.getElementById('userFormTambah');

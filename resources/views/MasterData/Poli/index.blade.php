@@ -42,13 +42,73 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0 text-right"></div>
+                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0 text-right">
+                        <!-- <div class="dropdown dropdown-inline">
+                            <a href="javascript:void(0);" class="btn btn-light-secondary btn-sm mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="flaticon2-file-1 text-dark"></i> <span class="text-dark">Export Data</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-sm">
+                                <ul class="navi navi-hover py-2">
+                                    <li class="navi-item">
+                                        <a href="" class="navi-link exportFile" data-tipe="excel">
+                                            <span class="navi-icon">
+                                                <i class="fas fa-file-excel text-success"></i>
+                                            </span>
+                                            <span class="navi-text text-success">File Excel</span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="" class="navi-link exportFile" data-tipe="pdf">
+                                            <span class="navi-icon">
+                                                <i class="fas fa-file-pdf text-danger"></i>
+                                            </span>
+                                            <span class="navi-text text-danger">File PDF</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> -->
+                        <a href="{{ route( $route . '.show' ) }}" class="btn btn-light-success btn-sm mr-3 ajaxify">
+                            <i class="flaticon-file-1"></i>Tambah Data
+                        </a>
+                    </div>
                 </div>
             </div>
             <!--end::Search Form-->
-
+            <!--begin: Selected Rows Group Action Form-->
+            <div class="mt-10 mb-5 collapse" id="kt_datatable_group_action_form_2">
+                <div class="d-flex align-items-center">
+                    <div class="font-weight-bold text-danger mr-3">Selected
+                    <span id="kt_datatable_selected_records_2">0</span> records :</div>
+                    <div class="dropdown mr-2">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Update status</button>
+                        <div class="dropdown-menu dropdown-menu-sm">
+                            <ul class="nav nav-hover flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route( $route . '.changeStatus', ['id' => 'NULL', 'status' => '1'] ) }}" class="nav-link updateStatus" data-value="1">
+                                        <span class="nav-text">Active</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route( $route . '.changeStatus', ['id' => 'NULL', 'status' => '0'] ) }}" class="nav-link updateStatus" data-value="0">
+                                        <span class="nav-text">Inactive</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route( $route . '.changeStatus', ['id' => 'NULL', 'status' => '99'] ) }}" class="nav-link updateStatus" data-value="99">
+                                        <span class="nav-text">Soft Delete</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="{{ route( $route . '.delete', [ 'id' => 'NULL' ] ) }}" class="btn btn-sm btn-danger mr-2 kt_datatable_delete_all" type="button" id="kt_datatable_delete_all_2">Delete All</a>
+                    <!-- <button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#kt_datatable_fetch_modal_2">Fetch Selected Records</button> -->
+                </div>
+            </div>
+            <!--end: Selected Rows Group Action Form-->
             <!--begin: Datatable-->
-            <div class="datatable datatable-bordered datatable-head-custom" id="ktTablePasienBerobat"></div>
+            <div class="datatable datatable-bordered datatable-head-custom" id="ktTablePoli"></div>
             <!--end: Datatable-->
         </div>
     </div>
@@ -80,27 +140,25 @@
     <script>
         $(document).ready(function(){
             // start set ktable datatable
-            var id     = '#ktTablePasienBerobat';
+            var id   = '#ktTablePoli';
             var urll   = '{{ route($route . ".ktable" ) }}';
             var column = [
+                { field : 'RecordID', title : '#', sortable : false, selector : { class : '' }, textAlign : 'center', width : 30 },
                 { field : 'no', title : 'No. ', textAlign : 'center', sortable : false, width : 30 },
-                { field : 'pasien_norekdis', title : 'No. Rekamedis' },
-                { field : 'pasien_nama', title : 'Nama'  },
-                { field : 'pasien_tgllahir', title : 'Tgl Lahir', textAlign : 'center' },
-                { field : 'pasien_umur', title : 'Umur', textAlign : 'center' },
-                { field : 'pasien_jk', title : 'Gender', textAlign : 'center' },
-                { field: 'pastrans_status', title: 'Status', textAlign : 'center', sortable : false, 
+                { field : 'poli_nama', title : 'Nama' },
+                { field : 'poli_deskripsi', title : 'Deskripsi'},
+                { field: 'status', title: 'Status', textAlign : 'center', sortable : false, 
                     // callback function support for column rendering
                     template: function(row) {
                         var status = {
-                            1  : { 'title' : 'Menunggu Cek', 'class' : ' label-light-primary'},
-                            2  : { 'title' : 'Cek Dokter', 'class' : ' label-light-success'},
-                            3  : { 'title' : 'Delete Temp', 'class' : ' label-light-danger'},
+                            0  : { 'title' : 'Inactive', 'class' : 'label-light-warning'},
+                            1  : { 'title' : 'Active', 'class' : ' label-light-success'},
+                            99 : { 'title' : 'Delete Temp', 'class' : ' label-light-danger'},
                         };
-                        return '<span class="label label-lg font-weight-bold' + status[row.pastrans_status].class + ' label-inline">' + status[row.pastrans_status].title + '</span>';
+                        return '<span class="label label-lg font-weight-bold' + status[row.status].class + ' label-inline">' + status[row.status].title + '</span>';
                     },
                 },
-                { field : 'pastrans_created_date', title : 'Created At', width : 170, textAlign : 'center' },
+                { field : 'poli_created_date', title : 'Created At', width : 170, textAlign : 'center' },
                 { field : 'action', title : 'Action', textAlign : 'center', sortable : false },
             ];
             var cari = {

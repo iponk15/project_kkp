@@ -40,21 +40,27 @@
                                     </a>
                                 </li>
                                 <li class="menu-item " aria-haspopup="true" >
-                                    <a  href="{{ route('role.index') }}" class="menu-link ajaxify">
-                                        <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span class="menu-text">Role</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item " aria-haspopup="true" >
                                     <a  href="#" class="menu-link ajaxify">
                                         <i class="flaticon-user icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="menu-text">Data Pasien</span>
                                     </a>
                                 </li>
                                 <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('role.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Role</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true" >
                                     <a  href="{{ route('uker.index') }}" class="menu-link ajaxify">
                                         <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="menu-text">Data Unit Kerja</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('poli.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Data Poli</span>
                                     </a>
                                 </li>
                             @endif
@@ -89,7 +95,7 @@
                 </li>
             @endif
 
-            @if( Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPSTR' )
+            @if( Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPDKT' )
                 <li class="menu-item  menu-item-submenu" aria-haspopup="true"  data-menu-toggle="hover">
                     <a  href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon2-group"></i><span class="menu-text">Pasien</span></a>
                     <div class="menu-submenu "><i class="menu-arrow"></i>
@@ -121,7 +127,7 @@
                                 </li>
                             @endif
 
-                            @if( Auth::user()->role_kode == 'KKPSTR' )
+                            @if( Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPDKT' )
                                 <li class="menu-item " aria-haspopup="true" >
                                     <a  href="{{ route('pasienin.index') }}" class="menu-link ajaxify">
                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

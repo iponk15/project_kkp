@@ -52,8 +52,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!--begin::Aside Top-->
                     <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                         <!--begin::Aside header-->
-                        <a href="#" class="text-center mb-10">
-                            <img src="{{ asset('assets/media/logos/logo-letter-1.png') }}" class="max-h-70px" alt=""/>
+                        <a href="#" class="text-center mb-10" style="margin-top: -10%;">
+                            <img src="{{ asset('assets/media/logos/kkp-log.png') }}" class="max-h-150px" alt=""/>
                         </a>
                         <!--end::Aside header-->
 

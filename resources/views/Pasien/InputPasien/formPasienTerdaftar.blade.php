@@ -11,17 +11,24 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="col-lg-4">
+                <label>Dokter <span class="text-danger"> * </span></label>
+                <select name="pastrans_dokter_id" class="form-control slctDokter formDisabled">
+                    <option></option>
+                </select>
+                <span class="form-text text-muted">Silahkan pilih dokter</span>
+            </div>
+            <div class="col-lg-4">
                 <label>Nama <span class="text-danger"> * </span></label>
                 <input type="email" class="form-control formDisabled pasien_nama" placeholder="Nama" name="pasien_nama" />
                 <span class="form-text text-muted">Silahkan input nama</span>
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Tanggal Lahir <span class="text-danger"> * </span></label>
                 <input type="text" class="form-control pasien_tgllahir formDisabled" placeholder="Tanggal lahir" name="pasien_tgllahir" />
                 <span class="form-text text-muted">Silahkan input tanggal lahir</span>
             </div>
-        </div>
-        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Umur <span class="text-danger"> * </span></label>
                 <input type="email" class="form-control formDisabled pasien_umur" placeholder="Umur" name="pasien_umur" />
@@ -32,6 +39,8 @@
                 <input type="text" class="form-control formDisabled pasien_pangkat" placeholder="Pangkat / golongan" name="pasien_pangkat" />
                 <span class="form-text text-muted">Silahkan input pangkat / golongan</span>
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Janis Kelamin <span class="text-danger"> * </span></label>
                 <div class="radio-inline">
@@ -48,8 +57,6 @@
                 </div>
                 <span class="form-text text-muted"></span>
             </div>
-        </div>
-        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Telp </label>
                 <input type="text" class="form-control formDisabled pasien_telp" placeholder="Telp" name="pasien_telp" />
@@ -60,6 +67,8 @@
                 <input type="email" class="form-control formDisabled pasien_email" placeholder="Email" name="pasien_email" />
                 <span class="form-text text-muted">Silahkan input email</span>
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Unit Kerja </label>
                 <select class="form-control formDisabled slctUker" name="pasien_uker[]" multiple>
@@ -68,8 +77,6 @@
                 </select>
                 <span class="form-text text-muted">Silahkan unit kerja</span>
             </div>
-        </div>
-        <div class="form-group row">
             <div class="col-lg-4">
                 <label>Alergi Obat </label>
                 <textarea name="pasien_alergi_obat" class="form-control formDisabled pasien_alergi_obat" rows="3" placeholder="Alergi obat"></textarea>
@@ -80,9 +87,11 @@
                 <textarea name="pasien_alamat" class="form-control formDisabled pasien_alergi_obat" rows="3" placeholder="Alamat"></textarea>
                 <span class="form-text text-muted">Silahkan input alamat</span>
             </div>
-            <div class="col-lg-4">
+        </div>
+        <div>
+            <div class="col-lg-12">
                 <label>&nbsp;</label>
-                <button type="button" id="btnFormSubmitPasienTerdaftar" class="btn btn-success form-control" style="height: 60%;">Submit Daftar Pasien Baru</button>
+                <button type="button" id="btnFormSubmitPasienTerdaftar" class="btn btn-success form-control">Submit</button>
             </div>
         </div>
     </form>
@@ -184,5 +193,14 @@
                 $('#btnFormSubmitPasienTerdaftar').hide();
             }
         });
+
+        var dokterOption = {
+            route_to    : '{{ route("globalfunction.getDokter") }}',
+            placeholder : 'Pilih Dokter',
+            allowClear  : true
+        };
+
+        global.init_select2('.slctDokter', dokterOption);
+        // end set select option dokter
     });
 </script>

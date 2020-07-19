@@ -25,11 +25,15 @@ class Select2Controller extends Controller
             ->limit(5)
             ->get();
 
-        for ($i=0; $i < count( $result ); $i++) {
-            $data[$i] = [
-                'id'   => $result[$i]->$id, 
-                'text' => $result[$i]->$nama
-            ];
+        if($result->isNotEmpty()){
+            for ($i=0; $i < count( $result ); $i++) {
+                $data[$i] = [
+                    'id'   => $result[$i]->$id, 
+                    'text' => $result[$i]->$nama
+                ];
+            }
+        }else{
+            $data = [];
         }
 
         echo json_encode( ['items' => $data] );
@@ -44,11 +48,15 @@ class Select2Controller extends Controller
             ->limit(5)
             ->get();
 
-        for ($i=0; $i < count( $result ); $i++) {
-            $data[$i] = [
-                'id'   => $result[$i]->role_kode, 
-                'text' => $result[$i]->role_nama
-            ];
+        if($result->isNotEmpty()){
+            for ($i=0; $i < count( $result ); $i++) {
+                $data[$i] = [
+                    'id'   => $result[$i]->role_kode, 
+                    'text' => $result[$i]->role_nama
+                ];
+            }
+        }else{
+            $data = [];
         }
 
         echo json_encode( ['items' => $data] );
@@ -85,6 +93,31 @@ class Select2Controller extends Controller
                 $data[$i] = [
                     'id'   => Hashids::encode($result[$i]->pasien_id),
                     'text' => $result[$i]->pasien_norekdis . ' - ' . $result[$i]->pasien_nama
+                ];
+            }
+        }else{
+            $data = [];
+        }
+
+        echo json_encode( ['items' => $data] );
+    }
+
+    function getDokter(){
+        $result = DB::table('users')
+            ->select('users.id', 'users.name', 'kpol.poli_nama')
+            ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
+            ->whereRaw('( users.name like "%'.@$_GET['q'].'%" OR kpol.poli_nama like "%'.@$_GET['q'].'%" )')
+            ->where('users.role_kode', 'KKPDKT')
+            ->where('users.status', '1')
+            ->orderBy('users.name', 'ASC')
+            ->limit(5)
+            ->get();
+
+        if($result->isNotEmpty()){
+            for ($i=0; $i < count( $result ); $i++) {
+                $data[$i] = [
+                    'id'   => $result[$i]->id, 
+                    'text' => $result[$i]->name . ' - ' . $result[$i]->poli_nama
                 ];
             }
         }else{

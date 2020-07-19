@@ -124,8 +124,9 @@
                 { field : 'RecordID', title : '#', sortable : false, selector : { class : '' }, textAlign : 'center', width : 30 },
                 { field : 'no', title : 'No. ', textAlign : 'center', sortable : false, width : 30 },
                 { field : 'name', title : 'Name' },
-                { field : 'email', title : 'Email'},
-                { field : 'role_nama', title : 'Role' },
+                { field : 'email', title : 'Email', width : 150 },
+                { field : 'role_nama', title : 'Role', textAlign : 'center' },
+                { field : 'poli_nama', title : 'Poli', textAlign : 'center' },
                 { field : 'status', title: 'Status', textAlign : 'center',
                     // callback function support for column rendering
                     template: function(row) {

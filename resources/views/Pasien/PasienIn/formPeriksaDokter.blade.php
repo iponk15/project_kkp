@@ -89,7 +89,6 @@
                             </div>
                             <div class="mt-2">
                                 <a href="#" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1">Chat</a>
-                                <a href="#" class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1">Follow</a>
                             </div>
                         </div>
                     </div>
@@ -189,7 +188,7 @@
                 <!--end::Header-->
 
                 <!--begin::Body-->
-                <form class="form" id="formPeriksaPasien" method="POST" form-confirm="1">
+                <form class="form" id="formPeriksaDokter" method="POST" form-confirm="1">
                     {{ csrf_field() }}
                     <div class="card-body py-5">
                         <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Subjective</h3>
@@ -207,34 +206,34 @@
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>Keluhan Utama <span class="text-danger"> * </span></label>
-                                <textarea placeholder="Keluhan Utama" name="psnrekdis_sbj_kelutm" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Keluhan Utama" name="psnrekdis_sbj_kelutm" class="form-control" rows="2">{{ $records->psnrekdis_sbj_kelutm }}</textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="col-lg-4">
                                 <label>Keluhan Tambahan <span class="text-danger"> * </span></label>
-                                <textarea placeholder="Keluhan tambahan" name="psnrekdis_sbj_keltam" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Keluhan tambahan" name="psnrekdis_sbj_keltam" class="form-control" rows="2">{{ $records->psnrekdis_sbj_keltam }}</textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="col-lg-4">
                                 <label>Riwayat Penyakit Sekarang</label>
-                                <textarea placeholder="Riwayat Penyakit Sekarang" name="psnrekdis_sbj_riwpktskr" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Riwayat Penyakit Sekarang" name="psnrekdis_sbj_riwpktskr" class="form-control" rows="2">{{ $records->psnrekdis_sbj_riwpktskr }}</textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>Riwayat Penyakit Dahulu</label>
-                                <textarea placeholder="Riwayat Penyakit Dahulu" name="psnrekdis_sbj_riwpktdhl" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Riwayat Penyakit Dahulu" name="psnrekdis_sbj_riwpktdhl" class="form-control" rows="2">{{ $records->psnrekdis_sbj_riwpktdhl }}</textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="col-lg-4">
                                 <label>Riwayat Penyakit Keluarga</label>
-                                <textarea placeholder="Riwayat Penyakit Keluarga" name="psnrekdis_sbj_riwpktklg" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Riwayat Penyakit Keluarga" name="psnrekdis_sbj_riwpktklg" class="form-control" rows="2"> {{ $records->psnrekdis_sbj_riwpktklg }} </textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="col-lg-4">
                                 <label>Riwayat Penyakit Alergi</label>
-                                <textarea placeholder="Riwayat Penyakit Alergi" name="psnrekdis_sbj_riwpktkalg" class="form-control" rows="2"></textarea>
+                                <textarea placeholder="Riwayat Penyakit Alergi" name="psnrekdis_sbj_riwpktkalg" class="form-control" rows="2"> {{ $records->psnrekdis_sbj_riwpktkalg }} </textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                         </div>
@@ -243,28 +242,28 @@
                             <div class="col-lg-6">
                                 <div class="example">
                                     <div class="example-preview">
-                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2A. VITAL SIGN</h3>    
+                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2A. VITAL SIGN</h3>
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>Tekanan Darah</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_vstd" placeholder="Tekanan Darah">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_vstd" placeholder="Tekanan Darah" value="{{ $records->psnrekdis_obj_vstd }}">
                                                 <span class="form-text text-muted">Dalam satuan mmHG</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>HR</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_vshr" placeholder="HR">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_vshr" placeholder="HR" value="{{ $records->psnrekdis_obj_vshr }}">
                                                 <span class="form-text text-muted">Dalam satuan x/menit</span>
                                             </div>
                                         </div>  
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>RR</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_vsrr" placeholder="RR">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_vsrr" placeholder="RR" value="{{ $records->psnrekdis_obj_vsrr }}">
                                                 <span class="form-text text-muted">Dalam satuan x/menit</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Suhu Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_vst" placeholder="Suhu Badan">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_vst" placeholder="Suhu Badan" value="{{ $records->psnrekdis_obj_vst }}">
                                                 <span class="form-text text-muted">Dalam satuan °C</span>
                                             </div>
                                         </div>  
@@ -278,38 +277,88 @@
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>Berat Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgbb" placeholder="Berat Badan">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_sgbb" placeholder="Berat Badan" value="{{ $records->psnrekdis_obj_sgbb }}">
                                                 <span class="form-text text-muted">Dalam satuan kg</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Tinggi Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan" value="{{ $records->psnrekdis_obj_sgtb }}">
                                                 <span class="form-text text-muted">Dalam satuan cm</span>
                                             </div>
                                         </div>      
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>IMT</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgimt" placeholder="IMT">
+                                                <input type="text" class="form-control" name="psnrekdis_obj_sgimt" placeholder="IMT" value="{{ $records->psnrekdis_obj_sgimt }}">
                                                 <span class="form-text text-muted">Dalam satuan kg/m2</span>
                                             </div>
                                         </div>    
                                     </div>
                                 </div>
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2C. PEMERIKSAAN FISIK</h3>
+                                        <div class="form-group row">
+                                            <div class="col-lg-3">
+                                                <label>Kepala</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfkpl" placeholder="Kepala" value="{{ $records->psnrekdis_obj_pfkpl }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Leher</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pflhr" placeholder="Leher" value="{{ $records->psnrekdis_obj_pflhr }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Thorax, Cor</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pftcor" placeholder="Thorax, cor" value="{{ $records->psnrekdis_obj_pftcor }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Thorax Pulmo</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pftpul" placeholder="Thorax Pulmo" value="{{ $records->psnrekdis_obj_pftpul }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group row">
+                                            <div class="col-lg-4">
+                                                <label>Abdomen</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfabd" placeholder="Abdomen" value="{{ $records->psnrekdis_obj_pfabd }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Ekstremitas, Atas</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfeksats" placeholder="Ekstremitas, Atas" value="{{ $records->psnrekdis_obj_pfeksats }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Ekstremitas, Bawah</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfeksbwh" placeholder="Ekstremitas, Bawah" value="{{ $records->psnrekdis_obj_pfeksbwh }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-lg-6">
                                 <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
                                 <div class="col-lg-12">
-                                    <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"></textarea>
+                                    <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"> {{ $records->psnrekdis_asm_digkrt }} </textarea>
                                     <span class="form-text text-muted"></span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
                                 <div class="col-lg-12">
-                                    <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"></textarea>
+                                    <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"> {{ $records->psnrekdis_pln_rak }} </textarea>
                                     <span class="form-text text-muted"></span>
                                 </div>
                             </div>
@@ -317,9 +366,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-3 ml-lg-auto">
-                                <button type="reset" class="btn btn-secondary">Batal</button>
-                                <button type="submit" class="btn btn-success mr-2">Simpan</button>
+                            <div class="col-lg-2 ml-lg-auto">
+                                <button type="submit" class="btn btn-success mr-2">Update Pemeriksaan</button>
                             </div>
                         </div>
                     </div>
@@ -336,8 +384,8 @@
     <script>
         $(document).ready(function(){
             // start form validation submit
-            var form   = document.getElementById('formPeriksaPasien');
-            var urll   = "{{ route( $route . '.storeFormPeriksa', ['psntrans_id' => $psntrans_id] ) }}";
+            var form   = document.getElementById('formPeriksaDokter');
+            var urll   = "{{ route( $route . '.updateFormDokter', ['psntrans_id' => $psntrans_id] ) }}";
             var fields = {
                 psnrekdis_sbj_kelutm : { validators : { notEmpty : { message : 'Keluhan utama tidak boleh kosong' } } },
                 psnrekdis_sbj_keltam : { validators : { notEmpty : { message : 'Keluhan tambahan tidak boleh kosong' } } },

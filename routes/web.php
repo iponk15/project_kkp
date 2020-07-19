@@ -20,6 +20,8 @@ Route::group(['as' => 'globalfunction.', 'prefix' => 'globalfunction', 'namespac
     Route::get('getdata/{table}/{prefix}', 'Select2Controller@getdata')->name('getdata');
     Route::get('getrole', 'Select2Controller@getrole')->name('getrole');
     Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
+    Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
+    Route::get('getDokter', 'Select2Controller@getDokter')->name('getDokter');
 });
 // end routing global function select2
 
@@ -107,6 +109,19 @@ Route::group(['middleware' => 'auth'], function(){
     });
     // end routing menu role
 
+    // start routing menu poli
+    Route::group(['as' => 'poli.', 'prefix' => 'poli', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'PoliController@index')->name('index');
+        Route::post('ktable', 'PoliController@ktable')->name('ktable');
+        Route::get('show', 'PoliController@show')->name('show');
+        Route::post('store', 'PoliController@store')->name('store');
+        Route::get('edit/{id}', 'PoliController@edit')->name('edit');
+        Route::post('update/{id}', 'PoliController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'PoliController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'PoliController@delete')->name('delete');
+    });
+    // end routing menu poli
+
     // start routing menu pasien
     Route::group(['as' => 'pasien.', 'prefix' => 'pasien', 'namespace' => 'Pasien'], function(){
         Route::get('index', 'PasienController@index')->name('index');
@@ -135,7 +150,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['as' => 'pasienin.', 'prefix' => 'pasienin', 'namespace' => 'Pasien'], function(){
         Route::get('index', 'PasienInController@index')->name('index');
         Route::post('ktable', 'PasienInController@ktable')->name('ktable');
-        route::get('formPeriksa/{pasien_id}', 'PasienInController@formPeriksa')->name('formPeriksa');
+        Route::get('formPeriksa/{psntrans_id}', 'PasienInController@formPeriksa')->name('formPeriksa');
+        Route::post('storeFormPeriksa/{psntrans_id}', 'PasienInController@storeFormPeriksa')->name('storeFormPeriksa');
+        Route::get('formPeriksaDokter/{psntrans_id}', 'PasienInController@formPeriksaDokter')->name('formPeriksaDokter');
+        Route::post('updateFormDokter/{psntrans_id}', 'PasienInController@updateFormDokter')->name('updateFormDokter');
     });
     // end routing menu pasien sedang berobat
 });

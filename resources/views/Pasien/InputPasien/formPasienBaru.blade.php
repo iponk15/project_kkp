@@ -9,17 +9,24 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="col-lg-4">
+                    <label>Dokter <span class="text-danger"> * </span></label>
+                    <select name="pastrans_dokter_id" class="form-control slctDokter">
+                        <option></option>
+                    </select>
+                    <span class="form-text text-muted">Silahkan pilih dokter</span>
+                </div>
+                <div class="col-lg-4">
                     <label>Nama <span class="text-danger"> * </span></label>
                     <input type="email" class="form-control" placeholder="Nama" name="pasien_nama" />
                     <span class="form-text text-muted">Silahkan input nama</span>
                 </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Tanggal Lahir <span class="text-danger"> * </span></label>
                     <input type="text" class="form-control pasien_tgllahir" placeholder="Tanggal lahir" name="pasien_tgllahir" />
                     <span class="form-text text-muted">Silahkan input tanggal lahir</span>
                 </div>
-            </div>
-            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Umur <span class="text-danger"> * </span></label>
                     <input type="email" class="form-control" placeholder="Umur" name="pasien_umur" />
@@ -30,6 +37,8 @@
                     <input type="text" class="form-control" placeholder="Pangkat / golongan" name="pasien_pangkat" />
                     <span class="form-text text-muted">Silahkan input pangkat / golongan</span>
                 </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Janis Kelamin <span class="text-danger"> * </span></label>
                     <div class="radio-inline">
@@ -46,8 +55,6 @@
                     </div>
                     <span class="form-text text-muted"></span>
                 </div>
-            </div>
-            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Telp </label>
                     <input type="text" class="form-control" placeholder="Telp" name="pasien_telp" />
@@ -58,6 +65,8 @@
                     <input type="email" class="form-control" placeholder="Email" name="pasien_email" />
                     <span class="form-text text-muted">Silahkan input email</span>
                 </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Unit Kerja </label>
                     <select class="form-control slctUker" name="pasien_uker[]" multiple>
@@ -65,8 +74,6 @@
                     </select>
                     <span class="form-text text-muted">Silahkan unit kerja</span>
                 </div>
-            </div>
-            <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Alergi Obat </label>
                     <textarea name="pasien_alergi_obat" class="form-control" rows="3" placeholder="Alergi obat"></textarea>
@@ -77,9 +84,11 @@
                     <textarea name="pasien_alamat" class="form-control" rows="3" placeholder="Alamat"></textarea>
                     <span class="form-text text-muted">Silahkan input alamat</span>
                 </div>
-                <div class="col-lg-4">
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-12">
                     <label>&nbsp;</label>
-                    <button type="button" id="btnFormSubmitPasienBaru" class="btn btn-success form-control" style="height: 60%;">Submit Daftar Pasien Baru</button>
+                    <button type="button" id="btnFormSubmitPasienBaru" class="btn btn-success form-control">Submit Pasien Baru</button>
                 </div>
             </div>
         </form>
@@ -112,12 +121,22 @@
         // start set select option kategory obat
         var ukerOption = {
             route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_unit_kerja", "prefix" => "uker"]) }}',
-            placeholder : 'Select Unit Kerja',
+            placeholder : 'Pilih Unit Kerja',
             allowClear  : true,
             tag         : true
         };
 
         global.init_select2('.slctUker', ukerOption);
         // end set select option kategory obat
+
+        // start set select option dokter
+        var dokterOption = {
+            route_to    : '{{ route("globalfunction.getDokter") }}',
+            placeholder : 'Pilih Dokter',
+            allowClear  : true
+        };
+
+        global.init_select2('.slctDokter', dokterOption);
+        // end set select option dokter
     });
 </script>

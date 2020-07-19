@@ -58,20 +58,22 @@ class InputPasienController extends Controller
         $validator = Validator::make(
             $post,
             [
-                'pasien_nama'     => 'required',
-                'pasien_tgllahir' => 'required',
-                'pasien_umur'     => 'required',
-                'pasien_jk'       => 'required',
-                'pasien_email'    => 'required',
-                'pasien_alamat'   => 'required'
+                'pasien_nama'        => 'required',
+                'pasien_tgllahir'    => 'required',
+                'pasien_umur'        => 'required',
+                'pasien_jk'          => 'required',
+                'pasien_email'       => 'required',
+                'pasien_alamat'      => 'required',
+                'pastrans_dokter_id' => 'required'
             ],
             [
-                'pasien_nama.required'     => 'Nama tidak boleh kosong',
-                'pasien_tgllahir.required' => 'Tanggal lahir tidak boleh kosong',
-                'pasien_umur.required'     => 'Umur tidak boleh kosong',
-                'pasien_jk.required'       => 'Jenis kelamin tidak boleh kosong',
-                'pasien_email.required'    => 'Email tidak boleh kosong',
-                'pasien_alamat.required'   => 'Alamat tidak boleh kosong',
+                'pasien_nama.required'        => 'Nama tidak boleh kosong',
+                'pasien_tgllahir.required'    => 'Tanggal lahir tidak boleh kosong',
+                'pasien_umur.required'        => 'Umur tidak boleh kosong',
+                'pasien_jk.required'          => 'Jenis kelamin tidak boleh kosong',
+                'pasien_email.required'       => 'Email tidak boleh kosong',
+                'pasien_alamat.required'      => 'Alamat tidak boleh kosong',
+                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong'
             ]
         );
 
@@ -118,6 +120,7 @@ class InputPasienController extends Controller
             // start create transaksi pasien
             $psntrans = [
                 'pastrans_pasien_id'    => $lastId,
+                'pastrans_dokter_id'    => $post['pastrans_dokter_id'],
                 'pastrans_status'       => '1',
                 'pastrans_created_by'   => Auth::user()->id,
                 'pastrans_created_date' => date('Y-m-d H:i:s')
@@ -160,20 +163,22 @@ class InputPasienController extends Controller
         $validator = Validator::make(
             $post,
             [
-                'pasien_nama'     => 'required',
-                'pasien_tgllahir' => 'required',
-                'pasien_umur'     => 'required',
-                'pasien_jk'       => 'required',
-                'pasien_email'    => 'required',
-                'pasien_alamat'   => 'required'
+                'pasien_nama'        => 'required',
+                'pasien_tgllahir'    => 'required',
+                'pasien_umur'        => 'required',
+                'pasien_jk'          => 'required',
+                'pasien_email'       => 'required',
+                'pasien_alamat'      => 'required',
+                'pastrans_dokter_id' => 'required'
             ],
             [
-                'pasien_nama.required'     => 'Nama tidak boleh kosong',
-                'pasien_tgllahir.required' => 'Tanggal lahir tidak boleh kosong',
-                'pasien_umur.required'     => 'Umur tidak boleh kosong',
-                'pasien_jk.required'       => 'Jenis kelamin tidak boleh kosong',
-                'pasien_email.required'    => 'Email tidak boleh kosong',
-                'pasien_alamat.required'   => 'Alamat tidak boleh kosong',
+                'pasien_nama.required'        => 'Nama tidak boleh kosong',
+                'pasien_tgllahir.required'    => 'Tanggal lahir tidak boleh kosong',
+                'pasien_umur.required'        => 'Umur tidak boleh kosong',
+                'pasien_jk.required'          => 'Jenis kelamin tidak boleh kosong',
+                'pasien_email.required'       => 'Email tidak boleh kosong',
+                'pasien_alamat.required'      => 'Alamat tidak boleh kosong',
+                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong'
             ]
         );
 
@@ -230,6 +235,7 @@ class InputPasienController extends Controller
             // start create transaksi pasien
             $psntrans = [
                 'pastrans_pasien_id'    => Hashids::decode($post['pasien_id'])[0],
+                'pastrans_dokter_id'    => $post['pastrans_dokter_id'],
                 'pastrans_status'       => '1',
                 'pastrans_created_by'   => Auth::user()->id,
                 'pastrans_created_date' => date('Y-m-d H:i:s')

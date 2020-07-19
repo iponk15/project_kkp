@@ -4,23 +4,26 @@ namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use App\Models\Poli;
 use Validator;
-use App\User;
 use Hashids;
 use Auth;
 use DB;
 
-class UserController extends Controller
+class PoliController extends Controller
 {
-    private $route = 'user';
-    private $path  = 'MasterData.User';
+    private $route = 'poli';
+    private $path  = 'MasterData.Poli';
+
+    function __construct(){
+        // put your magic
+    }
 
     public function index(){
         $data = [
-            'pagetitle'    => 'Page User',
-            'cardTitle'    => 'Card User',
-            'cardSubTitle' => 'List Data User',
+            'pagetitle'    => 'Poli',
+            'cardTitle'    => 'List Data',
+            'cardSubTitle' => 'Poli',
             'cardIcon'     => 'flaticon2-list-3',
             'breadcrumb'   => ['Index' => route($this->route . '.index')],
             'route'        => $this->route
@@ -31,28 +34,22 @@ class UserController extends Controller
 
     function ktable(Request $request){
         $post    = $request->input();
-        $getData = User::selectRaw('id, name, email, role_nama, poli_nama, status, created_at')
-            ->leftJoin('kkp_role AS kr', 'users.role_kode', 'kr.role_kode')
-            ->leftJoin('kkp_poli AS kp', 'users.poli_id', 'kp.poli_id');
-
-        $jmlData = User::selectRaw('count(*) AS jumlah')
-            ->leftJoin('kkp_role AS kr', 'users.role_kode', 'kr.role_kode')
-            ->leftJoin('kkp_poli AS kp', 'users.poli_id', 'kp.poli_id');
-
+        $getData = Poli::selectRaw('poli_id, poli_nama, poli_deskripsi, poli_status, poli_lastupdate, poli_created_date');
+        $jmlData = Poli::selectRaw('count(*) AS jumlah');
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);
 
         if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
         }else{
-            $getData->orderBy('created_at', 'DESC');
+            $getData->orderBy('poli_created_date', 'DESC');
         }
 
         if(!empty($search)){
             foreach ($search as $value => $param) {
                 if($value === 'generalSearch'){
-                    $getData->whereRaw("(name LIKE '%".$param."%' OR email LIKE '%".$param."%')");
-                    $jmlData->whereRaw("(name LIKE '%".$param."%' OR email LIKE '%".$param."%')");
+                    $getData->whereRaw("(poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
                 }else{
                     if($value !== 0 ){
                         $getData->where($value, $param);
@@ -77,31 +74,29 @@ class UserController extends Controller
         $i               = 1 + $awal;
 
         foreach($result as $key => $value){
-            $rowIds[]          = $value->id;
+            $rowIds[]          = $value->poli_id;
             $data['records'][] = [
-                'RecordID'   => $value->id,
-                'no'         => (string)$i,
-                'name'       => $value->name,
-                'email'      => $value->email,
-                'role_nama'  => $value->role_nama,
-                'poli_nama'  => ( $value->poli_nama == '' ? '-' : $value->poli_nama ),
-                'status'     => intval($value->status),
-                'created_at' => date('D, d F Y H:i', strtotime($value->created_at)),
-                'action'     => '<div class="dropdown dropdown-inline">
-                                    <button type="button" class="btn btn-clean btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-theme="dark" title="Ubah Status">
-                                        <i class="flaticon-cogwheel-1 text-dark"></i>
-                                    </button>
-                                    <div class="dropdown-menu" style="">
-                                        '.( $value->status == 0 || $value->status == 99 ? '<a onClick="return f_action(this, event, 1)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->id), 'status' => 1]) .'">Active</a>' : '' ).'
-                                        '.( $value->status == 1 || $value->status == 99 ? '<a onClick="return f_action(this, event, 0)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->id), 'status' => 0]) .'">Inactive</a>' : '').'
-                                        '.( $value->status == 0 || $value->status == 1 ? '<a onClick="return f_action(this, event, 99)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->id), 'status' => 99]) .'">Soft Delete</a>' : '' ).'
-                                    </div>
-                                    <a href="'. route($this->route . '.edit', ['id' => Hashids::encode($value->id)]) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Edit"><i class="flaticon-edit text-warning"></i></a>'.
-                                    ( $value->status == 99 
-                                        ? '<a href="'. route($this->route . '.delete', ['id' => Hashids::encode($value->id)]) .'" onClick="return f_action(this, event)" class="btn btn-icon btn-clean btn-sm mr-2" data-toggle="tooltip" data-theme="dark" title="Delete"><i class="flaticon-delete text-danger"></i></a>'
-                                        : ''
-                                    ).
-                                '</div>'
+                'RecordID'             => $value->poli_id,
+                'no'                   => (string)$i,
+                'poli_nama'         => $value->poli_nama,
+                'poli_deskripsi'    => $value->poli_deskripsi,
+                'status'               => intval($value->poli_status),
+                'poli_created_date' => date('D, d F Y H:i', strtotime($value->poli_created_date)),
+                'action'               => '<div class="dropdown dropdown-inline">
+                                                <button type="button" class="btn btn-clean btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-theme="dark" title="Ubah Status">
+                                                    <i class="flaticon-cogwheel-1 text-dark"></i>
+                                                </button>
+                                                <div class="dropdown-menu" style="">
+                                                    '.( $value->poli_status == 0 || $value->poli_status == 99 ? '<a onClick="return f_action(this, event, 1)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->poli_id), 'status' => 1]) .'">Active</a>' : '' ).'
+                                                    '.( $value->poli_status == 1 || $value->poli_status == 99 ? '<a onClick="return f_action(this, event, 0)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->poli_id), 'status' => 0]) .'">Inactive</a>' : '').'
+                                                    '.( $value->poli_status == 0 || $value->poli_status == 1 ? '<a onClick="return f_action(this, event, 99)" class="dropdown-item" href="'. route($this->route . '.changeStatus', ['id' => Hashids::encode($value->poli_id), 'status' => 99]) .'">Soft Delete</a>' : '' ).'
+                                                </div>
+                                                <a href="'. route($this->route . '.edit', ['id' => Hashids::encode($value->poli_id)]) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Edit"><i class="flaticon-edit text-warning"></i></a>'.
+                                                ( $value->poli_status == 99 
+                                                    ? '<a href="'. route($this->route . '.delete', ['id' => Hashids::encode($value->poli_id)]) .'" onClick="return f_action(this, event)" class="btn btn-icon btn-clean btn-sm mr-2" data-toggle="tooltip" data-theme="dark" title="Delete"><i class="flaticon-delete text-danger"></i></a>'
+                                                    : ''
+                                                ).
+                                            '</div>'
                                 
             ];
 
@@ -118,9 +113,9 @@ class UserController extends Controller
 
     function show(){
         $data = [
-            'pagetitle'    => 'Page User',
-            'cardTitle'    => 'Card User',
-            'cardSubTitle' => 'Form tambah user',
+            'pagetitle'    => 'Page Poli',
+            'cardTitle'    => 'Card Poli',
+            'cardSubTitle' => 'Form tambah Poli',
             'cardIcon'     => 'flaticon-file-1',
             'breadcrumb'   => ['Index' => route($this->route . '.index'), 'Show' => route($this->route . '.show')],
             'route'        => $this->route
@@ -134,17 +129,12 @@ class UserController extends Controller
         $validator = Validator::make(
             $post,
             [
-                'name'     => 'required',
-                'email'    => 'required|unique:users',
-                'password' => 'required',
-                'role_kode'  => 'required'
+                'poli_nama'      => 'required',
+                'poli_deskripsi' => 'required',
             ],
             [
-                'name.required'     => 'Nama tidak boleh kosong',
-                'email.required'    => 'Email tidak boleh kosong',
-                'email.unique'      => 'Email sudah digunakan',
-                'password.required' => 'Password tidak boleh kosong',
-                'role_kode.required'  => 'Role tidak boleh kosong',
+                'poli_nama.required'      => 'Nama tidak boleh kosong',
+                'poli_deskripsi.required' => 'Deskripsi tidak boleh kosong',
             ]
         );
 
@@ -165,8 +155,11 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            $post['password'] = bcrypt($post['password']);
-            User::create($post);
+            $post['poli_created_by']   = Auth::user()->id;
+            $post['poli_created_date'] = date('Y-m-d H:i:s');
+            $post['poli_ip']           = \Request::ip();
+
+            Poli::create($post);
 
             DB::commit();
 
@@ -185,18 +178,14 @@ class UserController extends Controller
 
     function edit($id){
         $data = [
-            'pagetitle'    => 'Page User',
-            'cardTitle'    => 'Card User',
-            'cardSubTitle' => 'Form edit user',
+            'pagetitle'    => 'Page Edit',
+            'cardTitle'    => 'Card Edit',
+            'cardSubTitle' => 'Form edit edit',
             'cardIcon'     => 'flaticon-file-1',
             'breadcrumb'   => ['Index' => route($this->route . '.index'), 'Edit' => route($this->route . '.edit', ['id' => $id]) ],
             'route'        => $this->route,
             'id'           => $id,
-            'records'      => User::selectRaw('users.name,users.email,kr.role_kode,kr.role_nama,kp.poli_id,kp.poli_nama')
-                ->leftJoin('kkp_role as kr', 'users.role_kode', 'kr.role_kode')
-                ->leftJoin('kkp_poli AS kp', 'users.poli_id', 'kp.poli_id')
-                ->where('id', Hashids::decode($id)[0])
-                ->first()
+            'records'      => Poli::selectRaw('poli_nama,poli_deskripsi')->where('poli_id', Hashids::decode($id)[0])->first()
         ];
 
         return view($this->path . '.edit', $data);
@@ -207,14 +196,12 @@ class UserController extends Controller
         $validator = Validator::make(
             $post,
             [
-                'name'    => 'required',
-                'email'   => 'required',
-                'role_kode' => 'required'
+                'poli_nama'      => 'required',
+                'poli_deskripsi' => 'required',
             ],
             [
-                'name.required'    => 'Nama tidak boleh kosong',
-                'email.required'   => 'Email tidak boleh kosong',
-                'role_kode.required' => 'Email tidak boleh kosong',
+                'poli_nama.required'      => 'Nama tidak boleh kosong',
+                'poli_deskripsi.required' => 'Deskripsi tidak boleh kosong',
             ]
         );
 
@@ -236,15 +223,11 @@ class UserController extends Controller
 
         try {
             Arr::forget($post, '_token');
-            Arr::forget($post, 'cnfmPass');
-            
-            if(!empty($post['password'])){
-                $post['password'] = bcrypt($post['password']);
-            }else{
-                Arr::forget($post, 'password');
-            }
 
-            User::where('id', Hashids::decode($id)[0])->update($post);
+            $post['poli_updated_by'] = Auth::user()->id;
+            $post['poli_ip']         = \Request::ip();
+
+            Poli::where('poli_id', Hashids::decode($id)[0])->update($post);
 
             DB::commit();
 
@@ -268,9 +251,9 @@ class UserController extends Controller
 
         try {
             if(empty($post)){
-                User::where('id', Hashids::decode($id)[0])->update(['status' => $status]);
+                Poli::where('poli_id', Hashids::decode($id)[0])->update(['poli_status' => $status]);
             }else{
-                User::whereIn('id', $post['ids'])->update(['status' => $post['status']]);
+                Poli::whereIn('poli_id', $post['ids'])->update(['poli_status' => $post['status']]);
             }
 
             DB::commit();
@@ -293,9 +276,9 @@ class UserController extends Controller
 
         try {
             if(empty($post)){
-                User::where('id', Hashids::decode($id)[0])->delete();
+                Poli::where('poli_id', Hashids::decode($id)[0])->delete();
             }else{
-                User::whereIn('id', $post['ids'])->delete();
+                Poli::whereIn('poli_id', $post['ids'])->delete();
             }
             
             DB::commit();
