@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\Models\Poli;
 use Validator;
 use Hashids;
@@ -34,7 +35,7 @@ class PoliController extends Controller
 
     function ktable(Request $request){
         $post    = $request->input();
-        $getData = Poli::selectRaw('poli_id, poli_nama, poli_deskripsi, poli_status, poli_lastupdate, poli_created_date');
+        $getData = Poli::selectRaw('poli_id, poli_kode, poli_nama, poli_deskripsi, poli_status, poli_lastupdate, poli_created_date');
         $jmlData = Poli::selectRaw('count(*) AS jumlah');
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);
@@ -48,8 +49,8 @@ class PoliController extends Controller
         if(!empty($search)){
             foreach ($search as $value => $param) {
                 if($value === 'generalSearch'){
-                    $getData->whereRaw("(poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
-                    $jmlData->whereRaw("(poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
+                    $getData->whereRaw("(poli_kode LIKE '%".$param."%' OR poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(poli_kode LIKE '%".$param."%' OR poli_nama LIKE '%".$param."%' OR poli_deskripsi LIKE '%".$param."%')");
                 }else{
                     if($value !== 0 ){
                         $getData->where($value, $param);
@@ -76,13 +77,14 @@ class PoliController extends Controller
         foreach($result as $key => $value){
             $rowIds[]          = $value->poli_id;
             $data['records'][] = [
-                'RecordID'             => $value->poli_id,
-                'no'                   => (string)$i,
+                'RecordID'          => $value->poli_id,
+                'no'                => (string)$i,
+                'poli_kode'         => $value->poli_kode,
                 'poli_nama'         => $value->poli_nama,
                 'poli_deskripsi'    => $value->poli_deskripsi,
-                'status'               => intval($value->poli_status),
+                'status'            => intval($value->poli_status),
                 'poli_created_date' => date('D, d F Y H:i', strtotime($value->poli_created_date)),
-                'action'               => '<div class="dropdown dropdown-inline">
+                'action'            => '<div class="dropdown dropdown-inline">
                                                 <button type="button" class="btn btn-clean btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-theme="dark" title="Ubah Status">
                                                     <i class="flaticon-cogwheel-1 text-dark"></i>
                                                 </button>
@@ -129,10 +131,12 @@ class PoliController extends Controller
         $validator = Validator::make(
             $post,
             [
+                'poli_kode'      => 'required',
                 'poli_nama'      => 'required',
                 'poli_deskripsi' => 'required',
             ],
             [
+                'poli_kode.required'      => 'Kode tidak boleh kosong',
                 'poli_nama.required'      => 'Nama tidak boleh kosong',
                 'poli_deskripsi.required' => 'Deskripsi tidak boleh kosong',
             ]
@@ -185,7 +189,7 @@ class PoliController extends Controller
             'breadcrumb'   => ['Index' => route($this->route . '.index'), 'Edit' => route($this->route . '.edit', ['id' => $id]) ],
             'route'        => $this->route,
             'id'           => $id,
-            'records'      => Poli::selectRaw('poli_nama,poli_deskripsi')->where('poli_id', Hashids::decode($id)[0])->first()
+            'records'      => Poli::selectRaw('poli_kode,poli_nama,poli_deskripsi')->where('poli_id', Hashids::decode($id)[0])->first()
         ];
 
         return view($this->path . '.edit', $data);
@@ -196,10 +200,12 @@ class PoliController extends Controller
         $validator = Validator::make(
             $post,
             [
+                'poli_kode'      => 'required',
                 'poli_nama'      => 'required',
                 'poli_deskripsi' => 'required',
             ],
             [
+                'poli_kode.required'      => 'Kode tidak boleh kosong',
                 'poli_nama.required'      => 'Nama tidak boleh kosong',
                 'poli_deskripsi.required' => 'Deskripsi tidak boleh kosong',
             ]

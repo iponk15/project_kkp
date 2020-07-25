@@ -301,11 +301,11 @@ var global = function(){
                     });
 
                     $.ajax({
-						url  	   : urll,
-						data 	   : frm.serialize(),
-						type  	   : 'POST',
-						dataType   : 'json',
-						success:function(response) {
+						url  	 : urll,
+						data 	 : frm.serialize(),
+						type  	 : 'POST',
+						dataType : 'json',
+						success  : function(response) {
 							setTimeout(function() {
                                 KTApp.unblock(content);
                             }, 2000);
@@ -503,12 +503,31 @@ var global = function(){
         }
     }
 
+    var hlp_frmrpt = function(clas){
+        $(clas).repeater({
+            initEmpty: false,
+           
+            defaultValues: {
+                'text-input': 'foo'
+            },
+             
+            show: function () {
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {                
+                $(this).slideUp(deleteElement);                 
+            }   
+        });
+    }
+
     return {
         init_ktable    : function(id,urll,column,search){ help_ktable(id,urll,column,search) },
         init_formVld   : function(form,urll,fields,params){ help_formValidation(form,urll,fields,params) },
-        init_select2   : function (clas,option) { hlp_select2(clas,option) },
-        init_wizard    : function (idWizard,idForm,temp) { hlp_wizard(idWizard,idForm,temp) },
-        init_dtrp      : function (tipe,clas,prm) { hlp_dtrp(tipe,clas,prm) },
-        init_formVldtn : function(form,urll,fields,btnSubmit){ hlp_formVldtn(form,urll,fields,btnSubmit) }
+        init_select2   : function(clas,option) { hlp_select2(clas,option) },
+        init_wizard    : function(idWizard,idForm,temp) { hlp_wizard(idWizard,idForm,temp) },
+        init_dtrp      : function(tipe,clas,prm) { hlp_dtrp(tipe,clas,prm) },
+        init_formVldtn : function(form,urll,fields,btnSubmit){ hlp_formVldtn(form,urll,fields,btnSubmit) },
+        init_frmrpt    : function(clas) { hlp_frmrpt(clas) },
     }
 }();

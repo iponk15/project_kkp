@@ -144,7 +144,7 @@
                         </div>
                         
                         <div class="navi-item mb-2">
-                            <a href="#" class="navi-link py-4" data-toggle="tooltip" title="" data-placement="right" data-original-title="Coming soon...">
+                            <a href="{{ route( $route . '.riwayatRekdis', [ 'pasien_id' => $records->pasien_id ]) }}" class="navi-link py-4" data-toggle="tooltip" title="" data-placement="right" data-original-title="Coming soon...">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -169,7 +169,7 @@
         <!--end::Aside-->
 
         <!--begin::Content-->
-        <div class="flex-row-fluid ml-lg-8">
+        <div class="flex-row-fluid ml-lg-8" id="bodyCtn">
             <!--begin::Advance Table: Widget 7-->
             <div class="card card-custom">
                 <!--begin::Header-->

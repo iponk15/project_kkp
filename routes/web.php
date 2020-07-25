@@ -22,6 +22,7 @@ Route::group(['as' => 'globalfunction.', 'prefix' => 'globalfunction', 'namespac
     Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
     Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
     Route::get('getDokter', 'Select2Controller@getDokter')->name('getDokter');
+    Route::get('getDokterSps', 'Select2Controller@getDokterSps')->name('getDokterSps');
 });
 // end routing global function select2
 
@@ -154,6 +155,27 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('storeFormPeriksa/{psntrans_id}', 'PasienInController@storeFormPeriksa')->name('storeFormPeriksa');
         Route::get('formPeriksaDokter/{psntrans_id}', 'PasienInController@formPeriksaDokter')->name('formPeriksaDokter');
         Route::post('updateFormDokter/{psntrans_id}', 'PasienInController@updateFormDokter')->name('updateFormDokter');
+        Route::get('riwayatRekdis/{pasien_id}', 'PasienInController@riwayatRekdis')->name('riwayatRekdis');
+        Route::post('showFormResepDok', 'PasienInController@showFormResepDok')->name('showFormResepDok');
+        Route::post('cekStokObat', 'PasienInController@cekStokObat')->name('cekStokObat');
+        Route::post('storeResepObat/{psnrekdis_id}', 'PasienInController@storeResepObat')->name('storeResepObat');
+        Route::post('editFormResepDok', 'PasienInController@editFormResepDok')->name('editFormResepDok');
+        Route::post('updateResepObat/{psnrekdis_id}', 'PasienInController@updateResepObat')->name('updateResepObat');
+        Route::post('showFormRujukanSpesialis', 'PasienInController@showFormRujukanSpesialis')->name('showFormRujukanSpesialis');
+        Route::post('storeFormRjkSps/{psnrekdis_id}', 'PasienInController@storeFormRjkSps')->name('storeFormRjkSps');
+        Route::post('editFormRujukanSpesialis/{rjksps_id}', 'PasienInController@editFormRujukanSpesialis')->name('editFormRujukanSpesialis');
+        Route::post('updateFormRjkSps/{rjksps_id}', 'PasienInController@updateFormRjkSps')->name('updateFormRjkSps');
+        Route::post('rukuanLab', 'PasienInController@rukuanLab')->name('rukuanLab');
+        Route::post('selesaiDokter', 'PasienInController@selesaiDokter')->name('selesaiDokter');
     });
     // end routing menu pasien sedang berobat
+
+    // start routing menu resep
+    Route::group(['as' => 'listresep.', 'prefix' => 'listresep', 'namespace' => 'Resep'], function(){
+        Route::get('index', 'ListResepController@index')->name('index');
+        Route::post('ktable', 'ListResepController@ktable')->name('ktable');
+        Route::get('showResepObat/{psntrans_id}', 'ListResepController@showResepObat')->name('showResepObat');
+        Route::post('approveResep', 'ListResepController@approveResep')->name('approveResep');
+    });
+    // start routing menu resep
 });

@@ -211,7 +211,12 @@ function ajaxx(param){
                         window.location.href = param.file;
                     }
                 }else{
-                    $('.reload').trigger('click');
+                    if(res.cus_url == undefined){
+                        $('.reload').trigger('click');
+                    }else{
+                        $(".reload").attr('href', res.cus_url);
+                        $('.reload').trigger('click');
+                    }
                 }
             }
 

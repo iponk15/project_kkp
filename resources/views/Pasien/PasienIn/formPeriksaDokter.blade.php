@@ -192,7 +192,7 @@
                     {{ csrf_field() }}
                     <div class="card-body py-5">
                         <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Subjective</h3>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="alert alert-custom alert-light-warning fade mb-5 d-none formAlert" role="alert">
                                 <div class="alert-icon"><i class="flaticon-warning"></i></div>
                                 <div class="alert-text">A simple primary alert—check it out!</div>
@@ -202,7 +202,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>Keluhan Utama <span class="text-danger"> * </span></label>
@@ -379,7 +379,17 @@
         <!--end::Content-->
     </div>
     
-    <a href="<?php echo route($route . '.index'); ?>" class="ajaxify reload"></a>
+    {{-- start form input stok --}}
+    <div class="modal fade" id="formResepDoketer" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="ctnFormResep">
+                
+            </div>
+        </div>
+    </div>
+    {{-- start form input stok --}}
+    
+    <a href="<?php echo route($route . '.formPeriksaDokter', ['psntrans_id' => $psntrans_id]); ?>" class="ajaxify reload"></a>
 
     <script>
         $(document).ready(function(){
@@ -394,5 +404,62 @@
             global.init_formVld(form, urll, fields);
             // end form validation submit
         });
+
+        function f_resepObat(ele,eve){
+            var option = {
+                route : $(ele).data('route'),
+                blkUi : '#body-content',
+                type  : 'ajax',
+                html  : true,
+                rnder : '#ctnFormResep',
+                data  : { psnrekdisid : $(ele).data('psnrekdisid') }
+            }
+
+            ajaxProses('post', option);
+        }
+
+        function f_rujukLab(ele,eve){
+            eve.preventDefault();
+
+            var option = {
+                route : $(ele).data('route'),
+                data  : { psnrekdis_id : $(ele).data('psnrekdisid')},
+                blkUi : '#body-content',
+                type  : 'swal',
+                attr  : {
+                    title : 'Anda yakin ?',
+                    text  : 'Merujuk pasien ini kebagian Laboratorium',
+                    icon  : 'warning',
+                    showCancelButton  : true,
+                    confirmButtonText : 'Iya',
+                    cancelButtonText  : 'Tidak',
+                    reverseButtons    : true
+                }
+            };
+            
+            ajaxProses('post', option);
+        }
+
+        function f_selesai(ele, eve){
+            eve.preventDefault();
+
+            var option = {
+                route : $(ele).data('route'),
+                data  : { psntrans_id : $(ele).data('psntransid') },
+                blkUi : '#body-content',
+                type  : 'swal',
+                attr  : {
+                    title : 'Anda yakin ?',
+                    text  : 'Untuk menyelesaikan pemeriksaan terhadap pasien ini',
+                    icon  : 'warning',
+                    showCancelButton  : true,
+                    confirmButtonText : 'Iya',
+                    cancelButtonText  : 'Tidak',
+                    reverseButtons    : true
+                }
+            };
+            
+            ajaxProses('post', option);
+        }
     </script>
 @endsection

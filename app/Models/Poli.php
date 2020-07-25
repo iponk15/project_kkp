@@ -10,6 +10,7 @@ class Poli extends Model
     protected $table      = 'kkp_poli';
     protected $primaryKey = 'poli_id';
     protected $fillable   = [
+        'poli_kode',
         'poli_nama',
         'poli_deskripsi',
         'poli_status',

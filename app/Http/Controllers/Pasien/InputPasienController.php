@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
-use App\Models\PasienUker;
 use App\Models\LogTrans;
 use App\Models\Pasien;
 use Validator;
@@ -64,7 +63,9 @@ class InputPasienController extends Controller
                 'pasien_jk'          => 'required',
                 'pasien_email'       => 'required',
                 'pasien_alamat'      => 'required',
-                'pastrans_dokter_id' => 'required'
+                'pastrans_dokter_id' => 'required',
+                'pasien_uker_id'     => 'required'
+                
             ],
             [
                 'pasien_nama.required'        => 'Nama tidak boleh kosong',
@@ -73,7 +74,8 @@ class InputPasienController extends Controller
                 'pasien_jk.required'          => 'Jenis kelamin tidak boleh kosong',
                 'pasien_email.required'       => 'Email tidak boleh kosong',
                 'pasien_alamat.required'      => 'Alamat tidak boleh kosong',
-                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong'
+                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong',
+                'pasien_uker_id.required'     => 'Unit kerja tidak boleh kosong'
             ]
         );
 
@@ -103,19 +105,6 @@ class InputPasienController extends Controller
             Pasien::create($post);
             $lastId = DB::getPdo()->lastInsertId();
             // end create pasein baru
-
-            // start create unit kerja
-            if(!empty($post['pasien_uker'])){
-                foreach ($post['pasien_uker'] as $value) {
-                    $tempUker[] = [
-                        'pasker_pasien_id' => $lastId,
-                        'pasker_uker_id'   => $value
-                    ];
-                }
-
-                PasienUker::insert($tempUker);
-            }
-            // end create unit kerja
 
             // start create transaksi pasien
             $psntrans = [
@@ -169,7 +158,8 @@ class InputPasienController extends Controller
                 'pasien_jk'          => 'required',
                 'pasien_email'       => 'required',
                 'pasien_alamat'      => 'required',
-                'pastrans_dokter_id' => 'required'
+                'pastrans_dokter_id' => 'required',
+                'pasien_uker_id'     => 'required'
             ],
             [
                 'pasien_nama.required'        => 'Nama tidak boleh kosong',
@@ -178,7 +168,8 @@ class InputPasienController extends Controller
                 'pasien_jk.required'          => 'Jenis kelamin tidak boleh kosong',
                 'pasien_email.required'       => 'Email tidak boleh kosong',
                 'pasien_alamat.required'      => 'Alamat tidak boleh kosong',
-                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong'
+                'pastrans_dokter_id.required' => 'Dokter tidak boleh kosong',
+                'pasien_uker_id.required'     => 'Unit kerja tidak boleh kosong'
             ]
         );
 
@@ -202,6 +193,7 @@ class InputPasienController extends Controller
             Arr::forget($post, '_token');
 
             // start create pasein baru
+            $pasien['pasien_uker_id']      = $post['pasien_uker_id'];
             $pasien['pasien_nama']         = $post['pasien_nama'];
             $pasien['pasien_umur']         = $post['pasien_umur'];
             $pasien['pasien_pangkat']      = $post['pasien_pangkat'];
@@ -216,21 +208,6 @@ class InputPasienController extends Controller
 
             Pasien::where('pasien_id', Hashids::decode($post['pasien_id'])[0])->update($pasien);
             // end create pasein baru
-
-            // start create unit kerja
-            if(!empty($post['pasien_uker'])){
-                PasienUker::where('pasker_pasien_id', Hashids::decode($post['pasien_id'])[0])->delete();
-
-                foreach ($post['pasien_uker'] as $value) {
-                    $tempUker[] = [
-                        'pasker_pasien_id' => Hashids::decode($post['pasien_id'])[0],
-                        'pasker_uker_id'   => $value
-                    ];
-                }
-
-                PasienUker::insert($tempUker);
-            }
-            // end create unit kerja
 
             // start create transaksi pasien
             $psntrans = [
@@ -276,19 +253,12 @@ class InputPasienController extends Controller
     function getDataPsien(Request $request){
         $post     = $request->input();
         $decPsnId = Hashids::decode($post['pasien_id'])[0];
-        $pasien   = Pasien::selectRaw('pasien_nama, pasien_email, pasien_jk, pasien_telp, pasien_alamat, pasien_tgllahir, pasien_umur, pasien_pangkat, pasien_alergi_obat')
+        $pasien   = Pasien::selectRaw('pasien_nama, pasien_email, pasien_jk, pasien_telp, pasien_alamat, pasien_tgllahir, pasien_umur, pasien_pangkat, pasien_alergi_obat, uker_id, uker_nama')
+            ->leftJoin('kkp_unit_kerja','pasien_uker_id','uker_id')
             ->where('pasien_id', $decPsnId)
             ->first();
-        
-        $uker = PasienUker::selectRaw('uker_id, uker_nama')
-            ->leftJoin('kkp_unit_kerja', 'pasker_uker_id', 'uker_id')
-            ->where('pasker_pasien_id', $decPsnId)
-            ->get();
 
-        $return = [
-            'pasien' => $pasien,
-            'uker'   => $uker
-        ];
+        $return = [ 'pasien' => $pasien ];
 
         echo json_encode($return);
     }

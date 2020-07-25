@@ -46,7 +46,7 @@
                     <label class="col-form-label text-right col-lg-3 col-sm-12">Deskripsi <span class="text-danger"> * </span></label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="uker_deskripsi" placeholder="Masukan jenjang ..." autocomplete="off" value="{{ $records->uker_deskripsi }}"/>
+                            <textarea name="uker_deskripsi" class="form-control" rows="3" placeholder="Masukan deskripsi ...">{{ $records->uker_deskripsi }}</textarea>
                         </div>
                         <span class="form-text text-muted"></span>
                     </div>

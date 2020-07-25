@@ -31,14 +31,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 my-2 my-md-0">
-                                    <select class="form-control status" name="status">
-                                        <option value="">Select Is Active</option>
-                                        <option value="0">In Active</option>
-                                        <option value="1">Active</option>
-                                        <option value="99">Delete Temp</option>
-                                    </select>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -84,24 +76,11 @@
             var urll   = '{{ route($route . ".ktable" ) }}';
             var column = [
                 { field : 'no', title : 'No. ', textAlign : 'center', sortable : false, width : 30 },
-                { field : 'pasien_norekdis', title : 'No. Rekamedis' },
-                { field : 'pasien_nama', title : 'Nama' },
-                { field : 'dokter_nama', title : 'Nama Dokter' },
-                { field : 'pasien_tgllahir', title : 'Tgl Lahir', textAlign : 'center' },
-                // { field : 'pasien_umur', title : 'Umur', textAlign : 'center' },
+                { field : 'pasien_norekdis', title : 'No. Rekamedis', textAlign : 'center' },
+                { field : 'pasien_nama', title : 'Pasien' },
                 { field : 'pasien_jk', title : 'Gender', textAlign : 'center' },
-                { field: 'pastrans_status', title: 'Status', textAlign : 'center', sortable : false, 
-                    // callback function support for column rendering
-                    template: function(row) {
-                        var status = {
-                            1  : { 'title' : 'Menunggu Cek', 'class' : ' label-light-primary'},
-                            2  : { 'title' : 'Cek Dokter', 'class' : ' label-light-success'},
-                            3  : { 'title' : 'Cek Dokter Selesai', 'class' : ' label-light-danger'},
-                        };
-                        return '<span class="label label-lg font-weight-bold' + status[row.pastrans_status].class + ' label-inline">' + status[row.pastrans_status].title + '</span>';
-                    },
-                },
-                { field : 'pastrans_created_date', title : 'Created At', width : 170, textAlign : 'center' },
+                { field : 'pasien_umur', title : 'Umur', textAlign : 'center' },
+                { field : 'dokter_nama', title : 'Dokter' },
                 { field : 'action', title : 'Action', textAlign : 'center', sortable : false },
             ];
             var cari = {
@@ -120,23 +99,6 @@
 
             global.init_select2('.status', statusOption);
             // end select2 get flag
-
-            // start proses export file
-            $('.exportFile').on('click', function(e){
-                e.preventDefault();
-                var tipe   = $(this).data('tipe');
-                var option = {
-                    route : $(this).attr('href'),
-                    blkUi : '#body-content',
-                    type  : 'ajax',
-                    data  : $('.formSearch').serialize(),
-                    file  : (tipe == 'pdf') ? '{{ asset("storage/users.pdf") }}' : '{{ asset("storage/users.xlsx") }}',
-                    extn  : tipe
-                };
-
-                ajaxProses('post', option);
-            });
-            // start proses export file
         });
 
         function f_action(ele,eve,flag){

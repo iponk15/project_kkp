@@ -1,8 +1,8 @@
 <!--begin::Brand-->
-<div class="brand flex-column-auto " id="kt_brand">
+<div class="brand flex-column-auto " id="kt_brand" style="background-color: #F6D55C !important;">
     <!--begin::Logo-->
     <a href="index.html" class="brand-logo">
-        <img alt="Logo" class="w-65px" src="{{ asset('assets/media/logos/logo-letter-13.png') }}"/>
+        <img alt="Logo" class="w-100px" src="{{ asset('assets/media/logos/kkp-log.png') }}"/>
     </a>
     <!--end::Logo-->
 </div>
@@ -95,7 +95,7 @@
                 </li>
             @endif
 
-            @if( Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPDKT' )
+            @if( Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPDKT' || Auth::user()->role_kode == 'KKPLBT' )
                 <li class="menu-item  menu-item-submenu" aria-haspopup="true"  data-menu-toggle="hover">
                     <a  href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon2-group"></i><span class="menu-text">Pasien</span></a>
                     <div class="menu-submenu "><i class="menu-arrow"></i>
@@ -135,6 +135,31 @@
                                     </a>
                                 </li>
                             @endif
+
+                            @if( Auth::user()->role_kode == 'KKPLBT' )
+                                <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('pasienin.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-calendar-with-a-clock-time-tools icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Pasien Cek Lab</span>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            
+            @if( Auth::user()->role_kode == 'KKPAPT' )
+                <li class="menu-item  menu-item-submenu" aria-haspopup="true"  data-menu-toggle="hover">
+                    <a  href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-envelope"></i><span class="menu-text">Resep</span></a>
+                    <div class="menu-submenu "><i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item " aria-haspopup="true" >
+                                <a  href="{{ route('listresep.index') }}" class="menu-link ajaxify">
+                                    <i class="flaticon-list icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="menu-text">List Resep Obat Pasien</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

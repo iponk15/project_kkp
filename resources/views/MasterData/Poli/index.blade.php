@@ -145,6 +145,7 @@
             var column = [
                 { field : 'RecordID', title : '#', sortable : false, selector : { class : '' }, textAlign : 'center', width : 30 },
                 { field : 'no', title : 'No. ', textAlign : 'center', sortable : false, width : 30 },
+                { field : 'poli_kode', title : 'Kode' },
                 { field : 'poli_nama', title : 'Nama' },
                 { field : 'poli_deskripsi', title : 'Deskripsi'},
                 { field: 'status', title: 'Status', textAlign : 'center', sortable : false, 

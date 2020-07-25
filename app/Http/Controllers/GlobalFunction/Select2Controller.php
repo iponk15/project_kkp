@@ -126,4 +126,28 @@ class Select2Controller extends Controller
 
         echo json_encode( ['items' => $data] );
     }
+
+    function getDokterSps(){
+        $result = DB::table('users')
+            ->select('users.id', 'users.name')
+            ->where('users.name', 'like', '%'.@$_GET['q'].'%')
+            ->where('users.poli_id', 3)
+            ->where('users.status', '1')
+            ->orderBy('users.name', 'ASC')
+            ->limit(5)
+            ->get();
+
+        if($result->isNotEmpty()){
+            for ($i=0; $i < count( $result ); $i++) {
+                $data[$i] = [
+                    'id'   => $result[$i]->id, 
+                    'text' => $result[$i]->name
+                ];
+            }
+        }else{
+            $data = [];
+        }
+
+        echo json_encode( ['items' => $data] );
+    }
 }

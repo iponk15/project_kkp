@@ -68,8 +68,8 @@
             </div>
             <div class="form-group row">
                 <div class="col-lg-4">
-                    <label>Unit Kerja </label>
-                    <select class="form-control slctUker" name="pasien_uker[]" multiple>
+                    <label>Unit Kerja <span class="text-danger"> * </span></label>
+                    <select class="form-control slctUker" name="pasien_uker_id">
                         <option></option>
                     </select>
                     <span class="form-text text-muted">Silahkan unit kerja</span>
@@ -107,12 +107,14 @@
         var form   = document.getElementById('formPasienBaru');
         var urll   = "{{ route($route . '.storePasienBaru') }}";
         var fields = {
-            pasien_nama     : { validators : { notEmpty : { message : 'Nama pasien tidak boleh kosong' } } },
-            pasien_tgllahir : { validators : { notEmpty : { message : 'Tanggal lahir tidak boleh kosong' } } },
-            pasien_umur     : { validators : { notEmpty : { message : 'Umur tidak boleh kosong' } } },
-            pasien_jk       : { validators : { notEmpty : { message : 'Jenis kelamin tidak boleh kosong' } } },
-            pasien_email    : { validators : { notEmpty : { message : 'Email tidak boleh kosong' } } },
-            pasien_alamat   : { validators : { notEmpty : { message : 'Alamat tidak boleh kosong' } } }
+            pasien_nama        : { validators : { notEmpty : { message : 'Nama pasien tidak boleh kosong' } } },
+            pasien_tgllahir    : { validators : { notEmpty : { message : 'Tanggal lahir tidak boleh kosong' } } },
+            pasien_umur        : { validators : { notEmpty : { message : 'Umur tidak boleh kosong' } } },
+            pasien_jk          : { validators : { notEmpty : { message : 'Jenis kelamin tidak boleh kosong' } } },
+            pasien_email       : { validators : { notEmpty : { message : 'Email tidak boleh kosong' } } },
+            pasien_alamat      : { validators : { notEmpty : { message : 'Alamat tidak boleh kosong' } } },
+            pasien_uker_id     : { validators : { notEmpty : { message : 'Unit kerja tidak boleh kosong' } } },
+            pastrans_dokter_id : { validators : { notEmpty : { message : 'Dokter tidak boleh kosong' } } }
         };
         
         global.init_formVldtn(form, urll, fields, '#btnFormSubmitPasienBaru');

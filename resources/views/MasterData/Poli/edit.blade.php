@@ -34,10 +34,19 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-sm-12 text-right">Kode <span class="text-danger"> * </span></label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="poli_kode" placeholder="Masukan kode ..." autocomplete="off"/ value="{{ $records->poli_kode }}">
+                        </div>
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12 text-right">Nama <span class="text-danger"> * </span></label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="poli_nama" placeholder="Masukan sekolah / universitas ..." autocomplete="off"/ value="{{ $records->poli_nama }}">
+                            <input type="text" class="form-control" name="poli_nama" placeholder="Masukan nama ..." autocomplete="off"/ value="{{ $records->poli_nama }}">
                         </div>
                         <span class="form-text text-muted"></span>
                     </div>
@@ -46,7 +55,7 @@
                     <label class="col-form-label text-right col-lg-3 col-sm-12">Deskripsi <span class="text-danger"> * </span></label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="poli_deskripsi" placeholder="Masukan jenjang ..." autocomplete="off" value="{{ $records->poli_deskripsi }}"/>
+                            <input type="text" class="form-control" name="poli_deskripsi" placeholder="Masukan deskripsi ..." autocomplete="off" value="{{ $records->poli_deskripsi }}"/>
                         </div>
                         <span class="form-text text-muted"></span>
                     </div>

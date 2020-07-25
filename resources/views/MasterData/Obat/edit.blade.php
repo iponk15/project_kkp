@@ -90,23 +90,23 @@
     <script>
         $(document).ready(function(){
             // start set select option kategory obat
-            var roleOption = {
+            var ktgrOption = {
                 route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_kategori_obat", "prefix" => "katobat"]) }}',
                 placeholder : 'Select Kategori Obat',
                 allowClear  : true
             };
 
-            global.init_select2('.slctKatobatId', roleOption);
+            global.init_select2('.slctKatobatId', ktgrOption);
             // end set select option kategory obat
 
             // start set select option jenis obat
-            var roleOption = {
+            var jenbatOption = {
                 route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_jenis_obat", "prefix" => "jenobat"]) }}',
                 placeholder : 'Select Jenis Obat',
                 allowClear  : true
             };
 
-            global.init_select2('.slctJenobatId', roleOption);
+            global.init_select2('.slctJenobatId', jenbatOption);
             // end set select option jenis obat
 
             // start form validation submit

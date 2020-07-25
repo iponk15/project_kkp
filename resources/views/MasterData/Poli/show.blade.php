@@ -34,6 +34,15 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-form-label col-lg-3 col-sm-12 text-right">Kode <span class="text-danger"> * </span></label>
+                    <div class="col-lg-4 col-md-9 col-sm-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="poli_kode" placeholder="Masukan nama ..." autocomplete="off"/>
+                        </div>
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12 text-right">Nama <span class="text-danger"> * </span></label>
                     <div class="col-lg-4 col-md-9 col-sm-12">
                         <div class="input-group">

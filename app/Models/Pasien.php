@@ -10,6 +10,7 @@ class Pasien extends Model
     protected $table      = 'kkp_pasien';
     protected $primaryKey = 'pasien_id';
     protected $fillable   = [
+        'pasien_uker_id',
         'pasien_norekdis',
         'pasien_nama',
         'pasien_tgllahir',

@@ -71,7 +71,7 @@
         <div class="form-group row">
             <div class="col-lg-4">
                 <label>Unit Kerja </label>
-                <select class="form-control formDisabled slctUker" name="pasien_uker[]" multiple>
+                <select class="form-control formDisabled slctUker" name="pasien_uker_id">
                     <option></option>
                     <option class="tempUker"></option>
                 </select>
@@ -84,7 +84,7 @@
             </div>
             <div class="col-lg-4">
                 <label>Alamat <span class="text-danger"> * </span> </label>
-                <textarea name="pasien_alamat" class="form-control formDisabled pasien_alergi_obat" rows="3" placeholder="Alamat"></textarea>
+                <textarea name="pasien_alamat" class="form-control formDisabled pasien_alamat" rows="3" placeholder="Alamat"></textarea>
                 <span class="form-text text-muted">Silahkan input alamat</span>
             </div>
         </div>
@@ -116,13 +116,15 @@
         var form   = document.getElementById('formPasienTerdaftar');
         var urll   = "{{ route($route . '.updatePasienTerdaftar') }}";
         var fields = {
-            pasien_norekdis : { validators : { notEmpty : { message : 'No Rekamedis tidak boleh kosong' } } },
-            pasien_nama     : { validators : { notEmpty : { message : 'Nama pasien tidak boleh kosong' } } },
-            pasien_tgllahir : { validators : { notEmpty : { message : 'Tanggal lahir tidak boleh kosong' } } },
-            pasien_umur     : { validators : { notEmpty : { message : 'Umur tidak boleh kosong' } } },
-            pasien_jk       : { validators : { notEmpty : { message : 'Jenis kelamin tidak boleh kosong' } } },
-            pasien_email    : { validators : { notEmpty : { message : 'Email tidak boleh kosong' } } },
-            pasien_alamat   : { validators : { notEmpty : { message : 'Alamat tidak boleh kosong' } } }
+            pasien_norekdis    : { validators : { notEmpty : { message : 'No Rekamedis tidak boleh kosong' } } },
+            pasien_nama        : { validators : { notEmpty : { message : 'Nama pasien tidak boleh kosong' } } },
+            pasien_tgllahir    : { validators : { notEmpty : { message : 'Tanggal lahir tidak boleh kosong' } } },
+            pasien_umur        : { validators : { notEmpty : { message : 'Umur tidak boleh kosong' } } },
+            pasien_jk          : { validators : { notEmpty : { message : 'Jenis kelamin tidak boleh kosong' } } },
+            pasien_email       : { validators : { notEmpty : { message : 'Email tidak boleh kosong' } } },
+            pasien_alamat      : { validators : { notEmpty : { message : 'Alamat tidak boleh kosong' } } },
+            pasien_uker_id     : { validators : { notEmpty : { message : 'Unit kerja tidak boleh kosong' } } },
+            pastrans_dokter_id : { validators : { notEmpty : { message : 'Dokter tidak boleh kosong' } } }
         };
         
         global.init_formVldtn(form, urll, fields, '#btnFormSubmitPasienTerdaftar');
@@ -182,11 +184,10 @@
                     global.init_select2('.slctUker', ukerOption);
                     // end set select option kategory obat
 
-                    jQuery.each( res.uker, function( i, val ) {
-                        var option = '<option selected value="'+ val.uker_id +'">'+ val.uker_nama +'</option>';
+                    
+                    var option = '<option selected value="'+ res.pasien.uker_id +'">'+ res.pasien.uker_nama +'</option>';
 
-                        $('.slctUker').append(option);
-                    });
+                    $('.slctUker').append(option);
                 },'json');
             }else{
                 $('.formDisabled').attr('disabled', true).val('');

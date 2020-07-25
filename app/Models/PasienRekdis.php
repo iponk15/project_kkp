@@ -33,6 +33,7 @@ class PasienRekdis extends Model
         'psnrekdis_obj_pfabd',
         'psnrekdis_obj_pfeksats',
         'psnrekdis_obj_pfeksbwh',
+        'psnrekdis_is_lab',
         'psnrekdis_created_by',
         'psnrekdis_created_date',
         'psnrekdis_ip'
