@@ -177,5 +177,16 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('showResepObat/{psntrans_id}', 'ListResepController@showResepObat')->name('showResepObat');
         Route::post('approveResep', 'ListResepController@approveResep')->name('approveResep');
     });
+    // end routing menu resep
+
     // start routing menu resep
+    Route::group(['as' => 'pasieninfo.', 'prefix' => 'pasieninfo', 'namespace' => 'Pasien'], function(){
+        Route::get('index/{psntrans_id}', 'PasienInfoController@index')->name('index');
+        Route::post('infoPeriksaSuster', 'PasienInfoController@infoPeriksaSuster')->name('infoPeriksaSuster');
+        Route::post('infoResepObat', 'PasienInfoController@infoResepObat')->name('infoResepObat');
+        Route::post('infoRekamedis', 'PasienInfoController@infoRekamedis')->name('infoRekamedis');
+        Route::post('ktableRekamedis/{psntrans_id}', 'PasienInfoController@ktableRekamedis')->name('ktableRekamedis');
+        Route::post('showInfoRekamedis', 'PasienInfoController@showInfoRekamedis')->name('showInfoRekamedis');
+    });
+    // end routing menu resep
 });

@@ -1,5 +1,6 @@
 var global = function(){
-    var help_ktable = function(id,urll,column,search){
+    var help_ktable = function(id,urll,column,search,child){
+        console.log(child);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -34,15 +35,33 @@ var global = function(){
             columns    : column, 
         };
         
+        if(child != undefined){
+            options.detail = {
+                title   : child.title,
+                content : subTableInit
+            }
+
+            function subTableInit(e){
+                if(child.html == true){
+                    $('<div/>').attr('id', 'child_data_ajax_' + e.data.RecordID).appendTo(e.detailCell);
+
+                    $.ajax( {
+                        type : 'POST',
+                        url  : child.route,
+                        data : { id : e.data.RecordID },
+                        // dataType: 'POST',
+                        success: function ( res ) {
+                            $('#child_data_ajax_' + e.data.RecordID).html(res);
+                        }
+                    } );
+                }
+            }
+        }
+
         // enable extension
         options.extensions = {
             // boolean or object (extension options)
             checkbox: true,
-        };
-
-        options.search = {
-            input : $('#kt_datatable_search_query_2'),
-            key   : 'generalSearch'
         };
 
         var datatable = $(id).KTDatatable(options);
@@ -522,7 +541,7 @@ var global = function(){
     }
 
     return {
-        init_ktable    : function(id,urll,column,search){ help_ktable(id,urll,column,search) },
+        init_ktable    : function(id,urll,column,search,child){ help_ktable(id,urll,column,search,child) },
         init_formVld   : function(form,urll,fields,params){ help_formValidation(form,urll,fields,params) },
         init_select2   : function(clas,option) { hlp_select2(clas,option) },
         init_wizard    : function(idWizard,idForm,temp) { hlp_wizard(idWizard,idForm,temp) },

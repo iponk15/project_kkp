@@ -77,10 +77,11 @@
             var column = [
                 { field : 'no', title : 'No. ', textAlign : 'center', sortable : false, width : 30 },
                 { field : 'pasien_norekdis', title : 'No. Rekamedis', textAlign : 'center' },
+                { field : 'dokter_nama', title : 'Dokter', width : 180 },
                 { field : 'pasien_nama', title : 'Pasien' },
-                { field : 'pasien_jk', title : 'Gender', textAlign : 'center' },
-                { field : 'pasien_umur', title : 'Umur', textAlign : 'center' },
-                { field : 'dokter_nama', title : 'Dokter' },
+                { field : 'pasien_jk', title : 'Gender', textAlign : 'center', width : 60 },
+                { field : 'pasien_umur', title : 'Umur', textAlign : 'center', width : 60 },
+                { field : 'pastrans_created_date', title : 'Tgl Berobat', textAlign : 'center' },
                 { field : 'action', title : 'Action', textAlign : 'center', sortable : false },
             ];
             var cari = {

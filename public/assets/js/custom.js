@@ -168,14 +168,14 @@ function ajaxProses(method, option, ele = null, eve = null){
 }
 
 function ajaxx(param){
-    if(param.html == undefined){
+    // if(param.html == undefined){
         KTApp.block(param.blkUi, {
             overlayColor: '#000000',
             type: 'v2',
             state: 'success',
             message: 'Please wait...'
         });
-    }
+    // }
 
     $.ajaxSetup({
         headers: {
@@ -186,6 +186,10 @@ function ajaxx(param){
     $.post(param.route, param.data, function(res){
         if(param.html == true){
             $(param.rnder).html(res);
+
+            setTimeout(function() {
+                KTApp.unblock(param.blkUi);
+            }, 1000);
         }else{
             if(param.type == 'swal'){
                 swal.fire(
@@ -220,7 +224,9 @@ function ajaxx(param){
                 }
             }
 
-            $('.scrolltop').trigger('click');
         }
+
+        $('.scrolltop').trigger('click');
+        
     }, (param.html == undefined) ? 'json' : 'html' );
 }

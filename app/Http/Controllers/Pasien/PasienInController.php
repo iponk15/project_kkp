@@ -101,9 +101,9 @@ class PasienInController extends Controller
         foreach($result as $key => $value){
 
             if( Auth::user()->role_kode == 'KKPPTG' ){
-                $button = '<div class="dropdown dropdown-inline">    
-                            <a href="" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>
-                        </div>';
+                $button = ' <div class="dropdown dropdown-inline">    
+                                <a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>
+                            </div>';
             }else if( Auth::user()->role_kode == 'KKPSTR' ){
                 $button = '<div class="dropdown dropdown-inline">' .
                                 ( $value->pastrans_status == '1'
@@ -479,6 +479,10 @@ class PasienInController extends Controller
 
             LogTrans::create($psnLog);
             // end create log
+
+            // start update status obat
+            PasienRekdis::where('psnrekdis_id', $decode)->update(['psnrekdis_resep_status' => '1']);
+            // end update status obat
 
             DB::commit();
 

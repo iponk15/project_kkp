@@ -36,41 +36,18 @@ class ListResepController extends Controller
 
     function ktable(Request $request){
         $post    = $request->input();
-        $getData = PasienTrans::selectRaw('temp.ptid as psntrans_id,temp.pasien_norekdis,temp.pasien_nama,temp.pasien_jk,temp.pasien_umur,temp.dokter_nama,temp.jmlresep')
-            ->leftJoin(DB::raw('(
-                    SELECT
-                        psntrans_id AS ptid,
-                        pasien_norekdis,
-                        pasien_nama,
-                        pasien_jk,
-                        pasien_umur,
-                        users.name AS dokter_nama,
-                        count(resep_id) as jmlresep
-                    FROM kkp_pasien_trans
-                    LEFT JOIN kkp_pasien ON pastrans_pasien_id = pasien_id
-                    LEFT JOIN users ON pastrans_dokter_id = users.id
-                    LEFT JOIN kkp_pasien_rekamedis ON psntrans_id = psnrekdis_psntrans_id
-                    LEFT JOIN kkp_resep_obat ON psnrekdis_id = resep_psnrekdis_id
-                    GROUP BY resep_psnrekdis_id
-                ) temp'), function($join){ $join->on('psntrans_id', '=', 'temp.ptid'); })
-            ->where('temp.jmlresep', '<>', NULL)
+        $getData = PasienTrans::selectRaw('psntrans_id,pasien_norekdis,pasien_nama,pasien_jk,pasien_umur,users.name AS dokter_nama,pastrans_created_date')
+            ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
+            ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
+            ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
+            ->where('psnrekdis_resep_status', '1')
             ->where('pastrans_status', '<>', '99');
 
         $jmlData = PasienTrans::selectRaw('count(*) AS jumlah')
-            ->leftJoin(DB::raw('(
-                SELECT
-                    psntrans_id AS ptid,
-                    pasien_nama,
-                    users.name AS dokter_nama,
-                    count(resep_id) as jmlresep
-                FROM kkp_pasien_trans
-                LEFT JOIN kkp_pasien ON pastrans_pasien_id = pasien_id
-                LEFT JOIN users ON pastrans_dokter_id = users.id
-                LEFT JOIN kkp_pasien_rekamedis ON psntrans_id = psnrekdis_psntrans_id
-                LEFT JOIN kkp_resep_obat ON psnrekdis_id = resep_psnrekdis_id
-                GROUP BY resep_psnrekdis_id
-            ) temp'), function($join){ $join->on('psntrans_id', '=', 'temp.ptid'); })
-            ->where('temp.jmlresep', '<>', NULL)
+            ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
+            ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
+            ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
+            ->where('psnrekdis_resep_status', '1')
             ->where('pastrans_status', '<>', '99');
 
         $paging  = $post['pagination'];
@@ -79,14 +56,14 @@ class ListResepController extends Controller
         if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
         }else{
-            $getData->orderBy('temp.pasien_nama', 'DESC');
+            $getData->orderBy('pasien_nama', 'DESC');
         }
 
         if(!empty($search)){
             foreach ($search as $value => $param) {
                 if($value === 'generalSearch'){
-                    $getData->whereRaw("(temp.pasien_nama LIKE '%".$param."%')");
-                    $jmlData->whereRaw("(temp.pasien_nama LIKE '%".$param."%')");
+                    $getData->whereRaw("(pasien_nama LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(pasien_nama LIKE '%".$param."%')");
                 }else{
                     if($value !== 0 ){
                         $getData->where($value, $param);
@@ -113,15 +90,16 @@ class ListResepController extends Controller
 
         foreach($result as $key => $value){
             $data['records'][] = [
-                'no'              => (string)$i,
-                'pasien_norekdis' => $value->pasien_norekdis,
-                'pasien_nama'     => $value->pasien_nama,
-                'pasien_jk'       => $gender[$value->pasien_jk],
-                'pasien_umur'     => $value->pasien_umur,
-                'dokter_nama'     => $value->dokter_nama,
-                'action'          => '<div class="dropdown dropdown-inline">
-                                        <a href="'. route( $this->route . '.showResepObat', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Resep Obat"><i class="flaticon-folder-1 text-info"></i></a>
-                                    </div>'
+                'no'                    => (string)$i,
+                'pasien_norekdis'       => $value->pasien_norekdis,
+                'pasien_nama'           => $value->pasien_nama,
+                'pasien_jk'             => $gender[$value->pasien_jk],
+                'pasien_umur'           => $value->pasien_umur,
+                'dokter_nama'           => $value->dokter_nama,
+                'pastrans_created_date' => date('d F Y - H:i:s',strtotime($value->pastrans_created_date)),
+                'action'                => '<div class="dropdown dropdown-inline">
+                                                <a href="'. route( $this->route . '.showResepObat', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Resep Obat"><i class="flaticon-folder-1 text-info"></i></a>
+                                            </div>'
             ];
 
             $i++;
@@ -138,8 +116,8 @@ class ListResepController extends Controller
     function showResepObat($psntrans_id){
         $decode = Hashids::decode($psntrans_id)[0];
         $data   = [
-            'pagetitle'    => 'Detail Resep Obat',
-            'cardTitle'    => 'Informasi Pasien dan Resep Obat',
+            'pagetitle'    => 'Resep Obat',
+            'cardTitle'    => 'Informasi Resep Obat Pasien',
             'cardSubTitle' => '&nbsp;',
             'cardIcon'     => 'flaticon2-list-3',
             'breadcrumb'   => ['Index' => route( $this->route . '.index' ), 'Detail Resep' => route( $this->route . '.showResepObat', [ 'psntrans_id' => $psntrans_id ] )],
@@ -149,7 +127,7 @@ class ListResepController extends Controller
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
                 ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
-                ->where('pastrans_pasien_id', $decode)
+                ->where('psntrans_id', $decode)
                 ->first(),
             'dataResep'    => PasienRekdis::selectRaw('katobat_nama,obat_nama,jenobat_nama,resep_jumlah,resep_keterangan')
                 ->leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')
@@ -171,6 +149,7 @@ class ListResepController extends Controller
 
         try {
             PasienTrans::where('psntrans_id', $decd)->update(['pastrans_status' => '99']);
+            PasienRekdis::where('psnrekdis_psntrans_id', $decd)->update(['psnrekdis_resep_status' => '2']);
 
             DB::commit();
 
