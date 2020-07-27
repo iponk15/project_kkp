@@ -134,6 +134,12 @@
                                         <span class="menu-text">Pasien Sedang Berobat</span>
                                     </a>
                                 </li>
+                                <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('pasienout.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-logout icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Pasien Selesai Berobat</span>
+                                    </a>
+                                </li>
                             @endif
 
                             @if( Auth::user()->role_kode == 'KKPLBT' )

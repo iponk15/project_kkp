@@ -199,4 +199,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('storeCekLab/{psnrekdis_id}', 'CekLabController@storeCekLab')->name('storeCekLab');
     });
     // end routing menu pasien cek lab
+
+    // start routing menu pasien cek lab
+    Route::group(['as' => 'pasienout.', 'prefix' => 'pasienout', 'namespace' => 'Pasien'], function(){
+        Route::get('index', 'PasienOutController@index')->name('index');
+        Route::post('ktable', 'PasienOutController@ktable')->name('ktable');
+    });
 });
