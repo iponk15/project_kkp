@@ -189,4 +189,14 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('showInfoRekamedis', 'PasienInfoController@showInfoRekamedis')->name('showInfoRekamedis');
     });
     // end routing menu resep
+
+    // start routing menu pasien cek lab
+    Route::group(['as' => 'ceklab.', 'prefix' => 'ceklab', 'namespace' => 'Pasien'], function(){
+        Route::get('index', 'CekLabController@index')->name('index');
+        Route::post('ktable', 'CekLabController@ktable')->name('ktable');
+        Route::get('showCekLab/{psntrans_id}', 'CekLabController@showCekLab')->name('showCekLab');
+        Route::post('showFormLab', 'CekLabController@showFormLab')->name('showFormLab');
+        Route::post('storeCekLab/{psnrekdis_id}', 'CekLabController@storeCekLab')->name('storeCekLab');
+    });
+    // end routing menu pasien cek lab
 });

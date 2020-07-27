@@ -108,7 +108,7 @@ class PasienInController extends Controller
                 $button = '<div class="dropdown dropdown-inline">' .
                                 ( $value->pastrans_status == '1'
                                     ? '<a href="'. route( $this->route . '.formPeriksa', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-warning icon-xl"></i></a>'
-                                    : '<a href="'. route( $this->route . '.formPeriksa', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Informasi Pasien"><i class="flaticon-notes text-info icon-xl"></i></a>' 
+                                    : '<a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>' 
                                 ) .
                            '</div>';
             }else if( Auth::user()->role_kode == 'KKPDKT' ) {
@@ -161,8 +161,7 @@ class PasienInController extends Controller
                 ->leftJoin('users AS u', 'pastrans_dokter_id', 'u.id')
                 ->leftJoin('kkp_poli AS kpol', 'u.poli_id', 'kpol.poli_id')
                 ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
-                ->first(),
-            'subHeadBtn' => '<b>Dr. Tirta</b> &nbsp; ( Poli Umum )'
+                ->first()
         ];
 
         $data['cardSubTitle'] = $data['records']->poli_nama;
@@ -776,64 +775,6 @@ class PasienInController extends Controller
 
             $response['status']  = 1;
             $response['message'] = 'Data rujukan spesialis berhasil diupdate';
-        } catch (\Exception $ex) {
-            DB::rollback();
-
-            $response['status']  = 0;
-            $response['message'] = $ex->getMessage();
-        }
-
-        echo json_encode($response);    
-    }
-
-    function showFormRujukanLab(Request $request){
-        $post = $request->input();
-        $data = [
-            'modalTitle'   => 'Form Rujukan Lab',
-            'route'        => $this->route,
-            'psnrekdis_id' => $post['psnrekdisid']
-        ];
-
-        return view($this->path . '.Rujukan.showFormRujLab', $data);
-    }
-
-    function storeFormRjkLab(Request $request, $psnrekdis_id){
-        $post      = $request->input();
-        $decode    = Hashids::decode($psnrekdis_id)[0];
-        $validator = Validator::make($post,[],[]);
-
-        if ($validator->fails()) {
-            $error     = '';
-            $validator = $validator->errors()->messages();
-            foreach ($validator as $key => $value) {
-                $error .= ' - ' . $value[0] . '<br>';
-            }
-
-            $response['status']  = 2;
-            $response['message'] = $error;
-
-            echo json_encode($response);
-            return;
-        }
-
-        DB::beginTransaction();
-
-        try {
-            $rjkLab['rjklab_psnrekdis_id'] = $decode;
-            $rjkLab['rjklab_htg_rutin']    = ($request->has('rjklab_htg_rutin') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_lekosit']  = ($request->has('rjklab_htg_lekosit') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_dc']       = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
-
-            $rjkLab['rjklab_created_by']   = Auth::user()->id;
-            $rjkLab['rjklab_created_date'] = date('Y-m-d H:i:s');
-            $rjkLab['rjklab_ip']           = \Request::ip();
-
-            RujukanLab::create($rjkLab);
-
-            DB::commit();
-
-            $response['status']  = 1;
-            $response['message'] = 'Form Rujukan Lab berhasil disimpan';
         } catch (\Exception $ex) {
             DB::rollback();
 

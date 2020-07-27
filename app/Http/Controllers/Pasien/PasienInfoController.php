@@ -29,7 +29,7 @@ class PasienInfoController extends Controller
             'breadcrumb'   => ['Index' => route('pasienin.index'), 'Info Pasien' => route( $this->route . '.index', ['psntrans_id' => $psntrans_id] )],
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
-            'records'      => PasienTrans::selectRaw('pasien_norekdis, pasien_id, pasien_nama, pasien_tgllahir, pasien_umur, pasien_email, pasien_jk, pasien_telp, pasien_alamat, u.name AS nama_dokter, kpol.poli_nama, kpol.poli_kode')
+            'records'      => PasienTrans::selectRaw('pasien_norekdis,pasien_id,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,u.name AS nama_dokter,kpol.poli_nama,kpol.poli_kode')
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('users AS u', 'pastrans_dokter_id', 'u.id')
                 ->leftJoin('kkp_poli AS kpol', 'u.poli_id', 'kpol.poli_id')
@@ -99,15 +99,18 @@ class PasienInfoController extends Controller
 
     function ktableRekamedis(Request $request, $psntrans_id){
         $post    = $request->input();
+        $decd    = Hashids::decode($psntrans_id)[0];
         $getData = PasienTrans::selectRaw('psntrans_id,users.name AS dokter_nama,poli_nama,pastrans_created_date')
             ->leftJoin('users','pastrans_dokter_id','users.id')
             ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
-            ->where('pastrans_status', '99');
+            ->where('pastrans_status', '99')
+            ->where('pastrans_pasien_id', $decd);
             
         $jmlData = PasienTrans::selectRaw('count(*) AS jumlah')
             ->leftJoin('users','pastrans_dokter_id','users.id')
             ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
-            ->where('pastrans_status', '99');
+            ->where('pastrans_status', '99')
+            ->where('pastrans_pasien_id', $decd);
 
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);

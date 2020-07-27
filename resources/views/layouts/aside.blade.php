@@ -138,7 +138,7 @@
 
                             @if( Auth::user()->role_kode == 'KKPLBT' )
                                 <li class="menu-item " aria-haspopup="true" >
-                                    <a  href="{{ route('pasienin.index') }}" class="menu-link ajaxify">
+                                    <a  href="{{ route('ceklab.index') }}" class="menu-link ajaxify">
                                         <i class="flaticon-calendar-with-a-clock-time-tools icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="menu-text">Pasien Cek Lab</span>
                                     </a>
