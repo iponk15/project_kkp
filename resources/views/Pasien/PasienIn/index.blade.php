@@ -31,14 +31,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 my-2 my-md-0">
-                                    <select class="form-control status" name="status">
-                                        <option value="">Select Is Active</option>
-                                        <option value="0">In Active</option>
-                                        <option value="1">Active</option>
-                                        <option value="99">Delete Temp</option>
-                                    </select>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -97,6 +89,7 @@
                             1  : { 'title' : 'Menunggu Cek', 'class' : ' label-light-primary'},
                             2  : { 'title' : 'Cek Dokter', 'class' : ' label-light-success'},
                             3  : { 'title' : 'Cek Dokter Selesai', 'class' : ' label-light-danger'},
+                            4  : { 'title' : 'Cek Lab', 'class' : ' label-light-danger'},
                         };
                         return '<span class="label label-lg font-weight-bold' + status[row.pastrans_status].class + ' label-inline">' + status[row.pastrans_status].title + '</span>';
                     },

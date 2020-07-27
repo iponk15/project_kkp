@@ -1,6 +1,5 @@
 var global = function(){
     var help_ktable = function(id,urll,column,search,child){
-        console.log(child);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
