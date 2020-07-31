@@ -144,7 +144,10 @@
     <script>
         $(document).ready(function(){
             $('.asideInfoPasien').on('click', function(e){
-                e.preventDefault()
+                e.preventDefault();
+
+                $('.asideInfoPasien').removeClass('active');
+                $(this).addClass('active');
 
                 var option = {
                     route : $(this).attr('href'),

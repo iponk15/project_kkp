@@ -9,6 +9,7 @@ use App\Models\PasienRekdis;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
 use App\Models\RujukanLab;
+use App\Models\ResepNote;
 use App\Models\ResepObat;
 use App\Models\LogTrans;
 use App\Models\Pasien;
@@ -66,7 +67,7 @@ class PasienInController extends Controller
         if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
         }else{
-            $getData->orderBy('pastrans_created_date', 'DESC');
+            $getData->orderBy('pastrans_created_date', 'ASC');
         }
 
         if(!empty($search)){
@@ -275,14 +276,16 @@ class PasienInController extends Controller
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
             'records'      => PasienTrans::selectRaw('
-                    pasien_norekdis,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,psnrekdis_id,psntrans_id,
+                    pasien_id,pasien_norekdis,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,psnrekdis_id,psntrans_id,
                     psnrekdis_sbj_kelutm,psnrekdis_sbj_keltam,psnrekdis_sbj_riwpktskr,psnrekdis_sbj_riwpktdhl,psnrekdis_sbj_riwpktklg,psnrekdis_sbj_riwpktkalg,psnrekdis_asm_digkrt,psnrekdis_pln_rak,
                     psnrekdis_obj_vstd,psnrekdis_obj_vshr,psnrekdis_obj_vsrr,psnrekdis_obj_vst,psnrekdis_obj_sgbb,psnrekdis_obj_sgtb,psnrekdis_obj_sgimt,psnrekdis_obj_pfkpl,psnrekdis_obj_pflhr,psnrekdis_obj_pftcor,
-                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,psnrekdis_is_lab
+                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,psnrekdis_is_lab,users.name AS nama_dokter,kpol.poli_nama
                 ')
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
                 ->leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')
+                ->leftJoin('users','pastrans_dokter_id','users.id')
+                ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
                 ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
                 ->first()
         ];
@@ -290,14 +293,35 @@ class PasienInController extends Controller
         $data['cekResep']   = PasienRekdis::leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('resep_id', '<>', NULL)->count();
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
         $data['cekRjkLab']  = $data['records']->psnrekdis_is_lab;
-        $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-info btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
+        $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-warning btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="flaticon2-map"></i> Rujukan
+                                    <button type="button" class="btn btn-outline-primary btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Rujukan Spesialis' : 'Rujukan Spesialis' ) .'</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rujukan Lab</button>
+                                        <!-- <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Rujukan Spesialis' : 'Rujukan Spesialis' ) .'</button> -->
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Radiologi</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab Internal</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab External</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="flaticon-map"></i> Konsultasi Internal
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Gigi</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Umum</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="flaticon2-start-up"></i> Pengantar
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rumah Sakit</button>
                                     </div>
                                 </div>' . 
                                 ( $data['cekResep'] > 0 || $data['cekRjkSps'] == 1 || $data['cekRjkLab'] == 1 
@@ -466,6 +490,13 @@ class PasienInController extends Controller
 
             ResepObat::insert($tempResp);
 
+            $dataNote = [
+                'resnote_psnrekdis_id' => $decode,
+                'resnote_keterangan'   => $post['resnote_keterangan']
+            ];
+
+            ResepNote::create($dataNote);
+
             // start create log
             $psnLog = [
                 'log_psntrans_id'  => $getRekdis->psnrekdis_psntrans_id,
@@ -507,7 +538,8 @@ class PasienInController extends Controller
                 ->leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')
                 ->leftJoin('kkp_obat', 'resep_obat_id', 'obat_id')
                 ->where('psnrekdis_id', Hashids::decode($post['psnrekdisid'])[0])
-                ->get()
+                ->get(),
+            'rspNote'      => ResepNote::select('resnote_keterangan')->where('resnote_psnrekdis_id', Hashids::decode($post['psnrekdisid'])[0])->first()
         ];
 
         return view($this->path . '.editFormResep', $data);
@@ -627,6 +659,9 @@ class PasienInController extends Controller
                     ResepObat::whereIn('resep_id', $tempDlt)->delete();
                 }
             }
+
+            ResepNote::where('resnote_psnrekdis_id', $decode)
+                ->update(['resnote_keterangan' => $post['resnote_keterangan']]);
 
             DB::commit();
 

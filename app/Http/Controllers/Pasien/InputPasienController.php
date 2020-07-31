@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
 use App\Models\LogTrans;
 use App\Models\Pasien;
+use App\Models\Uker;
 use Validator;
 use Hashids;
 use Auth;
@@ -196,7 +197,7 @@ class InputPasienController extends Controller
             $pasien['pasien_uker_id']      = $post['pasien_uker_id'];
             $pasien['pasien_nama']         = $post['pasien_nama'];
             $pasien['pasien_umur']         = $post['pasien_umur'];
-            $pasien['pasien_pangkat']      = $post['pasien_pangkat'];
+            $pasien['pasien_golongan_id']  = $post['pasien_golongan_id'];
             $pasien['pasien_jk']           = $post['pasien_jk'];
             $pasien['pasien_telp']         = $post['pasien_telp'];
             $pasien['pasien_email']        = $post['pasien_email'];
@@ -253,13 +254,35 @@ class InputPasienController extends Controller
     function getDataPsien(Request $request){
         $post     = $request->input();
         $decPsnId = Hashids::decode($post['pasien_id'])[0];
-        $pasien   = Pasien::selectRaw('pasien_nama, pasien_email, pasien_jk, pasien_telp, pasien_alamat, pasien_tgllahir, pasien_umur, pasien_pangkat, pasien_alergi_obat, uker_id, uker_nama')
+        $pasien   = Pasien::selectRaw('pasien_nama, pasien_email, pasien_jk, pasien_telp, pasien_alamat, pasien_tgllahir, pasien_umur, golongan_id, golongan_kode, golongan_nama, pasien_alergi_obat, uker_id, uker_nama')
             ->leftJoin('kkp_unit_kerja','pasien_uker_id','uker_id')
+            ->leftJoin('kkp_golongan','pasien_golongan_id','golongan_id')
             ->where('pasien_id', $decPsnId)
             ->first();
 
         $return = [ 'pasien' => $pasien ];
 
         echo json_encode($return);
+    }
+
+    function getNorekdis(Request $request){
+        $ukerId  = $request->input('uker_id');
+        $getUker = Uker::select('uker_nama')->where('uker_id', $ukerId)->first()->uker_nama;
+        $jmlPsn  = Pasien::where('pasien_status', '1')->count();
+        $n       = $jmlPsn + 1;
+        $len     = strlen($n);
+        
+        if($len == 1){
+            $urut = '000' . $n;
+        }else if($len == 2){
+            $urut = '00' . $n;
+        }else if($len == 3){
+            $urut = '0' . $n;
+        }else{
+            $urut = $n;
+        }
+        
+        $formula = $urut . '/' . $getUker;
+        echo $formula;
     }
 }

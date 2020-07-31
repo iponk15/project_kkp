@@ -6,74 +6,7 @@
             <!--begin::Profile Card-->
             <div class="card card-custom card-stretch">
                 <!--begin::Body-->
-                <div class="card-body pt-4">
-                    <!--begin::Toolbar-->
-                    <div class="d-flex justify-content-end">
-                        <div class="dropdown dropdown-inline">
-                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                <!--begin::Navigation-->
-                                <ul class="navi navi-hover py-5">
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-drop"></i></span>
-                                            <span class="navi-text">New Group</span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-list-3"></i></span>
-                                            <span class="navi-text">Contacts</span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-rocket-1"></i></span>
-                                            <span class="navi-text">Groups</span>
-                                            <span class="navi-link-badge">
-                                                <span class="label label-light-primary label-inline font-weight-bold">new</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
-                                            <span class="navi-text">Calls</span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-gear"></i></span>
-                                            <span class="navi-text">Settings</span>
-                                        </a>
-                                    </li>
-
-                                    <li class="navi-separator my-3"></li>
-
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-magnifier-tool"></i></span>
-                                            <span class="navi-text">Help</span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
-                                            <span class="navi-text">Privacy</span>
-                                            <span class="navi-link-badge">
-                                                <span class="label label-light-danger label-rounded font-weight-bold">5</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!--end::Navigation-->
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Toolbar-->
-
+                <div class="card-body pt-10">
                     <!--begin::User-->
                     <div class="d-flex align-items-center">
                         <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
@@ -88,7 +21,10 @@
                                 {{ $records->pasien_norekdis }}
                             </div>
                             <div class="mt-2">
-                                <a href="#" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1">Chat</a>
+                                {{ $records->poli_nama }}
+                            </div>
+                            <div class="mt-2">
+                                {{ $records->nama_dokter }}
                             </div>
                         </div>
                     </div>
@@ -126,7 +62,7 @@
                     <!--begin::Nav-->
                     <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                         <div class="navi-item mb-2">
-                            <a href="custom/apps/profile/profile-1/overview.html" class="navi-link py-4 active">
+                            <a href="{{ route( $route . '.formPeriksaDokter', ['psntrans_id' => $psntrans_id] ) }}" class="navi-link py-4 active asideInfoPasien ajaxify">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -143,7 +79,7 @@
                         </div>
                         
                         <div class="navi-item mb-2">
-                            <a href="#" class="navi-link py-4" data-toggle="tooltip" title="" data-placement="right" data-original-title="Coming soon...">
+                            <a href="{{ route( 'pasieninfo.infoRekamedis' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Riwayat Rekamedis" data-transid="{{ Hashids::encode($records->pasien_id) }}">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -168,7 +104,7 @@
         <!--end::Aside-->
 
         <!--begin::Content-->
-        <div class="flex-row-fluid ml-lg-8">
+        <div class="flex-row-fluid ml-lg-8 eleBlockUi" id="bodyCtnInfoPasien">
             <!--begin::Advance Table: Widget 7-->
             <div class="card card-custom">
                 <!--begin::Header-->
@@ -277,19 +213,19 @@
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>Berat Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgbb" placeholder="Berat Badan" value="{{ $records->psnrekdis_obj_sgbb }}">
+                                                <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan" value="{{ $records->psnrekdis_obj_sgbb }}">
                                                 <span class="form-text text-muted">Dalam satuan kg</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Tinggi Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan" value="{{ $records->psnrekdis_obj_sgtb }}">
+                                                <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan" value="{{ $records->psnrekdis_obj_sgtb }}">
                                                 <span class="form-text text-muted">Dalam satuan cm</span>
                                             </div>
                                         </div>      
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>IMT</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgimt" placeholder="IMT" value="{{ $records->psnrekdis_obj_sgimt }}">
+                                                <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" value="{{ $records->psnrekdis_obj_sgimt }}" readonly>
                                                 <span class="form-text text-muted">Dalam satuan kg/m2</span>
                                             </div>
                                         </div>    
@@ -393,6 +329,19 @@
 
     <script>
         $(document).ready(function(){
+            // start hitung IMT
+            $('.psnrekdis_obj_sgbb, .psnrekdis_obj_sgtb').on('keyup', function(){
+                var bb   = $('.psnrekdis_obj_sgbb').val();
+                var tb   = $('.psnrekdis_obj_sgtb').val();
+                var htb  = tb / 100;
+                var htb2 = (htb * htb);
+                var imt  = bb / htb2;
+                var res  = Number(imt.toFixed(2));
+
+                $('.psnrekdis_obj_sgimt').val(res);
+            });
+            // end hitung IMT
+
             // start form validation submit
             var form   = document.getElementById('formPeriksaDokter');
             var urll   = "{{ route( $route . '.updateFormDokter', ['psntrans_id' => $psntrans_id] ) }}";
@@ -403,6 +352,24 @@
             
             global.init_formVld(form, urll, fields);
             // end form validation submit
+
+            $('.asideInfoPasien').on('click', function(e){
+                e.preventDefault();
+
+                $('.asideInfoPasien').removeClass('active');
+                $(this).addClass('active');
+
+                var option = {
+                    route : $(this).attr('href'),
+                    blkUi : '.eleBlockUi',
+                    type  : 'ajax',
+                    html  : true,
+                    rnder : '#bodyCtnInfoPasien',
+                    data  : { transid : $(this).data('transid') }
+                }
+
+                ajaxProses('post', option);
+            });
         });
 
         function f_resepObat(ele,eve){

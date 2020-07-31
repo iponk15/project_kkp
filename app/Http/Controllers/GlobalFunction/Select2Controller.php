@@ -150,4 +150,27 @@ class Select2Controller extends Controller
 
         echo json_encode( ['items' => $data] );
     }
+
+    function getGolongan(){
+        $result = DB::table('kkp_golongan')
+            ->select('golongan_id', 'golongan_kode', 'golongan_nama')
+            ->whereRaw('( golongan_nama like "%'.@$_GET['q'].'%" OR golongan_kode like "%'.@$_GET['q'].'%" )')
+            ->where('golongan_status', '1')
+            ->orderBy('golongan_kode', 'ASC')
+            ->limit(5)
+            ->get();
+
+        if($result->isNotEmpty()){
+            for ($i=0; $i < count( $result ); $i++) {
+                $data[$i] = [
+                    'id'   => $result[$i]->golongan_id, 
+                    'text' => $result[$i]->golongan_kode . ' - ' .$result[$i]->golongan_nama
+                ];
+            }
+        }else{
+            $data = [];
+        }
+
+        echo json_encode( ['items' => $data] );
+    }
 }

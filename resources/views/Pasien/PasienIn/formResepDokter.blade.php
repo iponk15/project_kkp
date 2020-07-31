@@ -41,6 +41,13 @@
                             </a>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label>Note </label>
+                            <textarea name="resnote_keterangan" class="form-control" rows="5" placeholder="Catatan untuk menambahkan resep obat"></textarea>
+                            <div class="d-md-none mb-2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

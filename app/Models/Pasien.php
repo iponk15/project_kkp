@@ -16,7 +16,7 @@ class Pasien extends Model
         'pasien_tgllahir',
         'pasien_jk',
         'pasien_umur',
-        'pasien_pangkat',
+        'pasien_golongan_id',
         'pasien_alamat',
         'pasien_alergi_obat',
         'pasien_telp',

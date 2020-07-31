@@ -23,6 +23,7 @@ Route::group(['as' => 'globalfunction.', 'prefix' => 'globalfunction', 'namespac
     Route::get('getNoRekamedis', 'Select2Controller@getNoRekamedis')->name('getNoRekamedis');
     Route::get('getDokter', 'Select2Controller@getDokter')->name('getDokter');
     Route::get('getDokterSps', 'Select2Controller@getDokterSps')->name('getDokterSps');
+    Route::get('getGolongan', 'Select2Controller@getGolongan')->name('getGolongan');
 });
 // end routing global function select2
 
@@ -157,6 +158,7 @@ Route::group(['middleware' => 'auth'], function(){
         route::post('storePasienBaru', 'InputPasienController@storePasienBaru')->name('storePasienBaru');
         route::post('updatePasienTerdaftar', 'InputPasienController@updatePasienTerdaftar')->name('updatePasienTerdaftar');
         route::post('getDataPsien', 'InputPasienController@getDataPsien')->name('getDataPsien');
+        route::post('getNorekdis', 'InputPasienController@getNorekdis')->name('getNorekdis');
     });
     // end routing menu input pasien
 

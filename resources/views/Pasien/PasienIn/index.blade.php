@@ -80,7 +80,6 @@
                 { field : 'pasien_nama', title : 'Nama' },
                 { field : 'dokter_nama', title : 'Nama Dokter' },
                 { field : 'pasien_tgllahir', title : 'Tgl Lahir', textAlign : 'center' },
-                // { field : 'pasien_umur', title : 'Umur', textAlign : 'center' },
                 { field : 'pasien_jk', title : 'Gender', textAlign : 'center' },
                 { field: 'pastrans_status', title: 'Status', textAlign : 'center', sortable : false, 
                     // callback function support for column rendering

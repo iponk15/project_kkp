@@ -35,9 +35,11 @@
                 <span class="form-text text-muted">Silahkan input umur</span>
             </div>
             <div class="col-lg-4">
-                <label>Pangkat / Golongan </label>
-                <input type="text" class="form-control formDisabled pasien_pangkat" placeholder="Pangkat / golongan" name="pasien_pangkat" />
-                <span class="form-text text-muted">Silahkan input pangkat / golongan</span>
+                <label>Golongan </label>
+                <select name="pasien_golongan_id" class="form-control slctGolongan formDisabled">
+                    <option></option>
+                </select>
+                <span class="form-text text-muted">Silahkan input golongan</span>
             </div>
         </div>
         <div class="form-group row">
@@ -182,12 +184,25 @@
                     };
 
                     global.init_select2('.slctUker', ukerOption);
+                    
+                    var optionUker = '<option selected value="'+ res.pasien.uker_id +'">'+ res.pasien.uker_nama +'</option>';
+
+                    $('.slctUker').append(optionUker);
                     // end set select option kategory obat
 
-                    
-                    var option = '<option selected value="'+ res.pasien.uker_id +'">'+ res.pasien.uker_nama +'</option>';
+                    // start set select option golongan
+                    var golonganOption = {
+                        route_to    : '{{ route("globalfunction.getGolongan") }}',
+                        placeholder : 'Pilih Golongan',
+                        allowClear  : true
+                    };
 
-                    $('.slctUker').append(option);
+                    global.init_select2('.slctGolongan', golonganOption);
+
+                    var optionGolongan = '<option selected value="'+ res.pasien.golongan_id +'">'+ res.pasien.golongan_kode + ' - ' + res.pasien.golongan_nama +'</option>';
+
+                    $('.slctGolongan').append(optionGolongan);
+                    // end set select option golongan
                 },'json');
             }else{
                 $('.formDisabled').attr('disabled', true).val('');

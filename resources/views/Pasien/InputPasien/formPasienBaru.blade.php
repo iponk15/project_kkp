@@ -4,8 +4,8 @@
             {{ csrf_field() }}
             <div class="form-group row">
                 <div class="col-lg-4">
-                    <label>No. Rekamedis</label>
-                    <input type="email" class="form-control" placeholder="No. Rekamedis " name="pasien_norekdis" value="{{ $norekdis . date('dmYhi') }}" readonly/>
+                    <label>No. Rekamedis <span class="text-danger"> * </span></label>
+                    <input type="text" class="form-control pasien_norekdis" placeholder="No. Rekamedis " name="pasien_norekdis" readonly/>
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="col-lg-4">
@@ -24,18 +24,20 @@
             <div class="form-group row">
                 <div class="col-lg-4">
                     <label>Tanggal Lahir <span class="text-danger"> * </span></label>
-                    <input type="text" class="form-control pasien_tgllahir" placeholder="Tanggal lahir" name="pasien_tgllahir" />
+                    <input type="text" class="form-control pasien_tgllahir" placeholder="Tanggal lahir" name="pasien_tgllahir" autocomplete="off" />
                     <span class="form-text text-muted">Silahkan input tanggal lahir</span>
                 </div>
                 <div class="col-lg-4">
                     <label>Umur <span class="text-danger"> * </span></label>
-                    <input type="email" class="form-control" placeholder="Umur" name="pasien_umur" />
+                    <input type="email" class="form-control pasien_umur" readonly placeholder="Umur" name="pasien_umur" />
                     <span class="form-text text-muted">Silahkan input umur</span>
                 </div>
                 <div class="col-lg-4">
-                    <label>Pangkat / Golongan </label>
-                    <input type="text" class="form-control" placeholder="Pangkat / golongan" name="pasien_pangkat" />
-                    <span class="form-text text-muted">Silahkan input pangkat / golongan</span>
+                    <label>Golongan </label>
+                    <select name="pasien_golongan_id" class="form-control slctGolongan">
+                        <option></option>
+                    </select>
+                    <span class="form-text text-muted">Silahkan input golongan</span>
                 </div>
             </div>
             <div class="form-group row">
@@ -99,7 +101,20 @@
 
 <script>
     $(document).ready(function(){
-        var prmTglLahir = { autoclose : true }
+        // start hitung umur
+        $('.pasien_tgllahir').on('change', function(){
+            var dob   = new Date($(this).val());
+            var today = new Date();
+            var age   = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+
+            $('.pasien_umur').val(age);
+        });
+        // end hitung umur
+
+        var prmTglLahir = { 
+            autoclose   : true,
+            orientation : 'bottom left'
+        };
 
         global.init_dtrp('1', '.pasien_tgllahir', prmTglLahir);
 
@@ -107,6 +122,7 @@
         var form   = document.getElementById('formPasienBaru');
         var urll   = "{{ route($route . '.storePasienBaru') }}";
         var fields = {
+            pasien_norekdis    : { validators : { notEmpty : { message : 'No Rekam Medis tidak boleh kosong' } } },
             pasien_nama        : { validators : { notEmpty : { message : 'Nama pasien tidak boleh kosong' } } },
             pasien_tgllahir    : { validators : { notEmpty : { message : 'Tanggal lahir tidak boleh kosong' } } },
             pasien_umur        : { validators : { notEmpty : { message : 'Umur tidak boleh kosong' } } },
@@ -129,6 +145,16 @@
         };
 
         global.init_select2('.slctUker', ukerOption);
+
+        $('.slctUker').on('change', function(){
+            var val = $(this).val();
+            var rte = "{{ route( $route . '.getNorekdis' ) }}";
+            var dta = { uker_id : val };
+
+            $.post(rte,dta,function(rst){
+                $('.pasien_norekdis').val(rst);
+            });
+        });
         // end set select option kategory obat
 
         // start set select option dokter
@@ -140,5 +166,15 @@
 
         global.init_select2('.slctDokter', dokterOption);
         // end set select option dokter
+
+        // start set select option golongan
+        var golonganOption = {
+            route_to    : '{{ route("globalfunction.getGolongan") }}',
+            placeholder : 'Pilih Golongan',
+            allowClear  : true
+        };
+
+        global.init_select2('.slctGolongan', golonganOption);
+        // end set select option golongan
     });
 </script>

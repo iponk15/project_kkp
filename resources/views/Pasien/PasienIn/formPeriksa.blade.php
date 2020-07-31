@@ -62,7 +62,7 @@
                     <!--begin::Nav-->
                     <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                         <div class="navi-item mb-2">
-                            <a href="custom/apps/profile/profile-1/overview.html" class="navi-link py-4 active">
+                            <a href="{{ route( $route . '.formPeriksa', ['psntrans_id' => $psntrans_id] ) }}" class="navi-link py-4 active ajaxify asideInfoPasien">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -79,7 +79,7 @@
                         </div>
                         
                         <div class="navi-item mb-2">
-                            <a href="{{ route( $route . '.riwayatRekdis', [ 'pasien_id' => $records->pasien_id ]) }}" class="navi-link py-4" data-toggle="tooltip" title="" data-placement="right" data-original-title="Coming soon...">
+                            <a href="{{ route( 'pasieninfo.infoRekamedis' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Riwayat Rekamedis" data-transid="{{ Hashids::encode($records->pasien_id) }}">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -104,7 +104,7 @@
         <!--end::Aside-->
 
         <!--begin::Content-->
-        <div class="flex-row-fluid ml-lg-8" id="bodyCtn">
+        <div class="flex-row-fluid ml-lg-8 eleBlockUi" id="bodyCtnInfoPasien">
             <!--begin::Advance Table: Widget 7-->
             <div class="card card-custom">
                 <!--begin::Header-->
@@ -213,19 +213,19 @@
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>Berat Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgbb" placeholder="Berat Badan">
+                                                <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan">
                                                 <span class="form-text text-muted">Dalam satuan kg</span>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label>Tinggi Badan</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan">
+                                                <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan">
                                                 <span class="form-text text-muted">Dalam satuan cm</span>
                                             </div>
                                         </div>      
                                         <div class="form-group row">
                                             <div class="col-lg-6">
                                                 <label>IMT</label>
-                                                <input type="text" class="form-control" name="psnrekdis_obj_sgimt" placeholder="IMT">
+                                                <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" readonly>
                                                 <span class="form-text text-muted">Dalam satuan kg/m2</span>
                                             </div>
                                         </div>    
@@ -270,6 +270,19 @@
 
     <script>
         $(document).ready(function(){
+            // start hitung IMT
+            $('.psnrekdis_obj_sgbb, .psnrekdis_obj_sgtb').on('keyup', function(){
+                var bb   = $('.psnrekdis_obj_sgbb').val();
+                var tb   = $('.psnrekdis_obj_sgtb').val();
+                var htb  = tb / 100;
+                var htb2 = (htb * htb);
+                var imt  = bb / htb2;
+                var res  = Number(imt.toFixed(2));
+
+                $('.psnrekdis_obj_sgimt').val(res);
+            });
+            // end hitung IMT
+
             // start form validation submit
             var form   = document.getElementById('formPeriksaPasien');
             var urll   = "{{ route( $route . '.storeFormPeriksa', ['psntrans_id' => $psntrans_id] ) }}";
@@ -280,6 +293,24 @@
             
             global.init_formVld(form, urll, fields);
             // end form validation submit
+
+            $('.asideInfoPasien').on('click', function(e){
+                e.preventDefault();
+
+                $('.asideInfoPasien').removeClass('active');
+                $(this).addClass('active');
+
+                var option = {
+                    route : $(this).attr('href'),
+                    blkUi : '.eleBlockUi',
+                    type  : 'ajax',
+                    html  : true,
+                    rnder : '#bodyCtnInfoPasien',
+                    data  : { transid : $(this).data('transid') }
+                }
+
+                ajaxProses('post', option);
+            });
         });
     </script>
 @endsection
