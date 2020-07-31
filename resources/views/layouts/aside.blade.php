@@ -63,6 +63,12 @@
                                         <span class="menu-text">Data Poli</span>
                                     </a>
                                 </li>
+                                <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('golongan.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Golongan</span>
+                                    </a>
+                                </li>
                             @endif
 
                             @if(Auth::user()->role_kode == 'KKPAPT')                        
@@ -114,7 +120,7 @@
                                     </a>
                                 </li>
                                 <li class="menu-item " aria-haspopup="true" >
-                                    <a  href="{{ route('inputpasien.index') }}" class="menu-link ajaxify">
+                                    <a  href="{{ route('pasienout.index') }}" class="menu-link ajaxify">
                                         <i class="flaticon-logout icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="menu-text">Pasien Selesai Berobat</span>
                                     </a>

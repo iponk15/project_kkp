@@ -81,6 +81,19 @@ Route::group(['middleware' => 'auth'], function(){
     });
     // end routing menu jenis obat\
 
+    // start routing menu Golongan
+    Route::group(['as' => 'golongan.', 'prefix' => 'golongan', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'GolonganController@index')->name('index');
+        Route::post('ktable', 'GolonganController@ktable')->name('ktable');
+        Route::get('show', 'GolonganController@show')->name('show');
+        Route::post('store', 'GolonganController@store')->name('store');
+        Route::get('edit/{id}', 'GolonganController@edit')->name('edit');
+        Route::post('update/{id}', 'GolonganController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'GolonganController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'GolonganController@delete')->name('delete');
+    });
+    // end routing menu Golongan\
+
     // start routing menu jenis obat
     Route::group(['as' => 'obat.', 'prefix' => 'obat', 'namespace' => 'MasterData'], function(){
         Route::get('index', 'ObatController@index')->name('index');
