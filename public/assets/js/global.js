@@ -378,10 +378,11 @@ var global = function(){
 										confirmButton: "btn font-weight-bold btn-light-primary"
 									}
 								}).then(function() {
-									KTUtil.scrollTop();
+                                    // KTUtil.scrollTop();
+                                    $('.scrolltop').trigger('click');
 								});
 							}else{
-								
+								$('.scrolltop').trigger('click');
 							}
 						}
 					});

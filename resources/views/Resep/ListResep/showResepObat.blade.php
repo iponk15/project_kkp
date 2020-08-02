@@ -60,13 +60,15 @@
                     <!--end::Contact-->
 
                     <!--begin::Nav-->
-                    <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <button class="btn btn-success btnApproveResep" style="width: 100%;" data-psntransid="{{ $psntrans_id }}">
-                                <i class="flaticon2-circle-vol-2"></i> Approve
-                            </button>
+                    @if($dataTrans->pastrans_status == '3')
+                        <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button class="btn btn-success btnApproveResep" style="width: 100%;" data-psntransid="{{ $psntrans_id }}">
+                                    <i class="flaticon2-circle-vol-2"></i> Approve
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <!--end::Nav-->
                 </div>
                 <!--end::Body-->
@@ -117,6 +119,16 @@
                         </table>
                     </div>
                     <!--end::Table-->
+
+                    @if($dataTrans->resnote_keterangan != '')
+                        <div class="example">
+                            <div class="example-preview">
+                                <h6> Catatan Resep <span class="text-danger"> * </span> </h6> 
+                                <p>{{ $dataTrans->resnote_keterangan }}</p>
+                            </div>
+                        </div>
+                        <br>
+                    @endif
                 </div>
                 <!--end::Body-->
             </div>

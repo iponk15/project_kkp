@@ -11,6 +11,7 @@ class RujukanLab extends Model
     protected $primaryKey = 'rjklab_id';
     protected $fillable   = [
         'rjklab_psnrekdis_id',
+        'rjklab_diagnosa',
         'rjklab_htg_rutin',
         'rjklab_htg_hb',
         'rjklab_htg_hematokrit',

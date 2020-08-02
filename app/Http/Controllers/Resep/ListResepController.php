@@ -123,10 +123,12 @@ class ListResepController extends Controller
             'breadcrumb'   => ['Index' => route( $this->route . '.index' ), 'Detail Resep' => route( $this->route . '.showResepObat', [ 'psntrans_id' => $psntrans_id ] )],
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
-            'dataTrans'    => PasienTrans::selectRaw('pasien_nama,pasien_norekdis,users.name AS dokter_nama,pasien_jk,pasien_tgllahir,pasien_umur,pasien_email,pasien_telp,pasien_alamat,kpol.poli_nama')
+            'dataTrans'    => PasienTrans::selectRaw('pasien_nama,pasien_norekdis,users.name AS dokter_nama,pasien_jk,pasien_tgllahir,pasien_umur,pasien_email,pasien_telp,pasien_alamat,kpol.poli_nama,resnote_keterangan,pastrans_status')
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
                 ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
+                ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
+                ->leftJoin('kkp_resep_note', 'psnrekdis_id', 'resnote_psnrekdis_id')
                 ->where('psntrans_id', $decode)
                 ->first(),
             'dataResep'    => PasienRekdis::selectRaw('katobat_nama,obat_nama,jenobat_nama,resep_jumlah,resep_keterangan')

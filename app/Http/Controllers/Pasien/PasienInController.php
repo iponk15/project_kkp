@@ -299,10 +299,9 @@ class PasienInController extends Controller
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
-                                        <!-- <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Rujukan Spesialis' : 'Rujukan Spesialis' ) .'</button> -->
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Radiologi</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab Internal</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab External</button>
+                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Radiologi</button>
+                                        <button class="dropdown-item" onClick="return f_resepObat(this, event)" data-route="'. route( $this->route . '.showLabInt' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer">Form Lab Internal</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab External</button>
                                     </div>
                                 </div>
                                 <div class="btn-group">
@@ -310,9 +309,9 @@ class PasienInController extends Controller
                                         <i class="flaticon-map"></i> Konsultasi Internal
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Gigi</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Umum</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Gigi</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Umum</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
                                     </div>
                                 </div>
                                 <div class="btn-group">
@@ -320,8 +319,8 @@ class PasienInController extends Controller
                                         <i class="flaticon2-start-up"></i> Pengantar
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="'. route( $this->route . '.rukuanLab' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rumah Sakit</button>
+                                    <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Spesialis' : 'Spesialis' ) .'</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rumah Sakit</button>
                                     </div>
                                 </div>' . 
                                 ( $data['cekResep'] > 0 || $data['cekRjkSps'] == 1 || $data['cekRjkLab'] == 1 
@@ -820,42 +819,6 @@ class PasienInController extends Controller
         echo json_encode($response);    
     }
 
-    function rukuanLab(Request $request){
-        $post = $request->input();
-        $decd = Hashids::decode($post['psnrekdis_id'])[0];
-
-        DB::beginTransaction();
-
-        try {
-            PasienRekdis::where('psnrekdis_id', $decd)->update(['psnrekdis_is_lab' => '1']);
-
-            // start create log
-            $psnLog = [
-                'log_psntrans_id'  => PasienRekdis::selectRaw('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first()->psnrekdis_psntrans_id,
-                'log_subjek'       => 'Rujukan Laboratorium',
-                'log_keterangan'   => 'Dokter telah merujuk pasien ke bagian laboratorium',
-                'log_created_by'   => Auth::user()->id,
-                'log_created_date' => date('Y-m-d H:i:s'),
-                'log_ip'           => \Request::ip()
-            ];
-
-            LogTrans::create($psnLog);
-            // end create log
-
-            DB::commit();
-
-            $response['status']  = 1;
-            $response['message'] = 'Pasien berhasil dirujuk ke bagian Laboratorium';
-        } catch (\Exception $ex) {
-            DB::rollback();
-
-            $response['status']  = 0;
-            $response['message'] = $ex->getMessage();
-        }
-
-        echo json_encode($response);    
-    }
-
     function selesaiDokter(Request $request){
         $post = $request->input();
         $decd = Hashids::decode($post['psntrans_id'])[0];
@@ -893,4 +856,109 @@ class PasienInController extends Controller
         echo json_encode($response);    
     }
 
+    function showLabInt(Request $request){
+        $post = $request->input();
+        $decd = Hashids::decode($post['psnrekdisid'])[0];
+
+        $data = [
+            'pagetitle'    => 'Form Cek Lab',
+            'cardTitle'    => 'Form Cek Lab',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon-file-1',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['psnrekdisid']
+        ];
+
+        return view($this->path . '.PemeriksaanPenunjang.showFormLabInt', $data);
+    }
+
+    function storeLabInt(Request $request, $psnrekdis_id){
+        $post      = $request->input();
+        $decode    = Hashids::decode($psnrekdis_id)[0];
+        $validator = Validator::make($post,[],[]);
+        $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first()->psnrekdis_psntrans_id;
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $rjkLab['rjklab_psnrekdis_id']    = $decode;
+            $rjkLab['rjklab_diagnosa']        = $post['rjklab_diagnosa'];
+            $rjkLab['rjklab_htg_rutin']       = ($request->has('rjklab_htg_rutin') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_lekosit']     = ($request->has('rjklab_htg_lekosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_dc']          = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_hb']          = ($request->has('rjklab_htg_hb') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_trombosit']   = ($request->has('rjklab_htg_trombosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_gd']          = ($request->has('rjklab_htg_gd') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_hematokrit']  = ($request->has('rjklab_htg_hematokrit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_led']         = ($request->has('rjklab_htg_led') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_rhesus']      = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_eritrosit']   = ($request->has('rjklab_htg_eritrosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_mmm']         = ($request->has('rjklab_htg_mmm') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kt']        = ($request->has('rjklab_kk_ld_kt') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fh_ast']       = ($request->has('rjklab_kk_fh_ast') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_ureum']     = ($request->has('rjklab_kk_fg_ureum') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gds']       = ($request->has('rjklab_kk_gd_gds') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kh']        = ($request->has('rjklab_kk_ld_kh') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fh_alt']       = ($request->has('rjklab_kk_fh_alt') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_kreatinin'] = ($request->has('rjklab_kk_fg_kreatinin') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gdp']       = ($request->has('rjklab_kk_gd_gdp') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kl']        = ($request->has('rjklab_kk_ld_kl') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_au']        = ($request->has('rjklab_kk_fg_au') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gdj']       = ($request->has('rjklab_kk_gd_gdj') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_trig']      = ($request->has('rjklab_kk_ld_trig') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_hba']       = ($request->has('rjklab_kk_gd_hba') == true ? '1' : '0');
+            $rjkLab['rjklab_is_widal']        = ($request->has('rjklab_is_widal') == true ? '1' : '0');
+            $rjkLab['rjklab_is_hbs']          = ($request->has('rjklab_is_hbs') == true ? '1' : '0');
+            $rjkLab['rjklab_is_ah']           = ($request->has('rjklab_is_ah') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_hcg']       = ($request->has('rjklab_urine_hcg') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_narkoba']   = ($request->has('rjklab_urine_narkoba') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_ul']        = ($request->has('rjklab_urine_ul') == true ? '1' : '0');
+            $rjkLab['rjklab_created_by']      = Auth::user()->id;
+            $rjkLab['rjklab_created_date']    = date('Y-m-d H:i:s');
+            $rjkLab['rjklab_ip']              = \Request::ip();
+
+            RujukanLab::create($rjkLab);
+
+            PasienTrans::where('psntrans_id', $getTrans)->update(['pastrans_status' => '4']);
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans,
+                'log_subjek'       => 'Cek Lab',
+                'log_keterangan'   => 'Hasil telah keluar, tinggal diambil oleh pasien',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = 'Form Rujukan Lab berhasil disimpan';
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);    
+    }
 }

@@ -180,7 +180,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('storeFormRjkSps/{psnrekdis_id}', 'PasienInController@storeFormRjkSps')->name('storeFormRjkSps');
         Route::post('editFormRujukanSpesialis/{rjksps_id}', 'PasienInController@editFormRujukanSpesialis')->name('editFormRujukanSpesialis');
         Route::post('updateFormRjkSps/{rjksps_id}', 'PasienInController@updateFormRjkSps')->name('updateFormRjkSps');
-        Route::post('rukuanLab', 'PasienInController@rukuanLab')->name('rukuanLab');
+        Route::post('showLabInt', 'PasienInController@showLabInt')->name('showLabInt');
+        Route::post('storeLabInt/{psnrekdis_id}', 'PasienInController@storeLabInt')->name('storeLabInt');
         Route::post('selesaiDokter', 'PasienInController@selesaiDokter')->name('selesaiDokter');
     });
     // end routing menu pasien sedang berobat
