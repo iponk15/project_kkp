@@ -17,6 +17,20 @@
                 <table class="table">
                     <thead style="background-color: gainsboro;">
                         <tr>
+                            <th class="text-center">Diagnosa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $records->rjklab_diagnosa }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive-lg">
+                <table class="table">
+                    <thead style="background-color: gainsboro;">
+                        <tr>
                             <th colspan="3" class="text-center">HEMATOLOGI</th>
                         </tr>
                     </thead>
@@ -25,7 +39,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_rutin">
+                                        <input disabled type="checkbox" name="rjklab_htg_rutin" {{ $records->rjklab_htg_rutin == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Rutin (HB,HT,TR,Lc)
                                     </label>
@@ -34,7 +48,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_lekosit">
+                                        <input disabled type="checkbox" name="rjklab_htg_lekosit" {{ $records->rjklab_htg_lekosit == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Lekosit
                                     </label>
@@ -43,7 +57,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_dc">
+                                        <input disabled type="checkbox" name="rjklab_htg_dc" {{ $records->rjklab_htg_dc == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Diff Count
                                     </label>
@@ -54,7 +68,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_hb">
+                                        <input disabled type="checkbox" name="rjklab_htg_hb" {{ $records->rjklab_htg_hb == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         HB
                                     </label>
@@ -63,7 +77,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_trombosit">
+                                        <input disabled type="checkbox" name="rjklab_htg_trombosit" {{ $records->rjklab_htg_trombosit == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Trombosit
                                     </label>
@@ -72,7 +86,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_gd">
+                                        <input disabled type="checkbox" name="rjklab_htg_gd" {{ $records->rjklab_htg_gd == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Golongan Darah
                                     </label>
@@ -83,7 +97,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_hematokrit">
+                                        <input disabled type="checkbox" name="rjklab_htg_hematokrit" {{ $records->rjklab_htg_hematokrit == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Hematokrit
                                     </label>
@@ -92,7 +106,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_led">
+                                        <input disabled type="checkbox" name="rjklab_htg_led" {{ $records->rjklab_htg_led == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         LED
                                     </label>
@@ -101,7 +115,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_rhesus">
+                                        <input disabled type="checkbox" name="rjklab_htg_rhesus" {{ $records->rjklab_htg_rhesus == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Rhesus
                                     </label>
@@ -112,7 +126,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_eritrosit">
+                                        <input disabled type="checkbox" name="rjklab_htg_eritrosit" {{ $records->rjklab_htg_eritrosit == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Eritrosit
                                     </label>
@@ -121,7 +135,7 @@
                             <td colspan="2">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_htg_mmm">
+                                        <input disabled type="checkbox" name="rjklab_htg_mmm" {{ $records->rjklab_htg_mmm == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         MVC, MCH, MCHC
                                     </label>
@@ -150,7 +164,7 @@
                             <td width="25%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_ld_kt">
+                                        <input disabled type="checkbox" name="rjklab_kk_ld_kt" {{ $records->rjklab_kk_ld_kt == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Kolesterol Total *
                                     </label>
@@ -159,7 +173,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_fh_ast">
+                                        <input disabled type="checkbox" name="rjklab_kk_fh_ast" {{ $records->rjklab_kk_fh_ast == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         AST/SGOT
                                     </label>
@@ -168,7 +182,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_fg_ureum">
+                                        <input disabled type="checkbox" name="rjklab_kk_fg_ureum" {{ $records->rjklab_kk_fg_ureum == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Ureum
                                     </label>
@@ -177,7 +191,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_gd_gds">
+                                        <input disabled type="checkbox" name="rjklab_kk_gd_gds" {{ $records->rjklab_kk_gd_gds == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Gula Darah Sewaktu
                                     </label>
@@ -188,7 +202,7 @@
                             <td width="25%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_ld_kh">
+                                        <input disabled type="checkbox" name="rjklab_kk_ld_kh" {{ $records->rjklab_kk_ld_kh == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Kolesterol HDL *
                                     </label>
@@ -197,7 +211,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_fh_alt">
+                                        <input disabled type="checkbox" name="rjklab_kk_fh_alt" {{ $records->rjklab_kk_fh_alt == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         ALT/SGPT
                                     </label>
@@ -206,7 +220,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_fg_kreatinin">
+                                        <input disabled type="checkbox" name="rjklab_kk_fg_kreatinin" {{ $records->rjklab_kk_fg_kreatinin == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Kreatinin
                                     </label>
@@ -215,7 +229,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_gd_gdp">
+                                        <input disabled type="checkbox" name="rjklab_kk_gd_gdp" {{ $records->rjklab_kk_gd_gdp == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Gula Darah Puasa *
                                     </label>
@@ -226,7 +240,7 @@
                             <td width="25%" colspan="2">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_ld_kl">
+                                        <input disabled type="checkbox" name="rjklab_kk_ld_kl" {{ $records->rjklab_kk_ld_kl == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Kolesterol LDL *
                                     </label>
@@ -235,7 +249,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_fg_au">
+                                        <input disabled type="checkbox" name="rjklab_kk_fg_au" {{ $records->rjklab_kk_fg_au == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Asam Urat
                                     </label>
@@ -244,7 +258,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_gd_gdj">
+                                        <input disabled type="checkbox" name="rjklab_kk_gd_gdj" {{ $records->rjklab_kk_gd_gdj == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Gula Darah 2 JPP
                                     </label>
@@ -255,7 +269,7 @@
                             <td width="25%" colspan="3">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_ld_trig">
+                                        <input disabled type="checkbox" name="rjklab_kk_ld_trig" {{ $records->rjklab_kk_ld_trig == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Trigliserida *
                                     </label>
@@ -264,7 +278,7 @@
                             <td>
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_kk_gd_hba">
+                                        <input disabled type="checkbox" name="rjklab_kk_gd_hba" {{ $records->rjklab_kk_gd_hba == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         HBA!C *
                                     </label>
@@ -287,7 +301,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_is_widal">
+                                        <input disabled type="checkbox" name="rjklab_is_widal" {{ $records->rjklab_is_widal == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Widal
                                     </label>
@@ -296,7 +310,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_is_hbs">
+                                        <input disabled type="checkbox" name="rjklab_is_hbs" {{ $records->rjklab_is_hbs == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         HBsAg
                                     </label>
@@ -305,7 +319,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_is_ah">
+                                        <input disabled type="checkbox" name="rjklab_is_ah" {{ $records->rjklab_is_ah == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Anti HBs
                                     </label>
@@ -328,7 +342,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_urine_hcg">
+                                        <input disabled type="checkbox" name="rjklab_urine_hcg" {{ $records->rjklab_urine_hcg == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         HCG
                                     </label>
@@ -337,7 +351,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_urine_narkoba">
+                                        <input disabled type="checkbox" name="rjklab_urine_narkoba" {{ $records->rjklab_urine_narkoba == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Narkoba
                                     </label>
@@ -346,7 +360,7 @@
                             <td width="33.3333333%">
                                 <div class="checkbox-inline"> 
                                     <label class="checkbox checkbox-primary">
-                                        <input type="checkbox" name="rjklab_urine_ul">
+                                        <input disabled type="checkbox" name="rjklab_urine_ul" {{ $records->rjklab_urine_ul == '1' ? 'checked' : '' }} />
                                         <span></span>
                                         Urine Lengkap
                                     </label>
@@ -355,13 +369,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-lg-12 text-right">
-                    <button type="button" class="btn btn-success mr-2" id="submitFormLab">Simpan</button>
-                </div>
             </div>
         </div>
     </form>

@@ -119,11 +119,11 @@ class CeKLabController extends Controller
 
     function showCekLab($psntrans_id){
         $data = [
-            'pagetitle'    => 'Form Cek Lab',
-            'cardTitle'    => 'Form Cek Lab',
+            'pagetitle'    => 'Cek Lab',
+            'cardTitle'    => 'Cek Lab',
             'cardSubTitle' => '&nbsp;',
             'cardIcon'     => 'flaticon-file-1',
-            'breadcrumb'   => ['Index' => route($this->route . '.index'), 'Form Cek Lab' => route($this->route . '.showCekLab', ['psntrans_id' => $psntrans_id])],
+            'breadcrumb'   => ['Index' => route($this->route . '.index'), 'Cek Lab' => route($this->route . '.showCekLab', ['psntrans_id' => $psntrans_id])],
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
             'records'      => PasienTrans::selectRaw('pasien_norekdis,pasien_id,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,u.name AS nama_dokter,kpol.poli_nama,kpol.poli_kode,psnrekdis_id')
@@ -143,12 +143,13 @@ class CeKLabController extends Controller
         $decd = Hashids::decode($post['transid'])[0];
 
         $data = [
-            'pagetitle'    => 'Form Cek Lab',
-            'cardTitle'    => 'Form Cek Lab',
+            'pagetitle'    => 'Cek Lab',
+            'cardTitle'    => 'Cek Lab',
             'cardSubTitle' => '&nbsp;',
             'cardIcon'     => 'flaticon-file-1',
             'route'        => $this->route,
-            'psnrekdis_id' => $post['transid']
+            'psnrekdis_id' => $post['transid'],
+            'records'      => RujukanLab::where('rjklab_psnrekdis_id', $decd)->first()
         ];
 
         return view($this->path . '.showFormLab', $data);
