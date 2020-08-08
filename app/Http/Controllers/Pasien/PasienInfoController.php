@@ -44,7 +44,7 @@ class PasienInfoController extends Controller
         $post = $request->input();
         $decd = Hashids::decode($post['transid'])[0];
         $data = [
-            'cardTitle'    => 'Info Pemeriksaan Suster',
+            'cardTitle'    => 'Info Pemeriksaan',
             'cardSubTitle' => '&nbsp;',
             'cardIcon'     => 'flaticon-file-1',
             'route'        => $this->route,
@@ -71,12 +71,13 @@ class PasienInfoController extends Controller
             'route'        => $this->route,
             'transid'      => $post['transid'],
             'records'      => PasienRekdis::selectRaw('katobat_nama,obat_nama,jenobat_nama,resep_jumlah,resep_keterangan')
+                ->leftJoin('kkp_pasien_trans', 'psnrekdis_psntrans_id', 'psntrans_id')
                 ->leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')
                 ->leftJoin('kkp_obat', 'resep_obat_id', 'obat_id')
                 ->leftJoin('kkp_kategori_obat', 'obat_katobat_id', 'katobat_id')
                 ->leftJoin('kkp_jenis_obat', 'obat_jenobat_id', 'jenobat_id')
-                ->where('psnrekdis_resep_status', '1')
                 ->where('psnrekdis_psntrans_id', $decd)
+                ->where('pastrans_flag', '1')
                 ->get()
         ];
 

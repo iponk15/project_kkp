@@ -116,7 +116,7 @@ class PasienInController extends Controller
                 $button = '<div class="dropdown dropdown-inline">' .
                                 ( $value->pastrans_status == '2'
                                     ? '<a href="'. route( $this->route . '.formPeriksaDokter', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-danger icon-xl"></i></a>'
-                                    : ''
+                                    : '<a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>'
                                 ) .
                             '</div>';
             }else{
