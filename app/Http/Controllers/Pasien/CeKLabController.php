@@ -42,16 +42,16 @@ class CeKLabController extends Controller
             ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
             ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
             ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
-            ->where('psnrekdis_is_lab', '1')
-            ->where('pastrans_status', '<>', '99');
+            ->where('pastrans_flag', '3')
+            ->where('pastrans_status', '3');
 
         $jmlData = PasienTrans::selectRaw('count(*) AS jumlah')
             ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
             ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
             ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
             ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
-            ->where('psnrekdis_is_lab', '1')
-            ->where('pastrans_status', '<>', '99');
+            ->where('pastrans_flag', '3')
+            ->where('pastrans_status', '3');
 
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);
