@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PasienRekdis;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
+use App\Models\SuratSakit;
 use App\Models\RujukanLab;
 use App\Models\ResepNote;
 use App\Models\ResepObat;
@@ -294,7 +295,7 @@ class PasienInController extends Controller
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
         $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 ? "success" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 ? "warning" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
@@ -318,8 +319,17 @@ class PasienInController extends Controller
                                         <i class="flaticon2-start-up"></i> Pengantar
                                     </button>
                                     <div class="dropdown-menu">
-                                    <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Spesialis' : 'Spesialis' ) .'</button>
+                                        <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Spesialis' : 'Spesialis' ) .'</button>
                                         <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rumah Sakit</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 10 ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="flaticon-mail-1"></i> Surat Keterangan
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button data-route="'. route($this->route . '.showFormSuratSakit') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( $data['records']->pastrans_flag == 10 ? 'Edit Surat Sakit' : 'Surat Sakit' ) . ' </button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Sehat</button>
                                     </div>
                                 </div>' . 
                                 ( $data['records']->pastrans_flag != ''
@@ -964,5 +974,102 @@ class PasienInController extends Controller
         }
 
         echo json_encode($response);    
+    }
+
+    function showFormSuratSakit(Request $request){
+        $post = $request->input();
+        $decd = Hashids::decode($post['psnrekdisid'])[0];
+        $data = [
+            'modalTitle'   => 'Form Surat Keterangan Sakit',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['psnrekdisid'],
+            'records'      => SuratSakit::selectRaw('sskt_psnrekdis_id,sskt_tgl_mulai,sskt_tgl_akhir,sskt_jmlhari')
+                ->where('sskt_psnrekdis_id', $decd)
+                ->first()
+        ];
+
+        return view($this->path . '.SuratKeterangan.showFormSuratSakit', $data);
+    }
+
+    function storeFormSuratSakit(Request $request, $psnrekdis_id){
+        $post     = $request->input();
+        $decd     = Hashids::decode($psnrekdis_id)[0];
+        $getTrans = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
+
+        $validator = Validator::make(
+            $post,
+            [
+                'sskt_tgl_mulai' => 'required',
+                'sskt_tgl_akhir' => 'required',
+                'sskt_jmlhari'   => 'required'
+            ],
+            [
+                'sskt_tgl_mulai.required' => 'Tanggal mulai tidak boleh kosong',
+                'sskt_tgl_akhir.required' => 'Tanggal akhir tidak boleh kosong',
+                'sskt_jmlhari.required'   => 'Jumlah hari tidak boleh kosong'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $data = [
+                'sskt_psnrekdis_id' => $decd,
+                'sskt_tgl_mulai'    => date('Y-m-d', strtotime($post['sskt_tgl_mulai'])),
+                'sskt_tgl_akhir'    => date('Y-m-d', strtotime($post['sskt_tgl_akhir'])),
+                'sskt_jmlhari'      => $post['sskt_jmlhari'],
+                'sskt_created_by'   => Auth::user()->id,
+                'sskt_created_date' => date('Y-m-d H:i:s'),
+                'sskt_ip'           => \Request::ip()
+            ];
+
+            if($post['sskt_psnrekdis_id'] == ''){
+                SuratSakit::create($data);
+            }else{
+                SuratSakit::where('sskt_psnrekdis_id', $decd)->update($data);
+            }
+
+            PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '10']);
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
+                'log_subjek'       => 'Surat Keterangan Sakit',
+                'log_keterangan'   => 'Dokter telah membuat surat keterangan Sakit',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = ( $post['sskt_psnrekdis_id'] == '' ? 'Surat keterangan sakit berhasil dibuat' : 'Surat keterangan sakit berhasil diedit' );
+
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);  
     }
 }

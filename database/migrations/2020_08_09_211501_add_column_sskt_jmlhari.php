@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnPastransFlag extends Migration
+class AddColumnSsktJmlhari extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnPastransFlag extends Migration
      */
     public function up()
     {
-        Schema::table('kkp_pasien_trans', function (Blueprint $table) {
-            $table->enum('pastrans_flag', ['1','2','3','4','5','6','7','8','9','10','11'])->default(NULL)->after('pastrans_status');
+        Schema::table('kkp_surat_sakit', function (Blueprint $table) {
+            $table->integer('sskt_jmlhari')->unsigned()->after('sskt_tgl_akhir');
         });
     }
 
@@ -25,7 +25,7 @@ class AddColumnPastransFlag extends Migration
      */
     public function down()
     {
-        Schema::table('kkp_pasien_trans', function (Blueprint $table) {
+        Schema::table('kkp_surat_sakit', function (Blueprint $table) {
             //
         });
     }
