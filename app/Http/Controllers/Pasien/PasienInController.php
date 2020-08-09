@@ -1120,7 +1120,7 @@ class PasienInController extends Controller
             $data = [
                 'ssht_psnrekdis_id' => $decd,
                 'ssht_keperluan'    => $post['ssht_keperluan'],
-                'ssht_keterangan'   => ( $post['ssht_keterangan'] == '4' ? $post['ssht_keterangan'] : NULL ),
+                'ssht_keterangan'   => ( $post['ssht_keperluan'] == '4' ? $post['ssht_keterangan'] : NULL ),
                 'ssht_created_by'   => Auth::user()->id,
                 'ssht_created_date' => date('Y-m-d H:i:s'),
                 'ssht_ip'           => \Request::ip()
