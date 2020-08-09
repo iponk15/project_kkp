@@ -1,6 +1,6 @@
 <form method="POST" class="form" id="formSuratSakit">
     {{ csrf_field() }}
-    <input type="hidden" name="sskt_psnrekdis_id" value="{{ Hashids::encode($records->sskt_psnrekdis_id) }}">
+    <input type="hidden" name="sskt_psnrekdis_id" value="{{ !empty($records) ? Hashids::encode($records->sskt_psnrekdis_id) : '' }}">
     <div class="modal-header" style="background-color: #173f5f;">
         <h5 class="modal-title" id="exampleModalLabel" style="color: white;">{!! $modalTitle !!}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,11 +14,11 @@
                     <label class="col-form-label text-right col-lg-3 col-sm-12">Terhitung Tanggal</label>
                     <div class="col-lg-7 col-md-9 col-sm-12">
                         <div class="input-daterange input-group" id="kt_datepicker_5">
-                            <input type="text" class="form-control sskt_tgl_mulai" name="sskt_tgl_mulai" value="{{ date('m/d/Y', strtotime($records->sskt_tgl_mulai)) }}" />
+                            <input type="text" class="form-control sskt_tgl_mulai" name="sskt_tgl_mulai" value="{{ !empty($records) ? date('m/d/Y', strtotime($records->sskt_tgl_mulai)) : '' }}" />
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
                             </div>
-                            <input type="text" class="form-control sskt_tgl_akhir" name="sskt_tgl_akhir" value="{{ date('m/d/Y', strtotime($records->sskt_tgl_akhir)) }}" />
+                            <input type="text" class="form-control sskt_tgl_akhir" name="sskt_tgl_akhir" value="{{ !empty($records) ? date('m/d/Y', strtotime($records->sskt_tgl_akhir)) : '' }}" />
                         </div>
                         <span class="form-text text-muted"></span>
                     </div>
@@ -27,7 +27,7 @@
                     <label class="col-form-label text-right col-lg-3 col-sm-12">Istirahat Selama</label>
                     <div class="col-lg-3 col-md-9 col-sm-12">
                         <div class="input-daterange input-group">
-                            <input type="text" class="form-control jmlHari" readonly name="sskt_jmlhari" value="{{ $records->sskt_jmlhari }}" />
+                            <input type="text" class="form-control jmlHari" readonly name="sskt_jmlhari" value="{{ !empty($records) ? $records->sskt_jmlhari : '' }}" />
                         </div>
                         <span class="form-text text-muted"></span>
                     </div>

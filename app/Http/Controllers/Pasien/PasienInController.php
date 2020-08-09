@@ -9,6 +9,7 @@ use App\Models\PasienRekdis;
 use Illuminate\Support\Arr;
 use App\Models\PasienTrans;
 use App\Models\SuratSakit;
+use App\Models\SuratSehat;
 use App\Models\RujukanLab;
 use App\Models\ResepNote;
 use App\Models\ResepObat;
@@ -324,12 +325,12 @@ class PasienInController extends Controller
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 10 ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 10 || $data['records']->pastrans_flag == 11  ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon-mail-1"></i> Surat Keterangan
                                     </button>
                                     <div class="dropdown-menu">
                                         <button data-route="'. route($this->route . '.showFormSuratSakit') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( $data['records']->pastrans_flag == 10 ? 'Edit Surat Sakit' : 'Surat Sakit' ) . ' </button>
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Sehat</button>
+                                        <button data-route="'. route($this->route . '.showFormSuratSehat') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( $data['records']->pastrans_flag == 11 ? 'Edit Surat Sehat' : 'Surat Sehat' ) . ' </button>
                                     </div>
                                 </div>' . 
                                 ( $data['records']->pastrans_flag != ''
@@ -1062,6 +1063,94 @@ class PasienInController extends Controller
 
             $response['status']  = 1;
             $response['message'] = ( $post['sskt_psnrekdis_id'] == '' ? 'Surat keterangan sakit berhasil dibuat' : 'Surat keterangan sakit berhasil diedit' );
+
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);  
+    }
+
+    function showFormSuratSehat(Request $request){
+        $post = $request->input();
+        $decd = Hashids::decode($post['psnrekdisid'])[0];
+        $data = [
+            'modalTitle'   => 'Form Surat Keterangan Sehat',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['psnrekdisid'],
+            'records'      => SuratSehat::selectRaw('ssht_psnrekdis_id,ssht_keperluan,ssht_keterangan')
+                ->where('ssht_psnrekdis_id', $decd)
+                ->first()
+        ];
+
+        return view($this->path . '.SuratKeterangan.showFormSuratSehat', $data);
+    }
+
+    function storeFormSuratSehat(Request $request, $psnrekdis_id){
+        $post     = $request->input();
+        $decd     = Hashids::decode($psnrekdis_id)[0];
+        $getTrans = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
+
+        $validator = Validator::make(
+            $post,
+            [ 'ssht_keperluan' => 'required' ],
+            [ 'ssht_keperluan.required' => 'Tanggal mulai tidak boleh kosong' ]
+        );
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $data = [
+                'ssht_psnrekdis_id' => $decd,
+                'ssht_keperluan'    => $post['ssht_keperluan'],
+                'ssht_keterangan'   => ( $post['ssht_keterangan'] == '4' ? $post['ssht_keterangan'] : NULL ),
+                'ssht_created_by'   => Auth::user()->id,
+                'ssht_created_date' => date('Y-m-d H:i:s'),
+                'ssht_ip'           => \Request::ip()
+            ];
+
+            if($post['ssht_psnrekdis_id'] == ''){
+                SuratSehat::create($data);
+            }else{
+                SuratSehat::where('ssht_psnrekdis_id', $decd)->update($data);
+            }
+
+            PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '11']);
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
+                'log_subjek'       => 'Surat Keterangan Sehat',
+                'log_keterangan'   => 'Dokter telah membuat surat keterangan Sehat',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = ( $post['ssht_psnrekdis_id'] == '' ? 'Surat keterangan sehat berhasil dibuat' : 'Surat keterangan sehat berhasil diedit' );
 
         } catch (\Exception $ex) {
             DB::rollback();

@@ -185,6 +185,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('selesaiDokter', 'PasienInController@selesaiDokter')->name('selesaiDokter');
         Route::post('showFormSuratSakit', 'PasienInController@showFormSuratSakit')->name('showFormSuratSakit');
         Route::post('storeFormSuratSakit/{psnrekdis_id}', 'PasienInController@storeFormSuratSakit')->name('storeFormSuratSakit');
+        Route::post('showFormSuratSehat', 'PasienInController@showFormSuratSehat')->name('showFormSuratSehat');
+        Route::post('storeFormSuratSehat/{psnrekdis_id}', 'PasienInController@storeFormSuratSehat')->name('storeFormSuratSehat');
     });
     // end routing menu pasien sedang berobat
 
