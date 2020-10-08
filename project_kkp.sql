@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 08/10/2020 08:36:52
+ Date: 09/10/2020 06:30:38
 */
 
 SET NAMES utf8mb4;
@@ -102,6 +102,55 @@ INSERT INTO `kkp_jenis_obat` VALUES (8, 'Generik', 'Generik', '1', 1, '2020-07-1
 INSERT INTO `kkp_jenis_obat` VALUES (9, 'Non Generik', 'Non Generik', '1', 1, '2020-07-14 23:20:06', NULL, '2020-07-15 06:20:06', '127.0.0.1');
 
 -- ----------------------------
+-- Table structure for kkp_jenisp_gigi
+-- ----------------------------
+DROP TABLE IF EXISTS `kkp_jenisp_gigi`;
+CREATE TABLE `kkp_jenisp_gigi`  (
+  `jenisp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `jenisp_nama` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `jenisp_warna` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `jenisp_deskripsi` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `jenisp_status` enum('0','1','99') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT '1',
+  `jenisp_createddate` datetime(0) DEFAULT NULL,
+  `jenisp_createdby` int(11) DEFAULT NULL,
+  `jenisp_lastupdate` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `jenisp_updatedby` int(11) DEFAULT NULL,
+  `jenisp_ip` char(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`jenisp_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of kkp_jenisp_gigi
+-- ----------------------------
+INSERT INTO `kkp_jenisp_gigi` VALUES (1, 'Pit dan Fissure Sealang (fis)', '#0000FF', 'Pit dan Fissure Sealang (fis)', '1', '2020-10-08 21:11:39', NULL, '2020-10-08 21:11:39', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (2, 'Tambalan Composite', '#00FFFF', 'Tambalan Composite', '1', '2020-10-08 21:13:19', NULL, '2020-10-08 21:13:19', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (3, 'Gigi non Vital', '#8A2BE2', 'Gigi non Vital', '1', '2020-10-08 21:14:35', NULL, '2020-10-08 21:14:35', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (4, 'Perawatan Saluran Akar', '#A52A2A', 'Perawatan Saluran Akar', '1', '2020-10-08 21:17:00', NULL, '2020-10-08 21:17:00', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (5, 'Gigi tidak ada', '#7FFF00', 'tidak diketahui ada atau tidak ada', '1', '2020-10-08 21:18:20', NULL, '2020-10-08 21:18:20', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (6, 'Un-Erupted (une)', '#6464ED', 'Un-Erupted (une)', '1', '2020-10-08 21:19:10', NULL, '2020-10-08 21:19:10', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (7, 'Partial Erupt (pre)', '#00FFFF', 'Partial Erupt (pre)', '1', '2020-10-08 21:20:20', NULL, '2020-10-08 21:20:20', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (8, 'Norma / Baik (sou)', '#00008B', 'Norma / Baik (sou)', '1', '2020-10-08 21:21:11', NULL, '2020-10-08 21:21:11', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (9, 'Anomali (ano)', '#008B8B', 'Anomali (ano)', '1', '2020-10-08 21:23:02', NULL, '2020-10-08 21:23:02', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (10, 'Pegshape, micro, fusi, etc', '#B8860B', 'Pegshape, micro, fusi, etc', '1', '2020-10-08 21:24:46', NULL, '2020-10-08 21:24:46', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (11, 'Caries, tambalan sementara', '#E18C00', 'Caries, tambalan sementara', '1', '2020-10-08 21:28:49', NULL, '2020-10-08 21:28:49', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (12, 'Garis batas caries dibuat sesuai carries', '#9400D3', 'Garis batas caries dibuat sesuai carries', '1', '2020-10-08 21:31:11', NULL, '2020-10-08 21:31:11', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (13, 'Fracture (cfr)', '#FF09FF', 'Fracture (cfr)', '1', '2020-10-08 21:36:09', NULL, '2020-10-08 21:36:09', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (14, 'Tambalan Amalgam pada gigi non vital = Root Canal', '#FFD700', 'Tambalan Amalgam pada gigi non vital = Root Canal', '1', '2020-10-08 21:41:41', NULL, '2020-10-08 21:41:41', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (15, 'Tambah Composite pada gigi non vital = Root Canal', '#008000', 'Tambah Composite pada gigi non vital = Root Canal', '1', '2020-10-08 21:43:14', NULL, '2020-10-08 21:43:14', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (16, 'Full metal crown pada gigi vital (fmc)', '#ADFF2F', 'Full metal crown pada gigi vital (fmc)', '1', '2020-10-08 21:44:10', NULL, '2020-10-08 21:44:10', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (17, 'Full Metal Crown pada gigi non vital (fmc-rct)', '#4B0082', 'Full Metal Crown pada gigi non vital (fmc-rct)', '1', '2020-10-08 21:48:38', NULL, '2020-10-08 21:48:38', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (18, 'Porcelain crown pada gigi vital (poc)', '#FF69B4', 'Porcelain crown pada gigi vital (poc)', '1', '2020-10-08 21:51:14', NULL, '2020-10-08 21:51:14', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (19, 'Porcelain crown pada gigi no vital (poc-rct)', '#FF00FF', 'Porcelain crown pada gigi no vital (poc-rct)', '1', '2020-10-08 21:52:50', NULL, '2020-10-08 21:52:50', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (20, 'Sisa Akar (rrx)', '#FF0000', 'Sisa Akar (rrx)', '1', '2020-10-08 21:53:54', NULL, '2020-10-08 21:53:54', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (21, 'Gigi hilang (mis)', '#87CEEB', 'Gigi hilang', '1', '2020-10-08 21:56:14', NULL, '2020-10-08 21:56:14', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (22, 'Implant + Porcelain Crown (ipx - poc)', '#C0C0C0', 'Implant + Porcelain Crown (ipx - poc)', '1', '2020-10-08 21:58:25', NULL, '2020-10-08 21:58:25', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (23, 'Full metal bridge 3 units. (MEB) (masing-masing gigi)', '#FFFF00', 'Full metal bridge 3 units. (MEB) (masing-masing gigi)', '1', '2020-10-08 22:00:41', NULL, '2020-10-08 22:00:41', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (24, 'Porcelain bridge 4 units (pob)', '#008080', 'Porcelain bridge 4 units (pob)', '1', '2020-10-08 22:03:03', NULL, '2020-10-08 22:03:03', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (25, 'Full Metal Cantilever Bridge (meb)', '#D2B48C', 'Full Metal Cantilever Bridge (meb)', '1', '2020-10-08 22:06:41', NULL, '2020-10-08 22:06:41', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (26, 'Partial Denture/ Full Denture (frm=Frame, acr=Acr)', '#DDA0DD', 'Partial Denture/ Full Denture (frm=Frame, acr=Acr)', '1', '2020-10-08 22:08:17', NULL, '2020-10-08 22:08:17', NULL, '127.0.0.1');
+INSERT INTO `kkp_jenisp_gigi` VALUES (27, 'Migrasi / Verison / Rotasi dibuat panah sesuai arah', '#FFE4B5', 'Migrasi / Verison / Rotasi dibuat panah sesuai arah', '1', '2020-10-08 22:09:09', NULL, '2020-10-08 22:09:09', NULL, '127.0.0.1');
+
+-- ----------------------------
 -- Table structure for kkp_kategori_obat
 -- ----------------------------
 DROP TABLE IF EXISTS `kkp_kategori_obat`;
@@ -153,7 +202,7 @@ CREATE TABLE `kkp_log`  (
   INDEX `kkp_log_log_created_by_foreign`(`log_created_by`) USING BTREE,
   CONSTRAINT `kkp_log_log_created_by_foreign` FOREIGN KEY (`log_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_log_log_psntrans_id_foreign` FOREIGN KEY (`log_psntrans_id`) REFERENCES `kkp_pasien_trans` (`psntrans_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_log
@@ -208,6 +257,8 @@ INSERT INTO `kkp_log` VALUES (102, 29, 'Surat Keterangan Sakit', 'Dokter telah m
 INSERT INTO `kkp_log` VALUES (103, 29, 'Surat Keterangan Sakit', 'Dokter telah membuat surat keterangan Sakit', 13, '2020-10-07 23:39:35', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (104, 29, 'Surat Keterangan Sakit', 'Dokter telah membuat surat keterangan Sakit', 13, '2020-10-08 08:16:08', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (105, 29, 'Pemeriksaan Penunjang - Radiologi', 'Dokter telah mengubah form radiologi', 13, '2020-10-08 08:32:41', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (106, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-09 06:09:08', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (107, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-09 06:16:03', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_obat
@@ -355,6 +406,31 @@ INSERT INTO `kkp_obat_stok` VALUES (16, 2, 10, '10', 6, '2020-07-24 11:14:30', N
 INSERT INTO `kkp_obat_stok` VALUES (17, 45, 90, '90', 6, '2020-07-24 11:14:40', NULL, '2020-07-24 11:14:40', '127.0.0.1');
 INSERT INTO `kkp_obat_stok` VALUES (18, 2, 20, '20', 6, '2020-07-24 13:31:48', NULL, '2020-07-24 13:31:48', '127.0.0.1');
 INSERT INTO `kkp_obat_stok` VALUES (19, 45, 10, '10', 6, '2020-07-24 13:31:56', NULL, '2020-07-24 13:31:56', '127.0.0.1');
+
+-- ----------------------------
+-- Table structure for kkp_odontogram
+-- ----------------------------
+DROP TABLE IF EXISTS `kkp_odontogram`;
+CREATE TABLE `kkp_odontogram`  (
+  `odon_id` int(11) NOT NULL AUTO_INCREMENT,
+  `odon_psnrekdis_id` int(11) DEFAULT NULL,
+  `odon_jenisp_id` int(11) DEFAULT NULL,
+  `odon_kode` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `odon_keterangan` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `odon_status` enum('0','1','99') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT '1',
+  `odon_createdby` int(11) DEFAULT NULL,
+  `odon_createddate` datetime(0) DEFAULT NULL,
+  `odon_lastupdate` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `odon_updatedby` int(11) DEFAULT NULL,
+  `odon_ip` char(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`odon_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of kkp_odontogram
+-- ----------------------------
+INSERT INTO `kkp_odontogram` VALUES (1, 6, 11, 'P18-T', 'test', '1', 11, '2020-10-09 06:09:08', '2020-10-09 06:09:08', NULL, '127.0.0.1');
+INSERT INTO `kkp_odontogram` VALUES (2, 6, 25, 'P17-C', 'test kedua', '1', 11, '2020-10-09 06:16:03', '2020-10-09 06:16:03', NULL, '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_pasien
