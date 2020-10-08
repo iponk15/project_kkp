@@ -11,6 +11,7 @@ use App\Models\PasienTrans;
 use App\Models\SuratSakit;
 use App\Models\SuratSehat;
 use App\Models\RujukanLab;
+use App\Models\Radiologi;
 use App\Models\ResepNote;
 use App\Models\ResepObat;
 use App\Models\LogTrans;
@@ -69,7 +70,7 @@ class PasienInController extends Controller
         if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
         }else{
-            $getData->orderBy('pastrans_created_date', 'ASC');
+            $getData->orderBy('pastrans_created_date', 'DESC');
         }
 
         if(!empty($search)){
@@ -116,7 +117,7 @@ class PasienInController extends Controller
                            '</div>';
             }else if( Auth::user()->role_kode == 'KKPDKT' ) {
                 $button = '<div class="dropdown dropdown-inline">' .
-                                ( $value->pastrans_status == '2'
+                                ( $value->pastrans_status != '99'
                                     ? '<a href="'. route( $this->route . '.formPeriksaDokter', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-danger icon-xl"></i></a>'
                                     : '<a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>'
                                 ) .
@@ -168,12 +169,13 @@ class PasienInController extends Controller
         ];
 
         $data['cardSubTitle'] = $data['records']->poli_nama;
+        $data['kodePoli']     = $data['records']->poli_kode;
 
-        if($data['records']->poli_kode == 'KKPPOLMUM'){
-            return view ($this->path.'.formPeriksa', $data);        
-        }else{
-            dd('Coming Soon');
-        }
+        // if($data['records']->poli_kode == 'KKPPOLMUM'){
+        return view ($this->path.'.formPeriksa', $data);
+        // }else{
+        //     dd('Coming Soon');
+        // }
     }
 
     function storeFormPeriksa(Request $request, $psntrans_id){
@@ -210,27 +212,46 @@ class PasienInController extends Controller
             Arr::forget($post, '_token');
 
             // start create data pasien rekamedis
-            $frmPrk = [
-                'psnrekdis_psntrans_id'    => Hashids::decode($psntrans_id)[0],
-                'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
-                'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
-                'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
-                'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
-                'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
-                'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
-                'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
-                'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
-                'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
-                'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst'],
-                'psnrekdis_obj_sgbb'       => $post['psnrekdis_obj_sgbb'],
-                'psnrekdis_obj_sgtb'       => $post['psnrekdis_obj_sgtb'],
-                'psnrekdis_obj_sgimt'      => $post['psnrekdis_obj_sgimt'],
-                'psnrekdis_asm_digkrt'     => $post['psnrekdis_asm_digkrt'],
-                'psnrekdis_pln_rak'        => $post['psnrekdis_pln_rak'],
-                'psnrekdis_created_by'     => Auth::user()->id,
-                'psnrekdis_created_date'  => date('Y-m-d H:i:s'),
-                'psnrekdis_ip'            => \Request::ip()
-            ];
+            if($post['kodepoli'] == 'KKPPOLGG'){
+                $frmPrk = [ 
+                    'psnrekdis_psntrans_id'    => Hashids::decode($psntrans_id)[0],
+                    'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
+                    'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
+                    'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
+                    'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
+                    'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
+                    'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
+                    'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
+                    'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
+                    'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
+                    'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst'],
+                    'psnrekdis_created_by'     => Auth::user()->id,
+                    'psnrekdis_created_date'   => date('Y-m-d H:i:s'),
+                    'psnrekdis_ip'             => \Request::ip()
+                ];
+            }else{
+                $frmPrk = [ 
+                    'psnrekdis_psntrans_id'    => Hashids::decode($psntrans_id)[0],
+                    'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
+                    'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
+                    'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
+                    'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
+                    'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
+                    'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
+                    'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
+                    'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
+                    'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
+                    'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst'],
+                    'psnrekdis_obj_sgbb'       => $post['psnrekdis_obj_sgbb'],
+                    'psnrekdis_obj_sgtb'       => $post['psnrekdis_obj_sgtb'],
+                    'psnrekdis_obj_sgimt'      => $post['psnrekdis_obj_sgimt'],
+                    'psnrekdis_asm_digkrt'     => $post['psnrekdis_asm_digkrt'],
+                    'psnrekdis_pln_rak'        => $post['psnrekdis_pln_rak'],
+                    'psnrekdis_created_by'     => Auth::user()->id,
+                    'psnrekdis_created_date'   => date('Y-m-d H:i:s'),
+                    'psnrekdis_ip'             => \Request::ip()
+                ];
+            }
 
             PasienRekdis::create($frmPrk);
             // end create data pasien rekamedis
@@ -281,13 +302,15 @@ class PasienInController extends Controller
                     pasien_id,pasien_norekdis,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,psnrekdis_id,psntrans_id,
                     psnrekdis_sbj_kelutm,psnrekdis_sbj_keltam,psnrekdis_sbj_riwpktskr,psnrekdis_sbj_riwpktdhl,psnrekdis_sbj_riwpktklg,psnrekdis_sbj_riwpktkalg,psnrekdis_asm_digkrt,psnrekdis_pln_rak,
                     psnrekdis_obj_vstd,psnrekdis_obj_vshr,psnrekdis_obj_vsrr,psnrekdis_obj_vst,psnrekdis_obj_sgbb,psnrekdis_obj_sgtb,psnrekdis_obj_sgimt,psnrekdis_obj_pfkpl,psnrekdis_obj_pflhr,psnrekdis_obj_pftcor,
-                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,users.name AS nama_dokter,kpol.poli_nama,pastrans_flag
+                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,users.name AS nama_dokter,kpol.poli_nama,pastrans_flag,kpol.poli_kode,rjklab_id,radio_id
                 ')
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
                 ->leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')
                 ->leftJoin('users','pastrans_dokter_id','users.id')
                 ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
+                ->leftJoin('kkp_rujukan_lab','rjklab_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_radiologi','radio_psnrekdis_id','psnrekdis_id')
                 ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
                 ->first()
         ];
@@ -296,12 +319,12 @@ class PasienInController extends Controller
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
         $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 ? "warning" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 || $data['records']->pastrans_flag == 2 ? "warning" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item" onClick="return f_rujukLab(this, event)" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Radiologi</button>
-                                        <button class="dropdown-item" onClick="return f_resepObat(this, event)" data-route="'. route( $this->route . '.showLabInt' ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer"> '.  ( $data['records']->pastrans_flag == 3 ? "Edit Form Lab Internal" : "Form Lab Internal" ) .'</button>
+                                        <a href="'. route( $this->route . '.formRadiologi', [ 'radioid' => Hashids::encode($data['records']->radio_id) ] ) .'" class="dropdown-item asideInfoPasien" data-transid="'.Hashids::encode($data['records']->psnrekdis_id).'">'.( !empty($data['records']->radio_id) ? "Edit Form Radiologi" : "Form Radiologi" ).'</a>
+                                        <a href="'. route( $this->route . '.formLabInternal', [ 'labid' => Hashids::encode($data['records']->rjklab_id) ] ) .'" class="dropdown-item asideInfoPasien" data-transid="'.Hashids::encode($data['records']->psnrekdis_id).'"> '.  ( !empty($data['records']->rjklab_id) ? "Edit Form Lab Internal" : "Form Lab Internal" ) .'</a>
                                         <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab External</button>
                                     </div>
                                 </div>
@@ -375,30 +398,45 @@ class PasienInController extends Controller
             Arr::forget($post, '_token');
 
             // start create data pasien rekamedis
-            $frmPrk = [
-                'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
-                'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
-                'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
-                'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
-                'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
-                'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
-                'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
-                'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
-                'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
-                'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst'],
-                'psnrekdis_obj_sgbb'       => $post['psnrekdis_obj_sgbb'],
-                'psnrekdis_obj_sgtb'       => $post['psnrekdis_obj_sgtb'],
-                'psnrekdis_obj_sgimt'      => $post['psnrekdis_obj_sgimt'],
-                'psnrekdis_asm_digkrt'     => $post['psnrekdis_asm_digkrt'],
-                'psnrekdis_pln_rak'        => $post['psnrekdis_pln_rak'],
-                'psnrekdis_obj_pfkpl'      => $post['psnrekdis_obj_pfkpl'],
-                'psnrekdis_obj_pflhr'      => $post['psnrekdis_obj_pflhr'],
-                'psnrekdis_obj_pftcor'     => $post['psnrekdis_obj_pftcor'],
-                'psnrekdis_obj_pftpul'     => $post['psnrekdis_obj_pftpul'],
-                'psnrekdis_obj_pfabd'      => $post['psnrekdis_obj_pfabd'],
-                'psnrekdis_obj_pfeksats'   => $post['psnrekdis_obj_pfeksats'],
-                'psnrekdis_obj_pfeksbwh'   => $post['psnrekdis_obj_pfeksbwh']
-            ];
+            if($post['poli_kode'] == 'KKPPOLGG'){
+                $frmPrk = [
+                    'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
+                    'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
+                    'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
+                    'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
+                    'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
+                    'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
+                    'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
+                    'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
+                    'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
+                    'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst']
+                ];
+            }else{
+                $frmPrk = [
+                    'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
+                    'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
+                    'psnrekdis_sbj_riwpktskr'  => $post['psnrekdis_sbj_riwpktskr'],
+                    'psnrekdis_sbj_riwpktdhl'  => $post['psnrekdis_sbj_riwpktdhl'],
+                    'psnrekdis_sbj_riwpktklg'  => $post['psnrekdis_sbj_riwpktklg'],
+                    'psnrekdis_sbj_riwpktkalg' => $post['psnrekdis_sbj_riwpktkalg'],
+                    'psnrekdis_obj_vstd'       => $post['psnrekdis_obj_vstd'],
+                    'psnrekdis_obj_vshr'       => $post['psnrekdis_obj_vshr'],
+                    'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
+                    'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst'],
+                    'psnrekdis_obj_sgbb'       => $post['psnrekdis_obj_sgbb'],
+                    'psnrekdis_obj_sgtb'       => $post['psnrekdis_obj_sgtb'],
+                    'psnrekdis_obj_sgimt'      => $post['psnrekdis_obj_sgimt'],
+                    'psnrekdis_asm_digkrt'     => $post['psnrekdis_asm_digkrt'],
+                    'psnrekdis_pln_rak'        => $post['psnrekdis_pln_rak'],
+                    'psnrekdis_obj_pfkpl'      => $post['psnrekdis_obj_pfkpl'],
+                    'psnrekdis_obj_pflhr'      => $post['psnrekdis_obj_pflhr'],
+                    'psnrekdis_obj_pftcor'     => $post['psnrekdis_obj_pftcor'],
+                    'psnrekdis_obj_pftpul'     => $post['psnrekdis_obj_pftpul'],
+                    'psnrekdis_obj_pfabd'      => $post['psnrekdis_obj_pfabd'],
+                    'psnrekdis_obj_pfeksats'   => $post['psnrekdis_obj_pfeksats'],
+                    'psnrekdis_obj_pfeksbwh'   => $post['psnrekdis_obj_pfeksbwh']
+                ];
+            }
 
             PasienRekdis::where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->update($frmPrk);
             // end create data pasien rekamedis
@@ -866,117 +904,6 @@ class PasienInController extends Controller
         echo json_encode($response);    
     }
 
-    function showLabInt(Request $request){
-        $post = $request->input();
-        $decd = Hashids::decode($post['psnrekdisid'])[0];
-
-        $data = [
-            'pagetitle'    => 'Form Cek Lab',
-            'cardTitle'    => 'Form Cek Lab',
-            'cardSubTitle' => '&nbsp;',
-            'cardIcon'     => 'flaticon-file-1',
-            'route'        => $this->route,
-            'psnrekdis_id' => $post['psnrekdisid'],
-            'records'      => RujukanLab::where('rjklab_psnrekdis_id', $decd)->first()
-        ];
-
-        return view($this->path . '.PemeriksaanPenunjang.showFormLabInt', $data);
-    }
-
-    function storeLabInt(Request $request, $psnrekdis_id){
-        $post      = $request->input();
-        $decode    = Hashids::decode($psnrekdis_id)[0];
-        $validator = Validator::make($post,[],[]);
-        $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first();
-
-        if ($validator->fails()) {
-            $error     = '';
-            $validator = $validator->errors()->messages();
-            foreach ($validator as $key => $value) {
-                $error .= ' - ' . $value[0] . '<br>';
-            }
-
-            $response['status']  = 2;
-            $response['message'] = $error;
-
-            echo json_encode($response);
-            return;
-        }
-
-        DB::beginTransaction();
-
-        try {
-            $rjkLab['rjklab_psnrekdis_id']    = $decode;
-            $rjkLab['rjklab_diagnosa']        = $post['rjklab_diagnosa'];
-            $rjkLab['rjklab_htg_rutin']       = ($request->has('rjklab_htg_rutin') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_lekosit']     = ($request->has('rjklab_htg_lekosit') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_dc']          = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_hb']          = ($request->has('rjklab_htg_hb') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_trombosit']   = ($request->has('rjklab_htg_trombosit') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_gd']          = ($request->has('rjklab_htg_gd') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_hematokrit']  = ($request->has('rjklab_htg_hematokrit') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_led']         = ($request->has('rjklab_htg_led') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_rhesus']      = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_eritrosit']   = ($request->has('rjklab_htg_eritrosit') == true ? '1' : '0');
-            $rjkLab['rjklab_htg_mmm']         = ($request->has('rjklab_htg_mmm') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_ld_kt']        = ($request->has('rjklab_kk_ld_kt') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_fh_ast']       = ($request->has('rjklab_kk_fh_ast') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_fg_ureum']     = ($request->has('rjklab_kk_fg_ureum') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_gd_gds']       = ($request->has('rjklab_kk_gd_gds') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_ld_kh']        = ($request->has('rjklab_kk_ld_kh') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_fh_alt']       = ($request->has('rjklab_kk_fh_alt') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_fg_kreatinin'] = ($request->has('rjklab_kk_fg_kreatinin') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_gd_gdp']       = ($request->has('rjklab_kk_gd_gdp') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_ld_kl']        = ($request->has('rjklab_kk_ld_kl') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_fg_au']        = ($request->has('rjklab_kk_fg_au') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_gd_gdj']       = ($request->has('rjklab_kk_gd_gdj') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_ld_trig']      = ($request->has('rjklab_kk_ld_trig') == true ? '1' : '0');
-            $rjkLab['rjklab_kk_gd_hba']       = ($request->has('rjklab_kk_gd_hba') == true ? '1' : '0');
-            $rjkLab['rjklab_is_widal']        = ($request->has('rjklab_is_widal') == true ? '1' : '0');
-            $rjkLab['rjklab_is_hbs']          = ($request->has('rjklab_is_hbs') == true ? '1' : '0');
-            $rjkLab['rjklab_is_ah']           = ($request->has('rjklab_is_ah') == true ? '1' : '0');
-            $rjkLab['rjklab_urine_hcg']       = ($request->has('rjklab_urine_hcg') == true ? '1' : '0');
-            $rjkLab['rjklab_urine_narkoba']   = ($request->has('rjklab_urine_narkoba') == true ? '1' : '0');
-            $rjkLab['rjklab_urine_ul']        = ($request->has('rjklab_urine_ul') == true ? '1' : '0');
-            $rjkLab['rjklab_created_by']      = Auth::user()->id;
-            $rjkLab['rjklab_created_date']    = date('Y-m-d H:i:s');
-            $rjkLab['rjklab_ip']              = \Request::ip();
-
-            if($post['rjklab_id'] == ''){
-                RujukanLab::create($rjkLab);
-            }else{
-                RujukanLab::where( 'rjklab_id', Hashids::decode($post['rjklab_id']) )->update($rjkLab);
-            }
-
-            PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '3']);
-
-            // start input log transaksi
-            $logTrans = [
-                'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
-                'log_subjek'       => 'Cek Lab',
-                'log_keterangan'   => 'Hasil telah keluar, tinggal diambil oleh pasien',
-                'log_created_by'   => Auth::user()->id,
-                'log_created_date' => date('Y-m-d H:i:s'),
-                'log_ip'           => \Request::ip()
-            ];
-
-            LogTrans::create($logTrans);
-            // end input log transaksi
-
-            DB::commit();
-
-            $response['status']  = 1;
-            $response['message'] = 'Form Rujukan Lab berhasil disimpan';
-        } catch (\Exception $ex) {
-            DB::rollback();
-
-            $response['status']  = 0;
-            $response['message'] = $ex->getMessage();
-        }
-
-        echo json_encode($response);    
-    }
-
     function showFormSuratSakit(Request $request){
         $post = $request->input();
         $decd = Hashids::decode($post['psnrekdisid'])[0];
@@ -1151,6 +1078,244 @@ class PasienInController extends Controller
 
             $response['status']  = 1;
             $response['message'] = ( $post['ssht_psnrekdis_id'] == '' ? 'Surat keterangan sehat berhasil dibuat' : 'Surat keterangan sehat berhasil diedit' );
+
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);  
+    }
+
+    function odontogram(Request $request){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Odontogram',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon-file-1',
+            'route'        => $this->route
+        ];
+
+        return view($this->path . '.odontogram', $data);
+    }
+
+    function formLabInternal(Request $request, $labid = null){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Form Lab Internal',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon2-medical-records',
+            'route'        => $this->route,
+            'labid'        => $labid,
+            'records'      => PasienRekdis::selectRaw('pasien_nama,pasien_umur,pasien_norekdis,uker_nama,pasien_jk,pasien_alamat,dok.name AS dokter_nama,golongan_nama,pasien_telp,psnrekdis_id')
+                ->where('psnrekdis_id', Hashids::decode($post['transid'])[0])
+                ->leftJoin('kkp_pasien_trans','psnrekdis_psntrans_id','psntrans_id')
+                ->leftJoin('kkp_pasien','pastrans_pasien_id','pasien_id')
+                ->leftJoin('kkp_unit_kerja','pasien_uker_id','uker_id')
+                ->leftJoin('users AS dok','pastrans_dokter_id','dok.id')
+                ->leftJoin('kkp_golongan','pasien_golongan_id','golongan_id')
+                ->first()
+        ];
+
+        if(!empty($labid)){
+            $data['labs'] = RujukanLab::selectRaw('*')
+                ->where('rjklab_id', Hashids::decode($labid)[0])
+                ->first();
+        }else{
+            $data['labs'] = [];
+        }
+
+        return view($this->path . '.PemeriksaanPenunjang.formLabInternal', $data);
+    }
+
+    function storeFormLabInternal(Request $request, $psnrekdis_id){
+        $post      = $request->input();
+        $decode    = Hashids::decode($psnrekdis_id)[0];
+        $validator = Validator::make($post,[],[]);
+        $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first()->psnrekdis_psntrans_id;
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $rjkLab['rjklab_psnrekdis_id']    = $decode;
+            $rjkLab['rjklab_diagnosa']        = $post['rjklab_diagnosa'];
+            $rjkLab['rjklab_htg_rutin']       = ($request->has('rjklab_htg_rutin') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_lekosit']     = ($request->has('rjklab_htg_lekosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_dc']          = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_hb']          = ($request->has('rjklab_htg_hb') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_trombosit']   = ($request->has('rjklab_htg_trombosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_gd']          = ($request->has('rjklab_htg_gd') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_hematokrit']  = ($request->has('rjklab_htg_hematokrit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_led']         = ($request->has('rjklab_htg_led') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_rhesus']      = ($request->has('rjklab_htg_dc') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_eritrosit']   = ($request->has('rjklab_htg_eritrosit') == true ? '1' : '0');
+            $rjkLab['rjklab_htg_mmm']         = ($request->has('rjklab_htg_mmm') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kt']        = ($request->has('rjklab_kk_ld_kt') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fh_ast']       = ($request->has('rjklab_kk_fh_ast') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_ureum']     = ($request->has('rjklab_kk_fg_ureum') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gds']       = ($request->has('rjklab_kk_gd_gds') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kh']        = ($request->has('rjklab_kk_ld_kh') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fh_alt']       = ($request->has('rjklab_kk_fh_alt') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_kreatinin'] = ($request->has('rjklab_kk_fg_kreatinin') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gdp']       = ($request->has('rjklab_kk_gd_gdp') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_kl']        = ($request->has('rjklab_kk_ld_kl') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_fg_au']        = ($request->has('rjklab_kk_fg_au') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_gdj']       = ($request->has('rjklab_kk_gd_gdj') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_ld_trig']      = ($request->has('rjklab_kk_ld_trig') == true ? '1' : '0');
+            $rjkLab['rjklab_kk_gd_hba']       = ($request->has('rjklab_kk_gd_hba') == true ? '1' : '0');
+            $rjkLab['rjklab_is_widal']        = ($request->has('rjklab_is_widal') == true ? '1' : '0');
+            $rjkLab['rjklab_is_hbs']          = ($request->has('rjklab_is_hbs') == true ? '1' : '0');
+            $rjkLab['rjklab_is_ah']           = ($request->has('rjklab_is_ah') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_hcg']       = ($request->has('rjklab_urine_hcg') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_narkoba']   = ($request->has('rjklab_urine_narkoba') == true ? '1' : '0');
+            $rjkLab['rjklab_urine_ul']        = ($request->has('rjklab_urine_ul') == true ? '1' : '0');
+            $rjkLab['rjklab_created_by']      = Auth::user()->id;
+            $rjkLab['rjklab_created_date']    = date('Y-m-d H:i:s');
+            $rjkLab['rjklab_ip']              = \Request::ip();
+
+            if(empty($post['rjklab_id'])){
+                RujukanLab::create($rjkLab);
+            }else{
+                RujukanLab::where( 'rjklab_id', Hashids::decode($post['rjklab_id']) )->update($rjkLab);
+            }
+
+            PasienTrans::where('psntrans_id', $getTrans)->update([
+                'pastrans_flag'   => '3', 
+                'pastrans_status' => '4'
+            ]);
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans,
+                'log_subjek'       => 'Cek Lab',
+                'log_keterangan'   => 'Hasil telah keluar, tinggal diambil oleh pasien',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = 'Form Rujukan Lab berhasil disimpan';
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);    
+    }
+
+    function formRadiologi(Request $request, $radioid = null){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Form Radiologi',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon2-medical-records',
+            'route'        => $this->route,
+            'radioid'      => $radioid,
+            'psnrekdis_id' => $post['transid'],
+            'radiologi'    => Radiologi::selectRaw('*')
+                ->where('radio_id', Hashids::decode($radioid)[0])
+                ->first()
+        ];
+
+        return view($this->path . '.PemeriksaanPenunjang.formRadiologi', $data);
+    }
+
+    function storeFormRadiologi(Request $request, $psnrekdis_id){
+        $post      = $request->input();
+        $decd      = Hashids::decode($psnrekdis_id)[0];
+        $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
+        $validator = Validator::make(
+            $post,
+            [
+                'radio_rs'        => 'required',
+                'radio_jenis'     => 'required',
+                'radio_pekerjaan' => 'required'
+            ],
+            [
+                'radio_rs.required'        => 'Rumah sakit tidak boleh kosong',
+                'radio_jenis.required'     => 'Jenis Radiologi tidak boleh kosong',
+                'radio_pekerjaan.required' => 'Pekerjaan tidak boleh kosong'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $data = [
+                'radio_psnrekdis_id' => $decd,
+                'radio_rs'           => $post['radio_rs'],
+                'radio_pekerjaan'    => $post['radio_pekerjaan'],
+                'radio_tanggal'      => date('Y-m-d', strtotime($post['radio_tanggal'])),
+                'radio_jenis'        => $post['radio_jenis'],
+                'radio_ragio'        => $post['radio_ragio'],
+                'radio_keterangan'   => $post['radio_keterangan'],
+                'radio_created_by'   => Auth::user()->id,
+                'radio_created_date' => date('Y-m-d H:i:s'),
+                'radio_ip'           => \Request::ip()
+            ];
+
+            if(empty($post['radio_psnrekdis_id'])){
+                Radiologi::create($data);
+                PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '2']);
+            }else{
+                Radiologi::where('radio_id', $decd)->update($data);
+            }
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
+                'log_subjek'       => 'Pemeriksaan Penunjang - Radiologi',
+                'log_keterangan'   => 'Dokter telah '. ( empty($psnrekdis_id) ? 'mengisi' : 'mengubah' ) .' form radiologi',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = 'Data radiologi berhasil ' . ( empty($psnrekdis_id) ? 'disimpan' : 'diubah' );
 
         } catch (\Exception $ex) {
             DB::rollback();

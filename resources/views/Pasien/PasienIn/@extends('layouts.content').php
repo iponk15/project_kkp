@@ -77,27 +77,7 @@
                                 <span class="navi-text font-size-lg"> Form Pemeriksaan </span>
                             </a>
                         </div>
-                        @if($records->poli_kode == 'KKPPOLGG')
-                            <div class="navi-item mb-2">
-                                <a href="{{ route( $route . '.odontogram' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Odontogram" data-transid="{{ Hashids::encode($records->pasien_id) }}">
-                                    <span class="navi-icon mr-2">
-                                        <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                    <polygon points="0 0 24 0 24 24 0 24"/>
-                                                    <circle fill="#000000" opacity="0.3" cx="15" cy="17" r="5"/>
-                                                    <circle fill="#000000" opacity="0.3" cx="9" cy="17" r="5"/>
-                                                    <circle fill="#000000" opacity="0.3" cx="7" cy="11" r="5"/>
-                                                    <circle fill="#000000" opacity="0.3" cx="17" cy="11" r="5"/>
-                                                    <circle fill="#000000" opacity="0.3" cx="12" cy="7" r="5"/>
-                                                </g>
-                                            </svg><!--end::Svg Icon-->
-                                        </span>
-                                    </span>
-                                    <span class="navi-text"> Odontogram </span>
-                                </a>
-                            </div>
-                        @endif
+                        
                         <div class="navi-item mb-2">
                             <a href="{{ route( 'pasieninfo.infoRekamedis' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Riwayat Rekamedis" data-transid="{{ Hashids::encode($records->pasien_id) }}">
                                 <span class="navi-icon mr-2">
@@ -145,7 +125,6 @@
 
                 <!--begin::Body-->
                 <form class="form" id="formPeriksaDokter" method="POST" form-confirm="1">
-                    <input type="hidden" value="{{ $records->poli_kode }}" name="poli_kode">
                     {{ csrf_field() }}
                     <div class="card-body py-5">
                         <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Subjective</h3>
@@ -227,103 +206,99 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($records->poli_kode != 'KKPPOLGG')
-                                <div class="col-lg-6">
-                                    <div class="example">
-                                        <div class="example-preview">
-                                            <h3 class="font-size-lg text-dark font-weight-bold mb-6">2B. STATUS GIZI</h3>
-                                            <div class="form-group row">
-                                                <div class="col-lg-6">
-                                                    <label>Berat Badan</label>
-                                                    <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan" value="{{ $records->psnrekdis_obj_sgbb }}">
-                                                    <span class="form-text text-muted">Dalam satuan kg</span>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label>Tinggi Badan</label>
-                                                    <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan" value="{{ $records->psnrekdis_obj_sgtb }}">
-                                                    <span class="form-text text-muted">Dalam satuan cm</span>
-                                                </div>
-                                            </div>      
-                                            <div class="form-group row">
-                                                <div class="col-lg-6">
-                                                    <label>IMT</label>
-                                                    <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" value="{{ $records->psnrekdis_obj_sgimt }}" readonly>
-                                                    <span class="form-text text-muted">Dalam satuan kg/m2</span>
-                                                </div>
-                                            </div>    
-                                        </div>
+                            <div class="col-lg-6">
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2B. STATUS GIZI</h3>
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>Berat Badan</label>
+                                                <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan" value="{{ $records->psnrekdis_obj_sgbb }}">
+                                                <span class="form-text text-muted">Dalam satuan kg</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Tinggi Badan</label>
+                                                <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan" value="{{ $records->psnrekdis_obj_sgtb }}">
+                                                <span class="form-text text-muted">Dalam satuan cm</span>
+                                            </div>
+                                        </div>      
+                                        <div class="form-group row">
+                                            <div class="col-lg-6">
+                                                <label>IMT</label>
+                                                <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" value="{{ $records->psnrekdis_obj_sgimt }}" readonly>
+                                                <span class="form-text text-muted">Dalam satuan kg/m2</span>
+                                            </div>
+                                        </div>    
                                     </div>
                                 </div>
-                            @endif
+                            </div>
                         </div>
                         <br>
-                        @if($records->poli_kode != 'KKPPOLGG')
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="example">
-                                        <div class="example-preview">
-                                            <h3 class="font-size-lg text-dark font-weight-bold mb-6">2C. PEMERIKSAAN FISIK</h3>
-                                            <div class="form-group row">
-                                                <div class="col-lg-3">
-                                                    <label>Kepala</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pfkpl" placeholder="Kepala" value="{{ $records->psnrekdis_obj_pfkpl }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Leher</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pflhr" placeholder="Leher" value="{{ $records->psnrekdis_obj_pflhr }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Thorax, Cor</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pftcor" placeholder="Thorax, cor" value="{{ $records->psnrekdis_obj_pftcor }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label>Thorax Pulmo</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pftpul" placeholder="Thorax Pulmo" value="{{ $records->psnrekdis_obj_pftpul }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                            </div>  
-                                            <div class="form-group row">
-                                                <div class="col-lg-4">
-                                                    <label>Abdomen</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pfabd" placeholder="Abdomen" value="{{ $records->psnrekdis_obj_pfabd }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Ekstremitas, Atas</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pfeksats" placeholder="Ekstremitas, Atas" value="{{ $records->psnrekdis_obj_pfeksats }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Ekstremitas, Bawah</label>
-                                                    <input type="text" class="form-control" name="psnrekdis_obj_pfeksbwh" placeholder="Ekstremitas, Bawah" value="{{ $records->psnrekdis_obj_pfeksbwh }}">
-                                                    <span class="form-text text-muted"></span>
-                                                </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="example">
+                                    <div class="example-preview">
+                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2C. PEMERIKSAAN FISIK</h3>
+                                        <div class="form-group row">
+                                            <div class="col-lg-3">
+                                                <label>Kepala</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfkpl" placeholder="Kepala" value="{{ $records->psnrekdis_obj_pfkpl }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Leher</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pflhr" placeholder="Leher" value="{{ $records->psnrekdis_obj_pflhr }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Thorax, Cor</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pftcor" placeholder="Thorax, cor" value="{{ $records->psnrekdis_obj_pftcor }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label>Thorax Pulmo</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pftpul" placeholder="Thorax Pulmo" value="{{ $records->psnrekdis_obj_pftpul }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group row">
+                                            <div class="col-lg-4">
+                                                <label>Abdomen</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfabd" placeholder="Abdomen" value="{{ $records->psnrekdis_obj_pfabd }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Ekstremitas, Atas</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfeksats" placeholder="Ekstremitas, Atas" value="{{ $records->psnrekdis_obj_pfeksats }}">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label>Ekstremitas, Bawah</label>
+                                                <input type="text" class="form-control" name="psnrekdis_obj_pfeksbwh" placeholder="Ekstremitas, Bawah" value="{{ $records->psnrekdis_obj_pfeksbwh }}">
+                                                <span class="form-text text-muted"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"> {{ $records->psnrekdis_asm_digkrt }} </textarea>
-                                        <span class="form-text text-muted"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"> {{ $records->psnrekdis_pln_rak }} </textarea>
-                                        <span class="form-text text-muted"></span>
-                                    </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
+                                <div class="col-lg-12">
+                                    <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"> {{ $records->psnrekdis_asm_digkrt }} </textarea>
+                                    <span class="form-text text-muted"></span>
                                 </div>
                             </div>
-                        @endif
+                            <div class="col-lg-6">
+                                <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
+                                <div class="col-lg-12">
+                                    <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"> {{ $records->psnrekdis_pln_rak }} </textarea>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="row">

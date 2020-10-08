@@ -39,6 +39,11 @@
                                         <option value="99">Delete Temp</option>
                                     </select>
                                 </div>
+                                <div class="col-md-4 my-2 my-md-0">
+                                    <select class="form-control role_nama" name="role_nama">
+                                        <option></option>
+                                    </select>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -143,14 +148,15 @@
             ];
             var cari = {
                 generalSearch : '.generalSearch',
-                status        : '.status'
+                status        : '.status',
+                role_id       : '.role_nama'
             };
 
             global.init_ktable(id,urll,column,cari);
             // end set ktable datatable
 
             // start select2 get flag
-            statusOption = {
+            var statusOption = {
                 placeholder : 'Select Status',
                 allowClear  : true,
             }
@@ -174,6 +180,16 @@
                 ajaxProses('post', option);
             });
             // start proses export file
+
+            // start set select option role
+            var roleOption = {
+                route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_role", "prefix" => "role"]) }}',
+                placeholder : 'Select Role',
+                allowClear  : true
+            };
+
+            global.init_select2('.role_nama', roleOption);
+            // end set select option role
         });
 
         function f_action(ele,eve,flag){

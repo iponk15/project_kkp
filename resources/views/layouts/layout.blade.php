@@ -29,15 +29,10 @@
         <script src="{{ asset('assets/js/ajaxify.js') }}"></script>
 		<script src="{{ asset('assets/js/custom.js') }}"></script>
 		<script src="{{ asset('assets/js/global.js') }}"></script>
-        <!--end::Global Theme Bundle-->
-
-        <!--begin::Page Vendors(used by this page)-->
-        <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6') }}"></script>
-        <!--end::Page Vendors-->
-
-        <!--begin::Page Scripts(used by this page)-->
         <script src="{{ asset('assets/js/pages/widgets.js?v=7.0.6') }}"></script>
-        <!--end::Page Scripts-->
+        <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6') }}"></script>
+        <script src="{{ asset('assets/js/pages/custom/profile/profile.js?v=7.0.6') }}"></script>
+        <!--end::Global Theme Bundle-->
 
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>        

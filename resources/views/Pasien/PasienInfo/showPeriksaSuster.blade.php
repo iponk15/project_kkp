@@ -84,70 +84,74 @@
                             <td width="25%">{{ $records->psnrekdis_obj_vst }} °C</td>
                             <th width="25%" class="text-right" colspan="2"></th>
                         </tr>
-                        <tr>
-                            <th colspan="4" class="text-center bckg">2C. PEMERIKSAAN FISIK</th>
-                        </tr>
-                        <tr>
-                            <th class="text-right" width="25%">Kepala</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pfkpl }}</td>
-                            <th width="25%" class="text-right">Leher</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pflhr }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right" width="25%">Thorax, Cor</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pflhr }}</td>
-                            <th width="25%" class="text-right">Thorax, Pulmo</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pftpul }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right" width="25%">Abdomen</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pftpul }}</td>
-                            <th width="25%" class="text-right">Ekstremitas, Atas</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pfeksats }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right" width="25%">Ekstremitas, Bawah</th>
-                            <td width="25%">{{ $records->psnrekdis_obj_pfeksbwh }}</td>
-                            <th width="25%" class="text-right" colspan="2"></th>
-                        </tr>
+                        @if($records->poli_kode != 'KKPPOLGG')
+                            <tr>
+                                <th colspan="4" class="text-center bckg">2C. PEMERIKSAAN FISIK</th>
+                            </tr>
+                            <tr>
+                                <th class="text-right" width="25%">Kepala</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pfkpl }}</td>
+                                <th width="25%" class="text-right">Leher</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pflhr }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right" width="25%">Thorax, Cor</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pflhr }}</td>
+                                <th width="25%" class="text-right">Thorax, Pulmo</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pftpul }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right" width="25%">Abdomen</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pftpul }}</td>
+                                <th width="25%" class="text-right">Ekstremitas, Atas</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pfeksats }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right" width="25%">Ekstremitas, Bawah</th>
+                                <td width="25%">{{ $records->psnrekdis_obj_pfeksbwh }}</td>
+                                <th width="25%" class="text-right" colspan="2"></th>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
             <br>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
-                    <div class="table-responsive">
+            @if($records->poli_kode != 'KKPPOLGG')
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center bckg">Diagnosa Keperawatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>{{ $records->psnrekdis_asm_digkrt }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="text-center bckg">Diagnosa Keperawatan</th>
+                                    <th class="text-center bckg">Rencana Asuhan Keperawatan</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>{{ $records->psnrekdis_asm_digkrt }}</th>
+                                    <th>{{ $records->psnrekdis_pln_rak }}</th>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center bckg">Rencana Asuhan Keperawatan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>{{ $records->psnrekdis_pln_rak }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 @endif

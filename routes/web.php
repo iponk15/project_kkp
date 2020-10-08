@@ -187,6 +187,11 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('storeFormSuratSakit/{psnrekdis_id}', 'PasienInController@storeFormSuratSakit')->name('storeFormSuratSakit');
         Route::post('showFormSuratSehat', 'PasienInController@showFormSuratSehat')->name('showFormSuratSehat');
         Route::post('storeFormSuratSehat/{psnrekdis_id}', 'PasienInController@storeFormSuratSehat')->name('storeFormSuratSehat');
+        Route::post('odontogram', 'PasienInController@odontogram')->name('odontogram');
+        route::post('formLabInternal/{labid?}', 'PasienInController@formLabInternal')->name('formLabInternal');
+        route::post('storeFormLabInternal/{psnrekdis_id}', 'PasienInController@storeFormLabInternal')->name('storeFormLabInternal');
+        route::post('formRadiologi/{radioid?}', 'PasienInController@formRadiologi')->name('formRadiologi');
+        route::post('storeFormRadiologi/{psnrekdis_id}', 'PasienInController@storeFormRadiologi')->name('storeFormRadiologi');
     });
     // end routing menu pasien sedang berobat
 

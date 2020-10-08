@@ -113,22 +113,22 @@
 
     <script>
         $(document).ready(function(){
-            $( ".asideInfoCeklab" ).each(function( index ) {
-                var actv = $(this).is('.active');
+            // $( ".asideInfoCeklab" ).each(function( index ) {
+            //     var actv = $(this).is('.active');
                 
-                if(actv == true){
-                    var option = {
-                        route : $(this).attr('href'),
-                        blkUi : '.eleBlockUi',
-                        type  : 'ajax',
-                        html  : true,
-                        rnder : '#bodyCtnCekLab',
-                        data  : { transid : $(this).data('transid') }
-                    }
+            //     if(actv == true){
+            //         var option = {
+            //             route : $(this).attr('href'),
+            //             blkUi : '.eleBlockUi',
+            //             type  : 'ajax',
+            //             html  : true,
+            //             rnder : '#bodyCtnCekLab',
+            //             data  : { transid : $(this).data('transid') }
+            //         }
 
-                    ajaxProses('post', option);
-                }
-            });
+            //         ajaxProses('post', option);
+            //     }
+            // });
 
             $('.asideInfoCeklab').on('click', function(e){
                 e.preventDefault()

@@ -125,6 +125,7 @@
 
                 <!--begin::Body-->
                 <form class="form" id="formPeriksaPasien" method="POST" form-confirm="1">
+                    <input type="hidden" name="kodepoli" value="{{ $kodePoli }}">
                     {{ csrf_field() }}
                     <div class="card-body py-5">
                         <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. Subjective</h3>
@@ -206,49 +207,53 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="example">
-                                    <div class="example-preview">
-                                        <h3 class="font-size-lg text-dark font-weight-bold mb-6">2B. STATUS GIZI</h3>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6">
-                                                <label>Berat Badan</label>
-                                                <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan">
-                                                <span class="form-text text-muted">Dalam satuan kg</span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label>Tinggi Badan</label>
-                                                <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan">
-                                                <span class="form-text text-muted">Dalam satuan cm</span>
-                                            </div>
-                                        </div>      
-                                        <div class="form-group row">
-                                            <div class="col-lg-6">
-                                                <label>IMT</label>
-                                                <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" readonly>
-                                                <span class="form-text text-muted">Dalam satuan kg/m2</span>
-                                            </div>
-                                        </div>    
+                            @if($kodePoli == 'KKPPOLMUM')
+                                <div class="col-lg-6">
+                                    <div class="example">
+                                        <div class="example-preview">
+                                            <h3 class="font-size-lg text-dark font-weight-bold mb-6">2B. STATUS GIZI</h3>
+                                            <div class="form-group row">
+                                                <div class="col-lg-6">
+                                                    <label>Berat Badan</label>
+                                                    <input type="text" class="form-control psnrekdis_obj_sgbb" name="psnrekdis_obj_sgbb" placeholder="Berat Badan">
+                                                    <span class="form-text text-muted">Dalam satuan kg</span>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label>Tinggi Badan</label>
+                                                    <input type="text" class="form-control psnrekdis_obj_sgtb" name="psnrekdis_obj_sgtb" placeholder="Tinggi Badan">
+                                                    <span class="form-text text-muted">Dalam satuan cm</span>
+                                                </div>
+                                            </div>      
+                                            <div class="form-group row">
+                                                <div class="col-lg-6">
+                                                    <label>IMT</label>
+                                                    <input type="text" class="form-control psnrekdis_obj_sgimt" name="psnrekdis_obj_sgimt" placeholder="IMT" readonly>
+                                                    <span class="form-text text-muted">Dalam satuan kg/m2</span>
+                                                </div>
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div><br>
+                        @if($kodePoli == 'KKPPOLMUM')
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"></textarea>
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"></textarea>
+                                        <span class="form-text text-muted"></span>
                                     </div>
                                 </div>
                             </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <h3 class="font-size-lg text-dark font-weight-bold mb-6">3. Assessment</h3>
-                                <div class="col-lg-12">
-                                    <textarea placeholder="Diagnosa Keperawatan" name="psnrekdis_asm_digkrt" class="form-control" rows="3"></textarea>
-                                    <span class="form-text text-muted"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <h3 class="font-size-lg text-dark font-weight-bold mb-6">4. Planning</h3>
-                                <div class="col-lg-12">
-                                    <textarea placeholder="Rencana Asuhan Keperawatan" name="psnrekdis_pln_rak" class="form-control" rows="3"></textarea>
-                                    <span class="form-text text-muted"></span>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="card-footer">
                         <div class="row">
