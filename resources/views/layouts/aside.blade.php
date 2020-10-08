@@ -69,6 +69,12 @@
                                         <span class="menu-text">Golongan</span>
                                     </a>
                                 </li>
+                                <li class="menu-item " aria-haspopup="true" >
+                                    <a  href="{{ route('jenispgigi.index') }}" class="menu-link ajaxify">
+                                        <i class="flaticon-suitcase icon-xl text-dark"><span></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="menu-text">Penyakit Gigi</span>
+                                    </a>
+                                </li>
                             @endif
 
                             @if(Auth::user()->role_kode == 'KKPAPT')                        

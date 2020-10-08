@@ -192,6 +192,7 @@ Route::group(['middleware' => 'auth'], function(){
         route::post('storeFormLabInternal/{psnrekdis_id}', 'PasienInController@storeFormLabInternal')->name('storeFormLabInternal');
         route::post('formRadiologi/{radioid?}', 'PasienInController@formRadiologi')->name('formRadiologi');
         route::post('storeFormRadiologi/{psnrekdis_id}', 'PasienInController@storeFormRadiologi')->name('storeFormRadiologi');
+        route::post('storeOdontogram/{psnrekdis_id}', 'PasienInController@storeOdontogram')->name('storeOdontogram');
     });
     // end routing menu pasien sedang berobat
 
@@ -230,4 +231,17 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('index', 'PasienOutController@index')->name('index');
         Route::post('ktable', 'PasienOutController@ktable')->name('ktable');
     });
+
+    // start routing menu jenis penyakit gigi
+    Route::group(['as' => 'jenispgigi.', 'prefix' => 'jenispgigi', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'JenispGigiController@index')->name('index');
+        Route::post('ktable', 'JenispGigiController@ktable')->name('ktable');
+        Route::get('show', 'JenispGigiController@show')->name('show');
+        Route::post('store', 'JenispGigiController@store')->name('store');
+        Route::get('edit/{id}', 'JenispGigiController@edit')->name('edit');
+        Route::post('update/{id}', 'JenispGigiController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'JenispGigiController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'JenispGigiController@delete')->name('delete');
+    });
+    // end routing menu jenis penyakit gigi
 });

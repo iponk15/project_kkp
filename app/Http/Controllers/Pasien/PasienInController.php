@@ -11,6 +11,7 @@ use App\Models\PasienTrans;
 use App\Models\SuratSakit;
 use App\Models\SuratSehat;
 use App\Models\RujukanLab;
+use App\Models\Odontogram;
 use App\Models\Radiologi;
 use App\Models\ResepNote;
 use App\Models\ResepObat;
@@ -1089,18 +1090,6 @@ class PasienInController extends Controller
         echo json_encode($response);  
     }
 
-    function odontogram(Request $request){
-        $post = $request->input();
-        $data = [
-            'cardTitle'    => 'Odontogram',
-            'cardSubTitle' => '&nbsp;',
-            'cardIcon'     => 'flaticon-file-1',
-            'route'        => $this->route
-        ];
-
-        return view($this->path . '.odontogram', $data);
-    }
-
     function formLabInternal(Request $request, $labid = null){
         $post = $request->input();
         $data = [
@@ -1316,6 +1305,102 @@ class PasienInController extends Controller
 
             $response['status']  = 1;
             $response['message'] = 'Data radiologi berhasil ' . ( empty($psnrekdis_id) ? 'disimpan' : 'diubah' );
+
+        } catch (\Exception $ex) {
+            DB::rollback();
+
+            $response['status']  = 0;
+            $response['message'] = $ex->getMessage();
+        }
+
+        echo json_encode($response);  
+    }
+
+    function odontogram(Request $request){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Odontogram',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon-file-1',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['transid'],
+            'odontogram'   => Odontogram::selectRaw('*')
+                ->where('odon_psnrekdis_id', Hashids::decode($post['transid'])[0])
+                ->get()
+        ];
+
+        return view($this->path . '.odontogram', $data);
+    }
+
+    function storeOdontogram(Request $request, $psnrekdis_id){
+        $post      = $request->input();
+        $decd      = Hashids::decode($psnrekdis_id)[0];
+        $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
+        $validator = Validator::make(
+            $post,
+            [
+                'odon_kode'       => 'required',
+                'odon_jenisp_id'  => 'required',
+                'odon_keterangan' => 'required'
+            ],
+            [
+                'odon_kode.required'       => 'Kode sakit tidak boleh kosong',
+                'odon_jenisp_id.required'  => 'Jenis Penyakit tidak boleh kosong',
+                'odon_keterangan.required' => 'Keterangan tidak boleh kosong'
+            ]
+        );
+
+        if ($validator->fails()) {
+            $error     = '';
+            $validator = $validator->errors()->messages();
+            foreach ($validator as $key => $value) {
+                $error .= ' - ' . $value[0] . '<br>';
+            }
+
+            $response['status']  = 2;
+            $response['message'] = $error;
+
+            echo json_encode($response);
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $data = [
+                'odon_psnrekdis_id' => $decd,
+                'odon_jenisp_id'    => $post['odon_jenisp_id'],
+                'odon_kode'         => $post['odon_kode'],
+                'odon_keterangan'   => $post['odon_keterangan'],
+                'odon_createdby'    => Auth::user()->id,
+                'odon_createddate'  => date('Y-m-d H:i:s'),
+                'odon_ip'           => \Request::ip()
+            ];
+
+            // if(empty($post['radio_psnrekdis_id'])){
+                Odontogram::create($data);
+                // PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '2']);
+            // }else{
+            //     Radiologi::where('radio_id', $decd)->update($data);
+            // }
+
+            // start input log transaksi
+            $logTrans = [
+                'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
+                'log_subjek'       => 'Odontogram',
+                'log_keterangan'   => 'Dokter telah '. ( empty($psnrekdis_id) ? 'mengisi' : 'mengubah' ) .' data odontogram',
+                'log_created_by'   => Auth::user()->id,
+                'log_created_date' => date('Y-m-d H:i:s'),
+                'log_ip'           => \Request::ip()
+            ];
+
+            LogTrans::create($logTrans);
+            // end input log transaksi
+
+            DB::commit();
+
+            $response['status']  = 1;
+            $response['message'] = 'Data odontogram berhasil ' . ( empty($psnrekdis_id) ? 'disimpan' : 'diubah' );
 
         } catch (\Exception $ex) {
             DB::rollback();

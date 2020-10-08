@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <!--end::Contact-->
-
+                    
                     <!--begin::Nav-->
                     <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                         <div class="navi-item mb-2">
@@ -79,7 +79,7 @@
                         </div>
                         @if($records->poli_kode == 'KKPPOLGG')
                             <div class="navi-item mb-2">
-                                <a href="{{ route( $route . '.odontogram' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Odontogram" data-transid="{{ Hashids::encode($records->pasien_id) }}">
+                                <a href="{{ route( $route . '.odontogram' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Odontogram" data-transid="{{ Hashids::encode($records->psnrekdis_id) }}">
                                     <span class="navi-icon mr-2">
                                         <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

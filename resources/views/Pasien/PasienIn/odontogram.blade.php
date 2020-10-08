@@ -1,420 +1,428 @@
-<!--begin::Content-->
-<div class="flex-row-fluid ml-lg-8 eleBlockUi" id="bodyCtnInfoPasien">
-    <!--begin::Advance Table: Widget 7-->
-    <div class="card card-custom">
-        <!--begin::Header-->
-        <div class="card-header">
-            <div class="card-title">
-                <span class="card-icon"><i class="{{ (!empty($cardIcon) ? $cardIcon : 'flaticon2-chat-1') }} text-info icon-xl"></i></span>
-                <h3 class="card-label text-info">
-                    {{ (!empty($cardTitle) ? $cardTitle : 'Card Title' ) }}
-                    <small>{!! (!empty($cardSubTitle) ? $cardSubTitle : 'Card Sub Title' ) !!}</small>
-                    <!-- <span class="d-block text-muted pt-2 font-size-sm">row selection and group actions</span> -->
-                </h3>
-            </div>
-            <div class="card-toolbar">
-                
-            </div>
+<!--begin::Advance Table: Widget 7-->
+<div class="card card-custom">
+    <!--begin::Header-->
+    <div class="card-header">
+        <div class="card-title">
+            <span class="card-icon"><i class="{{ (!empty($cardIcon) ? $cardIcon : 'flaticon2-chat-1') }} text-info icon-xl"></i></span>
+            <h3 class="card-label text-info">
+                {{ (!empty($cardTitle) ? $cardTitle : 'Card Title' ) }}
+                <small>{!! (!empty($cardSubTitle) ? $cardSubTitle : 'Card Sub Title' ) !!}</small>
+                <!-- <span class="d-block text-muted pt-2 font-size-sm">row selection and group actions</span> -->
+            </h3>
         </div>
-        <!--end::Header-->
-
-        <!--begin::Body-->
-        <div class="card-body py-5">
-            <div class="example">
-                <div class="example-preview">
+        <div class="card-toolbar">
+            
+        </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body py-5">
+        <div class="example">
+            <div class="example-preview">
+                <form class="form" id="jenispFormTambah" method="POST">
+                    {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-8">
+                            <?php
+                                $kode    = 'P18';
+                                $clctP18 = collect($odontogram)->filter(function($item) use ($kode){
+                                    return false !== stristr($item->odon_kode, $kode);
+                                });
+                                echo '<pre>';
+                                print_r($clctP18->toArray());
+                                echo '</pre>';
+                            ?>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="9.9 67.66 480.2 245.766">
                                 <g transform="matrix(1.5, 0, 0, 1.5, 38.161758, 86.386719)" id="gmain">
                                     <g id="P18" transform="matrix(1, 0, 0, 1, -18.841303, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: rgb(0, 0, 128); font-size: 8px; white-space: pre;" x="6" y="-5">18</text>
                                     </g>
                                     <g id="P17" transform="matrix(1, 0, 0, 1, 1.292291, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: rgb(0, 0, 128); font-size: 8px; white-space: pre;" x="6" y="-5">17</text>
                                     </g>
                                     <g id="P16" transform="matrix(1, 0, 0, 1, 21.959291, 0)">
-                                        <polygon points="-0.667 0 19.333 0 14.333 5 4.333 5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="4.333 15 14.333 15 19.333 20 -0.667 20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="14.333 5 19.333 0 19.333 20 14.333 15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="-0.667 0 4.333 5 4.333 15 -0.667 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="4.333 5 14.333 5 14.333 15 4.333 15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="-0.667 0 19.333 0 14.333 5 4.333 5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="4.333 15 14.333 15 19.333 20 -0.667 20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="14.333 5 19.333 0 19.333 20 14.333 15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="-0.667 0 4.333 5 4.333 15 -0.667 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="4.333 5 14.333 5 14.333 15 4.333 15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="5.333" y="-5">16</text>
                                     </g>
                                     <g id="P15" transform="matrix(1, 0, 0, 1, 41.29229, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">15</text>
                                     </g>
                                     <g id="P14" transform="matrix(1, 0, 0, 1, 61.29229, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">14</text>
                                     </g>
                                     <g id="P13" transform="matrix(1, 0, 0, 1, 81.29229, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;" bx:origin="0.5 0.564971"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;" bx:origin="0.5 0.564971"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">13</text>
                                     </g>
                                     <g id="P12" transform="matrix(1, 0, 0, 1, 101.29229, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">12</text>
                                     </g>
                                     <g id="P11" transform="matrix(1, 0, 0, 1, 121.29229, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">11</text>
                                     </g>
                                     <g id="P55" transform="matrix(1, 0, 0, 1, 41.225494, 40)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">55</text>
                                     </g>
                                     <g id="P54" transform="matrix(1, 0, 0, 1, 61.225494, 40)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">54</text>
                                     </g>
                                     <g id="P53" transform="matrix(1, 0, 0, 1, 81.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">53</text>
                                     </g>
                                     <g id="P52" transform="matrix(1, 0, 0, 1, 101.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px;  white-space: pre;" x="6" y="-5">52</text>
                                     </g>
                                     <g id="P51" transform="matrix(1, 0, 0, 1, 121.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">51</text>
                                     </g>
                                     <g id="P85" transform="matrix(1, 0, 0, 1, 41.225494, 80)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">85</text>
                                     </g>
                                     <g id="P84" transform="matrix(1, 0, 0, 1, 61.225494, 80)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">84</text>
                                     </g>
                                     <g id="P83" transform="matrix(1, 0, 0, 1, 81.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">83</text>
                                     </g>
                                     <g id="P82" transform="matrix(1, 0, 0, 1, 101.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">82</text>
                                     </g>
                                     <g id="P81" transform="matrix(1, 0, 0, 1, 121.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">81</text>
                                     </g>
                                     <g id="P48" transform="matrix(1, 0, 0, 1, -18.774506, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">48</text>
                                     </g>
                                     <g id="P47" transform="matrix(1, 0, 0, 1, 1.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">47</text>
                                     </g>
                                     <g id="P46" transform="matrix(1, 0, 0, 1, 21.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">46</text>
                                     </g>
                                     <g id="P45" transform="matrix(1, 0, 0, 1, 41.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">45</text>
                                     </g>
                                     <g id="P44" transform="matrix(1, 0, 0, 1, 61.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">44</text>
                                     </g>
                                     <g id="P43" transform="matrix(1, 0, 0, 1, 81.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">43</text>
                                     </g>
                                     <g id="P42" transform="matrix(1, 0, 0, 1, 101.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">42</text>
                                     </g>
                                     <g id="P41" transform="matrix(1, 0, 0, 1, 121.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">41</text>
                                     </g>
                                     <g id="P21" transform="matrix(1, 0, 0, 1, 141.292297, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">21</text>
                                     </g>
                                     <g id="P22" transform="matrix(1, 0, 0, 1, 161.292297, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">22</text>
                                     </g>
                                     <g id="P23" transform="matrix(1, 0, 0, 1, 181.292297, 0)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">23</text>
                                     </g>
                                     <g id="P24" transform="matrix(1, 0, 0, 1, 201.292297, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">24</text>
                                     </g>
                                     <g id="P25" transform="matrix(1, 0, 0, 1, 221.292297, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">25</text>
                                     </g>
                                     <g id="P26" transform="matrix(1, 0, 0, 1, 241.292297, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">26</text>
                                     </g>
                                     <g id="P27" transform="matrix(1, 0, 0, 1, 261.292297, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">27</text>
                                     </g>
                                     <g id="P28" transform="matrix(1, 0, 0, 1, 281.292297, 0)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">28</text>
                                     </g>
                                     <g id="P61" transform="matrix(1, 0, 0, 1, 141.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">61</text>
                                     </g>
                                     <g id="P62" transform="matrix(1, 0, 0, 1, 161.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">62</text>
                                     </g>
                                     <g id="P63" transform="matrix(1, 0, 0, 1, 181.225494, 40)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">63</text>
                                     </g>
                                     <g id="P64" transform="matrix(1, 0, 0, 1, 201.225494, 40)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">64</text>
                                     </g>
                                     <g id="P65" transform="matrix(1, 0, 0, 1, 221.225494, 40)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="-5">65</text>
                                     </g>
                                     <g id="P71" transform="matrix(1, 0, 0, 1, 141.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">71</text>
                                     </g>
                                     <g id="P72" transform="matrix(1, 0, 0, 1, 161.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">72</text>
                                     </g>
                                     <g id="P73" transform="matrix(1, 0, 0, 1, 181.225494, 80)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">73</text>
                                     </g>
                                     <g id="P74" transform="matrix(1, 0, 0, 1, 201.225494, 80)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">74</text>
                                     </g>
                                     <g id="P75" transform="matrix(1, 0, 0, 1, 221.225494, 80)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">75</text>
                                     </g>
                                     <g id="P31" transform="matrix(1, 0, 0, 1, 141.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">31</text>
                                     </g>
                                     <g id="P32" transform="matrix(1, 0, 0, 1, 161.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">32</text>
                                     </g>
                                     <g id="P33" transform="matrix(1, 0, 0, 1, 181.225494, 120)">
-                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 20 0 15 8.333 5 8.333" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5 8.342 15 8.342 20 20.009 0 20.009" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15 8.5 20 0 20 20 15 8.5" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0 0 5 8.5 5 8.5 0 20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">33</text>
                                     </g>
                                     <g id="P34" transform="matrix(1, 0, 0, 1, 201.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                     <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">34</text>
                                     </g>
                                     <g id="P35" transform="matrix(1, 0, 0, 1, 221.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">35</text>
                                     </g>
                                     <g id="P36" transform="matrix(1, 0, 0, 1, 241.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">36</text>
                                     </g>
                                     <g id="P37" transform="matrix(1, 0, 0, 1, 261.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">37</text>
                                     </g>
                                     <g id="P38" transform="matrix(1, 0, 0, 1, 281.225494, 120)">
-                                        <polygon points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
-                                        <polygon points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: none; stroke-miterlimit: 2;"/>
+                                        <polygon onClick="return f_action(this, event)" points="0,0 &#9;20,0 &#9;15,5 &#9;5,5" stroke="navy" stroke-width="0.5" id="T" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon onClick="return f_action(this, event)" points="5,15 &#9;15,15 &#9;20,20 &#9;0,20" stroke="navy" stroke-width="0.5" id="B" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon onClick="return f_action(this, event)" points="15,5 &#9;20,0 &#9;20,20 &#9;15,15" stroke="navy" stroke-width="0.5" id="R" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon onClick="return f_action(this, event)" points="0,0 &#9;5,5 &#9;5,15 &#9;0,20" stroke="navy" stroke-width="0.5" id="L" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                        <polygon onClick="return f_action(this, event)" points="5,5 &#9;15,5 &#9;15,15 &#9;5,15" stroke="navy" stroke-width="0.5" id="C" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
                                         <text style="fill: navy; font-size: 8px; white-space: pre;" x="6" y="30">38</text>
                                     </g>
 
@@ -427,26 +435,79 @@
                         </div>
                         <div class="col-md-4">
                             <div>
-                                <span id="nomor">&nbsp;XX</span>
-                                -
-                                <span id="posisi">&nbsp;X</span>
+                                <label class="kodeodon"><h6>xxx-x</h6></label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Kode <span class="text-danger">*</span></label>
+                                <input type="text" readonly class="form-control odon_kode" placeholder="Kode Odontogram" name="odon_kode">
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Penyakit<span class="text-danger">*</span></label>
+                                <select name="odon_jenisp_id" class="form-control odon_jenisp_id">
+                                    <option></option>
+                                </select>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan<span class="text-danger">*</span></label>
+                                <textarea name="odon_keterangan" class="form-control" rows="3" placeholder="Input Keterangan"></textarea>
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success form-control">Simpan Data</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     $(document).ready(function () {
         $("polygon").hover(function (evt) {
             var sector = $(evt.target);
             var posisi = sector.attr('id');
-            var nomor = sector.parent().attr('id');
-            $('#nomor').html(nomor);
-            $('#posisi').html(posisi);
-        })	
+            var nomor  = sector.parent().attr('id');
+            $('.kodeodon').html('<h6>'+nomor+'-'+posisi+'</h6>');
+        });
+
+        $('svg').on('click', 'polygon', function (e) {
+            var sector   = $(e.target); 
+            var strdebug = sector.parent().attr('id') + '-' + sector.attr('id');
+                
+            $('.odon_kode').val(strdebug);
+            e.preventDefault();
+        });
+
+        // start select2 option jenis penyakit
+        var jenispOption = {
+            route_to    : '{{ route("globalfunction.getdata", ["table" => "kkp_jenisp_gigi", "prefix" => "jenisp"]) }}',
+            placeholder : 'Pilih Jeis Penyakit',
+            allowClear  : true,
+            tag         : true
+        };
+
+        global.init_select2('.odon_jenisp_id', jenispOption);
+        // end select2 option jenis penyakit
+
+        // start form validation submit
+        var form   = document.getElementById('jenispFormTambah');
+        var urll   = "{{ route($route . '.storeOdontogram', ['psnrekdis_id' => $psnrekdis_id]) }}";
+        var fields = {
+            odon_kode       : { validators : { notEmpty : { message : 'Kode tidak boleh kosong' } } },
+            odon_jenisp_id  : { validators : { notEmpty : { message : 'Jenis Penyakit tidak boleh kosong' } } },
+            odon_keterangan : { validators : { notEmpty : { message : 'Keterangan tidak boleh kosong' } } },
+        };
+        
+        global.init_formVld(form, urll, fields);
+        // end form validation submit
     });
 </script>
