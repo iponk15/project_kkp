@@ -15,6 +15,7 @@ class RujukanSpesialis extends Model
         'rjksps_rs',
         'rjksps_keluhan',
         'rjksps_ssb',
+        'rjksps_status',
         'rjksps_keterangan',
         'rjksps_created_by',
         'rjksps_created_date',

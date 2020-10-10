@@ -17,6 +17,7 @@ use App\Models\ResepNote;
 use App\Models\ResepObat;
 use App\Models\LogTrans;
 use App\Models\Pasien;
+use App\Models\Modon;
 use App\Models\Obat;
 use Validator;
 use Hashids;
@@ -303,7 +304,8 @@ class PasienInController extends Controller
                     pasien_id,pasien_norekdis,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,psnrekdis_id,psntrans_id,
                     psnrekdis_sbj_kelutm,psnrekdis_sbj_keltam,psnrekdis_sbj_riwpktskr,psnrekdis_sbj_riwpktdhl,psnrekdis_sbj_riwpktklg,psnrekdis_sbj_riwpktkalg,psnrekdis_asm_digkrt,psnrekdis_pln_rak,
                     psnrekdis_obj_vstd,psnrekdis_obj_vshr,psnrekdis_obj_vsrr,psnrekdis_obj_vst,psnrekdis_obj_sgbb,psnrekdis_obj_sgtb,psnrekdis_obj_sgimt,psnrekdis_obj_pfkpl,psnrekdis_obj_pflhr,psnrekdis_obj_pftcor,
-                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,users.name AS nama_dokter,kpol.poli_nama,pastrans_flag,kpol.poli_kode,rjklab_id,radio_id
+                    psnrekdis_obj_pftpul,psnrekdis_obj_pfabd,psnrekdis_obj_pfeksats,psnrekdis_obj_pfeksbwh,rjksps_id,users.name AS nama_dokter,kpol.poli_nama,pastrans_flag,kpol.poli_kode,rjklab_id,radio_id,
+                    sskt_id,ssht_id
                 ')
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
@@ -312,6 +314,8 @@ class PasienInController extends Controller
                 ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
                 ->leftJoin('kkp_rujukan_lab','rjklab_psnrekdis_id','psnrekdis_id')
                 ->leftJoin('kkp_radiologi','radio_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_surat_sakit','sskt_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_surat_sehat','ssht_psnrekdis_id','psnrekdis_id')
                 ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
                 ->first()
         ];
@@ -340,7 +344,7 @@ class PasienInController extends Controller
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( empty($data['records']->rjksps_id) ? 'primary' : 'warning' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-start-up"></i> Pengantar
                                     </button>
                                     <div class="dropdown-menu">
@@ -349,12 +353,12 @@ class PasienInController extends Controller
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 10 || $data['records']->pastrans_flag == 11  ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( !empty($data['records']->sskt_id) || !empty($data['records']->ssht_id)  ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon-mail-1"></i> Surat Keterangan
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button data-route="'. route($this->route . '.showFormSuratSakit') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( $data['records']->pastrans_flag == 10 ? 'Edit Surat Sakit' : 'Surat Sakit' ) . ' </button>
-                                        <button data-route="'. route($this->route . '.showFormSuratSehat') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( $data['records']->pastrans_flag == 11 ? 'Edit Surat Sehat' : 'Surat Sehat' ) . ' </button>
+                                        <button data-route="'. route($this->route . '.showFormSuratSakit') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( !empty($data['records']->sskt_id) ? 'Edit Surat Sakit' : 'Surat Sakit' ) . ' </button>
+                                        <button data-route="'. route($this->route . '.showFormSuratSehat') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( !empty($data['records']->ssht_id) ? 'Edit Surat Sehat' : 'Surat Sehat' ) . ' </button>
                                     </div>
                                 </div>' . 
                                 ( $data['records']->pastrans_flag != ''
@@ -1224,11 +1228,16 @@ class PasienInController extends Controller
             'cardIcon'     => 'flaticon2-medical-records',
             'route'        => $this->route,
             'radioid'      => $radioid,
-            'psnrekdis_id' => $post['transid'],
-            'radiologi'    => Radiologi::selectRaw('*')
-                ->where('radio_id', Hashids::decode($radioid)[0])
-                ->first()
+            'psnrekdis_id' => $post['transid']
         ];
+
+        if(empty($radioid)){
+            $data['radiologi'] = NULL;
+        }else{
+            $data['radiologi'] = Radiologi::selectRaw('*')
+                ->where('radio_id', Hashids::decode($radioid)[0])
+                ->first();
+        }
 
         return view($this->path . '.PemeriksaanPenunjang.formRadiologi', $data);
     }
@@ -1324,9 +1333,12 @@ class PasienInController extends Controller
             'cardIcon'     => 'flaticon-file-1',
             'route'        => $this->route,
             'psnrekdis_id' => $post['transid'],
-            'odontogram'   => Odontogram::selectRaw('*')
+            'modon'        => Modon::getModon(),
+            'odontogram'   => Odontogram::selectRaw('odon_kode,jenisp_warna')
+                ->leftJoin('kkp_jenisp_gigi','jenisp_id','odon_jenisp_id')
                 ->where('odon_psnrekdis_id', Hashids::decode($post['transid'])[0])
                 ->get()
+            
         ];
 
         return view($this->path . '.odontogram', $data);
@@ -1410,5 +1422,68 @@ class PasienInController extends Controller
         }
 
         echo json_encode($response);  
+    }
+
+    function ktableOdon(Request $request, $psnrekdis_id){
+        $post    = $request->input();
+        $getData = Odontogram::selectRaw('odon_id,odon_kode,jenisp_nama,odon_keterangan,odon_status,odon_createddate')->leftJoin('kkp_jenisp_gigi', 'jenisp_id', 'odon_jenisp_id');
+        $jmlData = Odontogram::selectRaw('count(*) AS jumlah')->leftJoin('kkp_jenisp_gigi', 'jenisp_id', 'odon_jenisp_id');
+        $paging  = $post['pagination'];
+        $search  = (!empty($post['query']) ? $post['query'] : null);
+        $getData = $getData->where('odon_psnrekdis_id', Hashids::decode($psnrekdis_id)[0]);
+
+        if( isset($post['sort']) ){
+            $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
+        }else{
+            $getData->orderBy('odon_createddate', 'DESC');
+        }
+
+        if(!empty($search)){
+            foreach ($search as $value => $param) {
+                if($value === 'generalSearch'){
+                    $getData->whereRaw("(odon_kode LIKE '%".$param."%' OR jenisp_nama LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(odon_kode LIKE '%".$param."%' OR jenisp_nama LIKE '%".$param."%')");
+                }else{
+                    if($value !== 0 ){
+                        $getData->where($value, $param);
+                        $jmlData->where($value, $param);
+                    }
+                }
+            }
+            $awal = null;
+        }
+
+        $start = intval($paging['page']);
+        $limit = intval($paging['perpage']);
+        $awal  = ($start == 1 ? '0' : ($start * $limit) - $limit);
+
+        $getData->offset($awal);
+        $getData->limit($limit);
+        $result = $getData->get();
+
+        $jumlah          = $jmlData->first()->jumlah;
+        $data['records'] = array();
+        $rowIds          = [];
+        $i               = 1 + $awal;
+
+        foreach($result as $key => $value){
+            $rowIds[]          = $value->jenobat_id;
+            $data['records'][] = [
+                'no'               => (string)$i,
+                'odon_kode'        => $value->odon_kode,
+                'jenisp_nama'      => $value->jenisp_nama,
+                'odon_keterangan'  => $value->odon_keterangan,
+                'odon_createddate' => date('D, d F Y H:i', strtotime($value->odon_createddate)),             
+            ];
+
+            $i++;
+        }
+
+        $encode = (object)[
+            'meta' => ['page' => $start, 'pages' => $limit, 'perpage' => $limit, 'total' => $jumlah, 'sort' => 'asc', 'field' => 'RecordID'],
+            'data' =>  $data['records']
+        ];
+
+        echo json_encode($encode);
     }
 }

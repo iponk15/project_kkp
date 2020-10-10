@@ -359,6 +359,10 @@ var global = function(){
         
                             var $toast = toastr[tipe](response.message, title);
                             $('.scrolltop').trigger('click');
+
+                            if(typeof(response.custUrl) != "undefined"){
+                                $('.reload').attr('href', response.custUrl);
+                            }
         
                             if(response.status == 1){
                                 $('.reload').trigger('click');

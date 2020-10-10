@@ -193,6 +193,7 @@ Route::group(['middleware' => 'auth'], function(){
         route::post('formRadiologi/{radioid?}', 'PasienInController@formRadiologi')->name('formRadiologi');
         route::post('storeFormRadiologi/{psnrekdis_id}', 'PasienInController@storeFormRadiologi')->name('storeFormRadiologi');
         route::post('storeOdontogram/{psnrekdis_id}', 'PasienInController@storeOdontogram')->name('storeOdontogram');
+        route::post('ktableOdon/{psnrekdis_id}', 'PasienInController@ktableOdon')->name('ktableOdon');
     });
     // end routing menu pasien sedang berobat
 
@@ -242,6 +243,23 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('update/{id}', 'JenispGigiController@update')->name('update');
         route::post('changeStatus/{id?}/{status}', 'JenispGigiController@changeStatus')->name('changeStatus');
         route::post('delete/{id}', 'JenispGigiController@delete')->name('delete');
+    });
+    // end routing menu jenis penyakit gigi
+
+    // start routing menu jenis penyakit gigi
+    Route::group(['as' => 'modon.', 'prefix' => 'modon', 'namespace' => 'MasterData'], function(){
+        Route::get('index', 'ModonController@index')->name('index');
+        Route::post('ktable', 'ModonController@ktable')->name('ktable');
+        Route::get('show', 'ModonController@show')->name('show');
+        Route::post('store', 'ModonController@store')->name('store');
+        Route::get('edit/{id}', 'ModonController@edit')->name('edit');
+        Route::post('update/{id}', 'ModonController@update')->name('update');
+        route::post('changeStatus/{id?}/{status}', 'ModonController@changeStatus')->name('changeStatus');
+        route::post('delete/{id}', 'ModonController@delete')->name('delete');
+        route::post('preview', 'ModonController@preview')->name('preview');
+        Route::get('showModet/{id}/{modetid?}', 'ModonController@showModet')->name('showModet');
+        route::post('storeModet/{id}/{modetid?}', 'ModonController@storeModet')->name('storeModet');
+        route::post('deleteModet/{id}', 'ModonController@deleteModet')->name('deleteModet');
     });
     // end routing menu jenis penyakit gigi
 });
