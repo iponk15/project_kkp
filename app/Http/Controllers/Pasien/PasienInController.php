@@ -1486,4 +1486,23 @@ class PasienInController extends Controller
 
         echo json_encode($encode);
     }
+
+    function debugOdontogram(Request $request){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Odontogram',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon-file-1',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['transid'],
+            'modon'        => Modon::getModon(),
+            'odontogram'   => Odontogram::selectRaw('odon_kode,jenisp_warna')
+                ->leftJoin('kkp_jenisp_gigi','jenisp_id','odon_jenisp_id')
+                ->where('odon_psnrekdis_id', Hashids::decode($post['transid'])[0])
+                ->get()
+            
+        ];
+
+        return view($this->path . '.debugOdontogram', $data);
+    }
 }

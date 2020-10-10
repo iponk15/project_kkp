@@ -194,6 +194,7 @@ Route::group(['middleware' => 'auth'], function(){
         route::post('storeFormRadiologi/{psnrekdis_id}', 'PasienInController@storeFormRadiologi')->name('storeFormRadiologi');
         route::post('storeOdontogram/{psnrekdis_id}', 'PasienInController@storeOdontogram')->name('storeOdontogram');
         route::post('ktableOdon/{psnrekdis_id}', 'PasienInController@ktableOdon')->name('ktableOdon');
+        route::post('debugOdontogram', 'PasienInController@debugOdontogram')->name('debugOdontogram');
     });
     // end routing menu pasien sedang berobat
 
