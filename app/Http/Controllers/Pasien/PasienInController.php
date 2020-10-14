@@ -29,13 +29,11 @@ class PasienInController extends Controller
     private $route = 'pasienin';
     private $path  = 'Pasien.PasienIn';
 
-    function __construct()
-    {
+    function __construct(){
         // put your magic
     }
 
-    public function index()
-    {
+    public function index(){
         $data = [
             'pagetitle'    => 'Pasien Berobat',
             'cardTitle'    => 'Form',
@@ -45,16 +43,15 @@ class PasienInController extends Controller
             'route'        => $this->route
         ];
 
-        return view($this->path . '.index', $data);
+        return view ($this->path.'.index', $data);
     }
 
-    function ktable(Request $request)
-    {
+    function ktable(Request $request){
         $post    = $request->input();
         $getData = PasienTrans::selectRaw('pasien_id, pasien_norekdis, pasien_nama, pasien_tgllahir, pasien_umur, pasien_jk, psntrans_id, pastrans_status, pastrans_created_date, u.name AS dokter_nama')
             ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
             ->leftJoin('users AS u', 'pastrans_dokter_id', 'u.id');
-
+            
         $jmlData = PasienTrans::selectRaw('count(*) AS jumlah')
             ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
             ->leftJoin('users AS u', 'pastrans_dokter_id', 'u.id');
@@ -62,29 +59,29 @@ class PasienInController extends Controller
         $paging  = $post['pagination'];
         $search  = (!empty($post['query']) ? $post['query'] : null);
 
-        if (Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPDKT') {
+        if(Auth::user()->role_kode == 'KKPSTR' || Auth::user()->role_kode == 'KKPPTG' || Auth::user()->role_kode == 'KKPDKT'){
             $getData->where('pastrans_status', '<>', '99');
             $jmlData->where('pastrans_status', '<>', '99');
 
-            if (Auth::user()->role_kode == 'KKPDKT') {
+            if( Auth::user()->role_kode == 'KKPDKT' ){
                 $getData->where('pastrans_dokter_id', Auth::user()->id);
                 $jmlData->where('pastrans_dokter_id', Auth::user()->id);
             }
         }
 
-        if (isset($post['sort'])) {
+        if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
-        } else {
+        }else{
             $getData->orderBy('pastrans_created_date', 'DESC');
         }
 
-        if (!empty($search)) {
+        if(!empty($search)){
             foreach ($search as $value => $param) {
-                if ($value === 'generalSearch') {
-                    $getData->whereRaw("(pasien_norekdis LIKE '%" . $param . "%' OR pasien_nama LIKE '%" . $param . "%')");
-                    $jmlData->whereRaw("(pasien_norekdis LIKE '%" . $param . "%' OR pasien_nama LIKE '%" . $param . "%')");
-                } else {
-                    if ($value !== 0) {
+                if($value === 'generalSearch'){
+                    $getData->whereRaw("(pasien_norekdis LIKE '%".$param."%' OR pasien_nama LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(pasien_norekdis LIKE '%".$param."%' OR pasien_nama LIKE '%".$param."%')");
+                }else{
+                    if($value !== 0 ){
                         $getData->where($value, $param);
                         $jmlData->where($value, $param);
                     }
@@ -107,25 +104,27 @@ class PasienInController extends Controller
         $i               = 1 + $awal;
         $gender          = ['L' => 'Laki-laki', 'P' => 'Perempuan'];
 
-        foreach ($result as $key => $value) {
+        foreach($result as $key => $value){
 
-            if (Auth::user()->role_kode == 'KKPPTG') {
+            if( Auth::user()->role_kode == 'KKPPTG' ){
                 $button = ' <div class="dropdown dropdown-inline">    
-                                <a href="' . route('pasieninfo.index', ['psntrans_id' => Hashids::encode($value->psntrans_id)]) . '" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>
+                                <a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>
                             </div>';
-            } else if (Auth::user()->role_kode == 'KKPSTR') {
+            }else if( Auth::user()->role_kode == 'KKPSTR' ){
                 $button = '<div class="dropdown dropdown-inline">' .
-                    ($value->pastrans_status == '1'
-                        ? '<a href="' . route($this->route . '.formPeriksa', ['psntrans_id' => Hashids::encode($value->psntrans_id)]) . '" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-warning icon-xl"></i></a>'
-                        : '<a href="' . route('pasieninfo.index', ['psntrans_id' => Hashids::encode($value->psntrans_id)]) . '" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>') .
-                    '</div>';
-            } else if (Auth::user()->role_kode == 'KKPDKT') {
+                                ( $value->pastrans_status == '1'
+                                    ? '<a href="'. route( $this->route . '.formPeriksa', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-warning icon-xl"></i></a>'
+                                    : '<a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>' 
+                                ) .
+                           '</div>';
+            }else if( Auth::user()->role_kode == 'KKPDKT' ) {
                 $button = '<div class="dropdown dropdown-inline">' .
-                    ($value->pastrans_status != '99'
-                        ? '<a href="' . route($this->route . '.formPeriksaDokter', ['psntrans_id' => Hashids::encode($value->psntrans_id)]) . '" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-danger icon-xl"></i></a>'
-                        : '<a href="' . route('pasieninfo.index', ['psntrans_id' => Hashids::encode($value->psntrans_id)]) . '" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>') .
-                    '</div>';
-            } else {
+                                ( $value->pastrans_status != '99'
+                                    ? '<a href="'. route( $this->route . '.formPeriksaDokter', ['psntrans_id' => Hashids::encode($value->psntrans_id)] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Pemeriksaan Pasien"><i class="flaticon-statistics text-danger icon-xl"></i></a>'
+                                    : '<a href="'. route( 'pasieninfo.index', [ 'psntrans_id' => Hashids::encode($value->psntrans_id) ] ) .'" class="btn btn-icon btn-clean btn-sm mr-2 ajaxify" data-toggle="tooltip" data-theme="dark" title="Detail Pasien"><i class="flaticon-information text-primary icon-xl"></i></a>'
+                                ) .
+                            '</div>';
+            }else{
                 $button = '';
             }
 
@@ -141,7 +140,7 @@ class PasienInController extends Controller
                 'pastrans_status'       => $value->pastrans_status,
                 'pastrans_created_date' => date('D, d F Y H:i', strtotime($value->pastrans_created_date)),
                 'action'                => $button
-
+                                
             ];
 
             $i++;
@@ -155,13 +154,12 @@ class PasienInController extends Controller
         echo json_encode($encode);
     }
 
-    function formPeriksa($psntrans_id)
-    {
+    function formPeriksa($psntrans_id){
         $data = [
             'pagetitle'    => 'Form Pemeriksaan',
             'cardTitle'    => 'Form Pemeriksaan',
             'cardIcon'     => 'flaticon2-list-3',
-            'breadcrumb'   => ['index' => route($this->route . '.index'), 'Form Pemeriksaan' => route($this->route . '.formPeriksa', ['psntrans_id' => $psntrans_id])],
+            'breadcrumb'   => [ 'index' => route( $this->route . '.index' ), 'Form Pemeriksaan' => route($this->route . '.formPeriksa', ['psntrans_id' => $psntrans_id])],
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
             'records'      => PasienTrans::selectRaw('pasien_norekdis, pasien_id, pasien_nama, pasien_tgllahir, pasien_umur, pasien_email, pasien_jk, pasien_telp, pasien_alamat, u.name AS nama_dokter, kpol.poli_nama, kpol.poli_kode')
@@ -176,14 +174,13 @@ class PasienInController extends Controller
         $data['kodePoli']     = $data['records']->poli_kode;
 
         // if($data['records']->poli_kode == 'KKPPOLMUM'){
-        return view($this->path . '.formPeriksa', $data);
+        return view ($this->path.'.formPeriksa', $data);
         // }else{
         //     dd('Coming Soon');
         // }
     }
 
-    function storeFormPeriksa(Request $request, $psntrans_id)
-    {
+    function storeFormPeriksa(Request $request, $psntrans_id){
         $post      = $request->input();
         $validator = Validator::make(
             $post,
@@ -217,8 +214,8 @@ class PasienInController extends Controller
             Arr::forget($post, '_token');
 
             // start create data pasien rekamedis
-            if ($post['kodepoli'] == 'KKPPOLGG') {
-                $frmPrk = [
+            if($post['kodepoli'] == 'KKPPOLGG'){
+                $frmPrk = [ 
                     'psnrekdis_psntrans_id'    => Hashids::decode($psntrans_id)[0],
                     'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
                     'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
@@ -234,8 +231,8 @@ class PasienInController extends Controller
                     'psnrekdis_created_date'   => date('Y-m-d H:i:s'),
                     'psnrekdis_ip'             => \Request::ip()
                 ];
-            } else {
-                $frmPrk = [
+            }else{
+                $frmPrk = [ 
                     'psnrekdis_psntrans_id'    => Hashids::decode($psntrans_id)[0],
                     'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
                     'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
@@ -262,7 +259,7 @@ class PasienInController extends Controller
             // end create data pasien rekamedis
 
             // start update data pasien trans
-            $psnTrans = ['pastrans_status' => '2'];
+            $psnTrans = [ 'pastrans_status' => '2' ];
             PasienTrans::where('psntrans_id', Hashids::decode($psntrans_id)[0])->update($psnTrans);
             // start update data pasien trans
 
@@ -294,14 +291,13 @@ class PasienInController extends Controller
         echo json_encode($response);
     }
 
-    function formPeriksaDokter($psntrans_id)
-    {
+    function formPeriksaDokter($psntrans_id){
         $data = [
             'pagetitle'    => 'Form Pemeriksaan',
             'cardTitle'    => 'Form Pemeriksaan',
             'cardSubTitle' => '&nbsp;',
             'cardIcon'     => 'flaticon2-list-3',
-            'breadcrumb'   => ['index' => route($this->route . '.index'), 'Form Pemeriksaan' => route($this->route . '.formPeriksaDokter', ['psntrans_id' => $psntrans_id])],
+            'breadcrumb'   => [ 'index' => route( $this->route . '.index' ), 'Form Pemeriksaan' => route($this->route . '.formPeriksaDokter', ['psntrans_id' => $psntrans_id])],
             'route'        => $this->route,
             'psntrans_id'  => $psntrans_id,
             'records'      => PasienTrans::selectRaw('
@@ -314,27 +310,27 @@ class PasienInController extends Controller
                 ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
                 ->leftJoin('kkp_pasien_rekamedis', 'psntrans_id', 'psnrekdis_psntrans_id')
                 ->leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')
-                ->leftJoin('users', 'pastrans_dokter_id', 'users.id')
-                ->leftJoin('kkp_poli AS kpol', 'users.poli_id', 'kpol.poli_id')
-                ->leftJoin('kkp_rujukan_lab', 'rjklab_psnrekdis_id', 'psnrekdis_id')
-                ->leftJoin('kkp_radiologi', 'radio_psnrekdis_id', 'psnrekdis_id')
-                ->leftJoin('kkp_surat_sakit', 'sskt_psnrekdis_id', 'psnrekdis_id')
-                ->leftJoin('kkp_surat_sehat', 'ssht_psnrekdis_id', 'psnrekdis_id')
+                ->leftJoin('users','pastrans_dokter_id','users.id')
+                ->leftJoin('kkp_poli AS kpol','users.poli_id','kpol.poli_id')
+                ->leftJoin('kkp_rujukan_lab','rjklab_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_radiologi','radio_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_surat_sakit','sskt_psnrekdis_id','psnrekdis_id')
+                ->leftJoin('kkp_surat_sehat','ssht_psnrekdis_id','psnrekdis_id')
                 ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
                 ->first()
         ];
 
         $data['cekResep']   = PasienRekdis::leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('resep_id', '<>', NULL)->count();
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
-        $data['subHeadBtn'] = ' <button data-route="' . route($this->route . ($data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok')) . '" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="' . ($data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background') . '"></i> ' . ($data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat') . ' </button>
+        $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-' . ($data['records']->pastrans_flag == 3 || $data['records']->pastrans_flag == 2 ? "warning" : "primary") . ' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 || $data['records']->pastrans_flag == 2 ? "warning" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a href="' . route($this->route . '.formRadiologi', ['radioid' => Hashids::encode($data['records']->radio_id)]) . '" class="dropdown-item asideInfoPasien" data-transid="' . Hashids::encode($data['records']->psnrekdis_id) . '">' . (!empty($data['records']->radio_id) ? "Edit Form Radiologi" : "Form Radiologi") . '</a>
-                                        <a href="' . route($this->route . '.formLabInternal', ['labid' => Hashids::encode($data['records']->rjklab_id)]) . '" class="dropdown-item asideInfoPasien" data-transid="' . Hashids::encode($data['records']->psnrekdis_id) . '"> ' .  (!empty($data['records']->rjklab_id) ? "Edit Form Lab Internal" : "Form Lab Internal") . '</a>
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '">Form Lab External</button>
+                                        <a href="'. route( $this->route . '.formRadiologi', [ 'radioid' => Hashids::encode($data['records']->radio_id) ] ) .'" class="dropdown-item asideInfoPasien" data-transid="'.Hashids::encode($data['records']->psnrekdis_id).'">'.( !empty($data['records']->radio_id) ? "Edit Form Radiologi" : "Form Radiologi" ).'</a>
+                                        <a href="'. route( $this->route . '.formLabInternal', [ 'labid' => Hashids::encode($data['records']->rjklab_id) ] ) .'" class="dropdown-item asideInfoPasien" data-transid="'.Hashids::encode($data['records']->psnrekdis_id).'"> '.  ( !empty($data['records']->rjklab_id) ? "Edit Form Lab Internal" : "Form Lab Internal" ) .'</a>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Form Lab External</button>
                                     </div>
                                 </div>
                                 <div class="btn-group">
@@ -342,38 +338,38 @@ class PasienInController extends Controller
                                         <i class="flaticon-map"></i> Konsultasi Internal
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '">Poli Gigi</button>
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '">Poli Umum</button>
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '">Spesialis</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Gigi</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Poli Umum</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Spesialis</button>
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-' . (empty($data['records']->rjksps_id) ? 'primary' : 'warning') . ' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( empty($data['records']->rjksps_id) ? 'primary' : 'warning' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-start-up"></i> Pengantar
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button data-route="' . ($data['cekRjkSps'] > 0 ? route($this->route . '.editFormRujukanSpesialis', ['rjksps_id' => Hashids::encode($data['records']->rjksps_id)]) : route($this->route . '.showFormRujukanSpesialis')) . '" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">' . ($data['cekRjkSps'] > 0 ? 'Edit Spesialis' : 'Spesialis') . '</button>
-                                        <button class="dropdown-item" data-route="" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '">Rumah Sakit</button>
+                                        <button data-route="'. ( $data['cekRjkSps'] > 0 ? route( $this->route . '.editFormRujukanSpesialis', [ 'rjksps_id' => Hashids::encode($data['records']->rjksps_id) ]) : route( $this->route . '.showFormRujukanSpesialis') ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item">'. ( $data['cekRjkSps'] > 0 ? 'Edit Spesialis' : 'Spesialis' ) .'</button>
+                                        <button class="dropdown-item" data-route="" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'">Rumah Sakit</button>
                                     </div>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-' . (!empty($data['records']->sskt_id) || !empty($data['records']->ssht_id)  ? 'warning' : 'primary') . ' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. ( !empty($data['records']->sskt_id) || !empty($data['records']->ssht_id)  ? 'warning' : 'primary' ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon-mail-1"></i> Surat Keterangan
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button data-route="' . route($this->route . '.showFormSuratSakit') . '" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> ' . (!empty($data['records']->sskt_id) ? 'Edit Surat Sakit' : 'Surat Sakit') . ' </button>
-                                        <button data-route="' . route($this->route . '.showFormSuratSehat') . '" data-psnrekdisid="' . Hashids::encode($data['records']->psnrekdis_id) . '" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> ' . (!empty($data['records']->ssht_id) ? 'Edit Surat Sehat' : 'Surat Sehat') . ' </button>
+                                        <button data-route="'. route($this->route . '.showFormSuratSakit') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( !empty($data['records']->sskt_id) ? 'Edit Surat Sakit' : 'Surat Sakit' ) . ' </button>
+                                        <button data-route="'. route($this->route . '.showFormSuratSehat') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( !empty($data['records']->ssht_id) ? 'Edit Surat Sehat' : 'Surat Sehat' ) . ' </button>
                                     </div>
-                                </div>' .
-            ($data['records']->pastrans_flag != ''
-                ? '<button data-route="' . route($this->route . '.selesaiDokter') . '" data-psntransid="' . Hashids::encode($data['records']->psntrans_id) . '" onClick="return f_selesai(this, event)" type="button" class="btn btn-outline-success btn-sm mr-3"><i class="flaticon-tea-cup"></i> Selesai </button>'
-                : '');
+                                </div>' . 
+                                ( $data['records']->pastrans_flag != ''
+                                    ? '<button data-route="'. route( $this->route . '.selesaiDokter' ) .'" data-psntransid="'.Hashids::encode($data['records']->psntrans_id).'" onClick="return f_selesai(this, event)" type="button" class="btn btn-outline-success btn-sm mr-3"><i class="flaticon-tea-cup"></i> Selesai </button>' 
+                                    : '' 
+                                );
 
-        return view($this->path . '.formPeriksaDokter', $data);
+        return view ($this->path.'.formPeriksaDokter', $data);        
     }
 
-    function updateFormDokter(Request $result, $psntrans_id)
-    {
+    function updateFormDokter(Request $result, $psntrans_id){
         $post      = $result->input();
         $validator = Validator::make(
             $post,
@@ -407,7 +403,7 @@ class PasienInController extends Controller
             Arr::forget($post, '_token');
 
             // start create data pasien rekamedis
-            if ($post['poli_kode'] == 'KKPPOLGG') {
+            if($post['poli_kode'] == 'KKPPOLGG'){
                 $frmPrk = [
                     'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
                     'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
@@ -420,7 +416,7 @@ class PasienInController extends Controller
                     'psnrekdis_obj_vsrr'       => $post['psnrekdis_obj_vsrr'],
                     'psnrekdis_obj_vst'        => $post['psnrekdis_obj_vst']
                 ];
-            } else {
+            }else{
                 $frmPrk = [
                     'psnrekdis_sbj_kelutm'     => $post['psnrekdis_sbj_kelutm'],
                     'psnrekdis_sbj_keltam'     => $post['psnrekdis_sbj_keltam'],
@@ -478,8 +474,7 @@ class PasienInController extends Controller
         echo json_encode($response);
     }
 
-    function showFormResepDok(Request $request)
-    {
+    function showFormResepDok(Request $request){
         $post = $request->input();
         $data = [
             'modalTitle'   => 'Form Resep Obat',
@@ -490,23 +485,21 @@ class PasienInController extends Controller
         return view($this->path . '.formResepDokter', $data);
     }
 
-    function cekStokObat(Request $request)
-    {
+    function cekStokObat(Request $request){
         $post    = $request->input();
         $getObat = Obat::selectRaw('obat_stok')->where('obat_id', $post['obat_id'])->first();
         $param   = [
-            'message' => ($getObat->obat_stok == 0 ? '*Stok habis' : '*Stok obat ' . $getObat->obat_stok),
+            'message' => ( $getObat->obat_stok == 0 ? '*Stok habis' : '*Stok obat ' . $getObat->obat_stok ),
             'stok'    => $getObat->obat_stok
         ];
 
         echo json_encode($param);
     }
 
-    function storeResepObat(Request $request, $psnrekdis_id)
-    {
+    function storeResepObat(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decode    = Hashids::decode($psnrekdis_id)[0];
-        $validator = Validator::make($post, [], []);
+        $validator = Validator::make( $post,[],[] );
         $getRekdis = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first();
 
         if ($validator->fails()) {
@@ -536,13 +529,13 @@ class PasienInController extends Controller
                     'resep_created_date' => date('Y-m-d H:i:s'),
                     'resep_ip'           => \Request::ip()
                 ];
-
+                
                 $tempResp[] = $resep;
 
                 // start update stok obat
                 $getStok = Obat::selectRaw('obat_stok')->where('obat_id', $resep['resep_obat_id'])->first()->obat_stok;
                 $kurang  = $getStok - $resep['resep_jumlah'];
-
+                
                 Obat::where('obat_id', $resep['resep_obat_id'])->update(['obat_stok' => $kurang]);
                 // end update stok obat
             }
@@ -584,11 +577,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);       
     }
 
-    function editFormResepDok(Request $request)
-    {
+    function editFormResepDok(Request $request){
         $post = $request->input();
         $data = [
             'modalTitle'   => 'Edit Resep Obat',
@@ -605,11 +597,10 @@ class PasienInController extends Controller
         return view($this->path . '.editFormResep', $data);
     }
 
-    function updateResepObat(Request $request, $psnrekdis_id)
-    {
+    function updateResepObat(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decode    = Hashids::decode($psnrekdis_id)[0];
-        $validator = Validator::make($post, [], []);
+        $validator = Validator::make( $post,[],[] );
         $getRekdis = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first();
 
         if ($validator->fails()) {
@@ -629,19 +620,19 @@ class PasienInController extends Controller
         DB::beginTransaction();
 
         try {
-
+            
             foreach ($post['resep_obat_id'] as $key => $value) {
                 $rspId      = $post['resep_id'][$key];
                 $tmpRspId[] = $post['resep_id'][$key];
-
-                if (!empty($rspId)) {
+                
+                if(!empty($rspId)){
                     $dbResep = ResepObat::selectRaw('resep_obat_id,resep_jumlah')->where('resep_id', $rspId)->first();
 
-                    if ($dbResep->resep_obat_id != $post['resep_obat_id'][$key]) {
+                    if($dbResep->resep_obat_id != $post['resep_obat_id'][$key]){
                         // start delete dan update obat
                         $getStok = Obat::selectRaw('obat_stok')->where('obat_id', $dbResep->resep_obat_id)->first()->obat_stok;
                         $tambah  = $getStok + $dbResep->resep_jumlah;
-
+                        
                         Obat::where('obat_id', $dbResep->resep_obat_id)->update(['obat_stok' => $tambah]);
                         ResepObat::where('resep_id', $rspId)->delete();
                         // end delete dan update obat
@@ -656,18 +647,18 @@ class PasienInController extends Controller
                             'resep_created_date' => date('Y-m-d H:i:s'),
                             'resep_ip'           => \Request::ip()
                         ];
-
+                        
                         $tempResp[] = $resep;
-
+    
                         $getStok2 = Obat::selectRaw('obat_stok')->where('obat_id', $resep['resep_obat_id'])->first()->obat_stok;
                         $kurang   = $getStok2 - $resep['resep_jumlah'];
-
+                        
                         Obat::where('obat_id', $resep['resep_obat_id'])->update(['obat_stok' => $kurang]);
                         // end update obat yang baru diinput
-                    } else {
+                    }else{
                         $getStok = Obat::selectRaw('obat_stok')->where('obat_id', $post['resep_obat_id'][$key])->first()->obat_stok;
                         $iptStok = $post['resep_jumlah'][$key];
-                        $finStok = (($dbResep->resep_jumlah + $getStok) - $iptStok);
+                        $finStok = ( ( $dbResep->resep_jumlah + $getStok ) - $iptStok);
                         $uptRsp  = [
                             'resep_obat_id'    => $post['resep_obat_id'][$key],
                             'resep_jumlah'     => $post['resep_jumlah'][$key],
@@ -678,7 +669,7 @@ class PasienInController extends Controller
                         ResepObat::where('resep_id', $rspId)->update($uptRsp);
                         Obat::where('obat_id', $post['resep_obat_id'][$key])->update(['obat_stok' => $finStok]);
                     }
-                } else {
+                }else{
                     $resep = [
                         'resep_psnrekdis_id' => $decode,
                         'resep_obat_id'      => $post['resep_obat_id'][$key],
@@ -688,31 +679,31 @@ class PasienInController extends Controller
                         'resep_created_date' => date('Y-m-d H:i:s'),
                         'resep_ip'           => \Request::ip()
                     ];
-
+                    
                     $tempResp[] = $resep;
 
                     // start update stok obat
                     $getStok = Obat::selectRaw('obat_stok')->where('obat_id', $resep['resep_obat_id'])->first()->obat_stok;
                     $kurang  = $getStok - $resep['resep_jumlah'];
-
+                    
                     Obat::where('obat_id', $resep['resep_obat_id'])->update(['obat_stok' => $kurang]);
                     // end update stok obat
                 }
             }
 
-            if (!empty($tempResp)) {
+            if(!empty($tempResp)){
                 ResepObat::insert($tempResp);
-            } else {
+            }else{
                 $getData = ResepObat::selectRaw('resep_id,resep_jumlah,resep_obat_id')->whereNotIn('resep_id', $tmpRspId)->get();
 
-                if ($getData->isNotEmpty()) {
+                if($getData->isNotEmpty()){
                     foreach ($getData as $delResep) {
                         $tempDlt[] = $delResep->resep_id;
 
                         // start update stok obat
                         $getStok = Obat::selectRaw('obat_stok')->where('obat_id', $delResep->resep_obat_id)->first()->obat_stok;
                         $tambah  = $getStok + $delResep->resep_jumlah;
-
+                        
                         Obat::where('obat_id', $delResep->resep_obat_id)->update(['obat_stok' => $tambah]);
                         // end update stok obat
                     }
@@ -735,11 +726,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);       
     }
 
-    function showFormRujukanSpesialis(Request $request)
-    {
+    function showFormRujukanSpesialis(Request $request){
         $post = $request->input();
         $data = [
             'modalTitle'   => 'Form Rujukan Spesialis',
@@ -750,8 +740,7 @@ class PasienInController extends Controller
         return view($this->path . '.Rujukan.showFormRujSps', $data);
     }
 
-    function storeFormRjkSps(Request $request, $psnrekdis_id)
-    {
+    function storeFormRjkSps(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decode    = Hashids::decode($psnrekdis_id)[0];
         $validator = Validator::make(
@@ -807,11 +796,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);    
     }
 
-    function editFormRujukanSpesialis(Request $request, $rjksps_id)
-    {
+    function editFormRujukanSpesialis(Request $request, $rjksps_id){
         $post = $request->input();
         $decd = Hashids::decode($rjksps_id)[0];
         $data = [
@@ -827,8 +815,7 @@ class PasienInController extends Controller
         return view($this->path . '.Rujukan.editFormRujSps', $data);
     }
 
-    function updateFormRjkSps(Request $request, $rjksps_id)
-    {
+    function updateFormRjkSps(Request $request, $rjksps_id){
         $post      = $request->input();
         $decode    = Hashids::decode($rjksps_id)[0];
         $validator = Validator::make(
@@ -882,11 +869,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);    
     }
 
-    function selesaiDokter(Request $request)
-    {
+    function selesaiDokter(Request $request){
         $post = $request->input();
         $decd = Hashids::decode($post['psntrans_id'])[0];
 
@@ -912,7 +898,7 @@ class PasienInController extends Controller
 
             $response['status']  = 1;
             $response['message'] = 'Data berhasil diupdate';
-            $response['cus_url'] = route($this->route . '.index');
+            $response['cus_url'] = route( $this->route . '.index' );
         } catch (\Exception $ex) {
             DB::rollback();
 
@@ -920,11 +906,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);    
     }
 
-    function showFormSuratSakit(Request $request)
-    {
+    function showFormSuratSakit(Request $request){
         $post = $request->input();
         $decd = Hashids::decode($post['psnrekdisid'])[0];
         $data = [
@@ -939,8 +924,7 @@ class PasienInController extends Controller
         return view($this->path . '.SuratKeterangan.showFormSuratSakit', $data);
     }
 
-    function storeFormSuratSakit(Request $request, $psnrekdis_id)
-    {
+    function storeFormSuratSakit(Request $request, $psnrekdis_id){
         $post     = $request->input();
         $decd     = Hashids::decode($psnrekdis_id)[0];
         $getTrans = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
@@ -986,9 +970,9 @@ class PasienInController extends Controller
                 'sskt_ip'           => \Request::ip()
             ];
 
-            if ($post['sskt_psnrekdis_id'] == '') {
+            if($post['sskt_psnrekdis_id'] == ''){
                 SuratSakit::create($data);
-            } else {
+            }else{
                 SuratSakit::where('sskt_psnrekdis_id', $decd)->update($data);
             }
 
@@ -1010,7 +994,8 @@ class PasienInController extends Controller
             DB::commit();
 
             $response['status']  = 1;
-            $response['message'] = ($post['sskt_psnrekdis_id'] == '' ? 'Surat keterangan sakit berhasil dibuat' : 'Surat keterangan sakit berhasil diedit');
+            $response['message'] = ( $post['sskt_psnrekdis_id'] == '' ? 'Surat keterangan sakit berhasil dibuat' : 'Surat keterangan sakit berhasil diedit' );
+
         } catch (\Exception $ex) {
             DB::rollback();
 
@@ -1018,11 +1003,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);  
     }
 
-    function showFormSuratSehat(Request $request)
-    {
+    function showFormSuratSehat(Request $request){
         $post = $request->input();
         $decd = Hashids::decode($post['psnrekdisid'])[0];
         $data = [
@@ -1037,16 +1021,15 @@ class PasienInController extends Controller
         return view($this->path . '.SuratKeterangan.showFormSuratSehat', $data);
     }
 
-    function storeFormSuratSehat(Request $request, $psnrekdis_id)
-    {
+    function storeFormSuratSehat(Request $request, $psnrekdis_id){
         $post     = $request->input();
         $decd     = Hashids::decode($psnrekdis_id)[0];
         $getTrans = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
 
         $validator = Validator::make(
             $post,
-            ['ssht_keperluan' => 'required'],
-            ['ssht_keperluan.required' => 'Tanggal mulai tidak boleh kosong']
+            [ 'ssht_keperluan' => 'required' ],
+            [ 'ssht_keperluan.required' => 'Tanggal mulai tidak boleh kosong' ]
         );
 
         if ($validator->fails()) {
@@ -1069,15 +1052,15 @@ class PasienInController extends Controller
             $data = [
                 'ssht_psnrekdis_id' => $decd,
                 'ssht_keperluan'    => $post['ssht_keperluan'],
-                'ssht_keterangan'   => ($post['ssht_keperluan'] == '4' ? $post['ssht_keterangan'] : NULL),
+                'ssht_keterangan'   => ( $post['ssht_keperluan'] == '4' ? $post['ssht_keterangan'] : NULL ),
                 'ssht_created_by'   => Auth::user()->id,
                 'ssht_created_date' => date('Y-m-d H:i:s'),
                 'ssht_ip'           => \Request::ip()
             ];
 
-            if ($post['ssht_psnrekdis_id'] == '') {
+            if($post['ssht_psnrekdis_id'] == ''){
                 SuratSehat::create($data);
-            } else {
+            }else{
                 SuratSehat::where('ssht_psnrekdis_id', $decd)->update($data);
             }
 
@@ -1099,7 +1082,8 @@ class PasienInController extends Controller
             DB::commit();
 
             $response['status']  = 1;
-            $response['message'] = ($post['ssht_psnrekdis_id'] == '' ? 'Surat keterangan sehat berhasil dibuat' : 'Surat keterangan sehat berhasil diedit');
+            $response['message'] = ( $post['ssht_psnrekdis_id'] == '' ? 'Surat keterangan sehat berhasil dibuat' : 'Surat keterangan sehat berhasil diedit' );
+
         } catch (\Exception $ex) {
             DB::rollback();
 
@@ -1107,11 +1091,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);  
     }
 
-    function formLabInternal(Request $request, $labid = null)
-    {
+    function formLabInternal(Request $request, $labid = null){
         $post = $request->input();
         $data = [
             'cardTitle'    => 'Form Lab Internal',
@@ -1121,30 +1104,29 @@ class PasienInController extends Controller
             'labid'        => $labid,
             'records'      => PasienRekdis::selectRaw('pasien_nama,pasien_umur,pasien_norekdis,uker_nama,pasien_jk,pasien_alamat,dok.name AS dokter_nama,golongan_nama,pasien_telp,psnrekdis_id')
                 ->where('psnrekdis_id', Hashids::decode($post['transid'])[0])
-                ->leftJoin('kkp_pasien_trans', 'psnrekdis_psntrans_id', 'psntrans_id')
-                ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
-                ->leftJoin('kkp_unit_kerja', 'pasien_uker_id', 'uker_id')
-                ->leftJoin('users AS dok', 'pastrans_dokter_id', 'dok.id')
-                ->leftJoin('kkp_golongan', 'pasien_golongan_id', 'golongan_id')
+                ->leftJoin('kkp_pasien_trans','psnrekdis_psntrans_id','psntrans_id')
+                ->leftJoin('kkp_pasien','pastrans_pasien_id','pasien_id')
+                ->leftJoin('kkp_unit_kerja','pasien_uker_id','uker_id')
+                ->leftJoin('users AS dok','pastrans_dokter_id','dok.id')
+                ->leftJoin('kkp_golongan','pasien_golongan_id','golongan_id')
                 ->first()
         ];
 
-        if (!empty($labid)) {
+        if(!empty($labid)){
             $data['labs'] = RujukanLab::selectRaw('*')
                 ->where('rjklab_id', Hashids::decode($labid)[0])
                 ->first();
-        } else {
+        }else{
             $data['labs'] = [];
         }
 
         return view($this->path . '.PemeriksaanPenunjang.formLabInternal', $data);
     }
 
-    function storeFormLabInternal(Request $request, $psnrekdis_id)
-    {
+    function storeFormLabInternal(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decode    = Hashids::decode($psnrekdis_id)[0];
-        $validator = Validator::make($post, [], []);
+        $validator = Validator::make($post,[],[]);
         $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decode)->first()->psnrekdis_psntrans_id;
 
         if ($validator->fails()) {
@@ -1200,14 +1182,14 @@ class PasienInController extends Controller
             $rjkLab['rjklab_created_date']    = date('Y-m-d H:i:s');
             $rjkLab['rjklab_ip']              = \Request::ip();
 
-            if (empty($post['rjklab_id'])) {
+            if(empty($post['rjklab_id'])){
                 RujukanLab::create($rjkLab);
-            } else {
-                RujukanLab::where('rjklab_id', Hashids::decode($post['rjklab_id']))->update($rjkLab);
+            }else{
+                RujukanLab::where( 'rjklab_id', Hashids::decode($post['rjklab_id']) )->update($rjkLab);
             }
 
             PasienTrans::where('psntrans_id', $getTrans)->update([
-                'pastrans_flag'   => '3',
+                'pastrans_flag'   => '3', 
                 'pastrans_status' => '4'
             ]);
 
@@ -1235,11 +1217,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);    
     }
 
-    function formRadiologi(Request $request, $radioid = null)
-    {
+    function formRadiologi(Request $request, $radioid = null){
         $post = $request->input();
         $data = [
             'cardTitle'    => 'Form Radiologi',
@@ -1250,9 +1231,9 @@ class PasienInController extends Controller
             'psnrekdis_id' => $post['transid']
         ];
 
-        if (empty($radioid)) {
+        if(empty($radioid)){
             $data['radiologi'] = NULL;
-        } else {
+        }else{
             $data['radiologi'] = Radiologi::selectRaw('*')
                 ->where('radio_id', Hashids::decode($radioid)[0])
                 ->first();
@@ -1261,8 +1242,7 @@ class PasienInController extends Controller
         return view($this->path . '.PemeriksaanPenunjang.formRadiologi', $data);
     }
 
-    function storeFormRadiologi(Request $request, $psnrekdis_id)
-    {
+    function storeFormRadiologi(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decd      = Hashids::decode($psnrekdis_id)[0];
         $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
@@ -1310,10 +1290,10 @@ class PasienInController extends Controller
                 'radio_ip'           => \Request::ip()
             ];
 
-            if (empty($post['radio_psnrekdis_id'])) {
+            if(empty($post['radio_psnrekdis_id'])){
                 Radiologi::create($data);
                 PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '2']);
-            } else {
+            }else{
                 Radiologi::where('radio_id', $decd)->update($data);
             }
 
@@ -1321,7 +1301,7 @@ class PasienInController extends Controller
             $logTrans = [
                 'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
                 'log_subjek'       => 'Pemeriksaan Penunjang - Radiologi',
-                'log_keterangan'   => 'Dokter telah ' . (empty($psnrekdis_id) ? 'mengisi' : 'mengubah') . ' form radiologi',
+                'log_keterangan'   => 'Dokter telah '. ( empty($psnrekdis_id) ? 'mengisi' : 'mengubah' ) .' form radiologi',
                 'log_created_by'   => Auth::user()->id,
                 'log_created_date' => date('Y-m-d H:i:s'),
                 'log_ip'           => \Request::ip()
@@ -1333,7 +1313,8 @@ class PasienInController extends Controller
             DB::commit();
 
             $response['status']  = 1;
-            $response['message'] = 'Data radiologi berhasil ' . (empty($psnrekdis_id) ? 'disimpan' : 'diubah');
+            $response['message'] = 'Data radiologi berhasil ' . ( empty($psnrekdis_id) ? 'disimpan' : 'diubah' );
+
         } catch (\Exception $ex) {
             DB::rollback();
 
@@ -1341,10 +1322,50 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);  
     }
 
-    function odontogram(Request $request)
+    function odontogram(Request $request){
+        $post = $request->input();
+        $data = [
+            'cardTitle'    => 'Odontogram',
+            'cardSubTitle' => '&nbsp;',
+            'cardIcon'     => 'flaticon-file-1',
+            'route'        => $this->route,
+            'psnrekdis_id' => $post['transid'],
+            'modon'    => Modon::getModon(),
+            'odontogram'   => Odontogram::selectRaw('odon_kode,jenisp_warna')
+                ->leftJoin('kkp_jenisp_gigi','jenisp_id','odon_jenisp_id')
+                ->where('odon_psnrekdis_id', Hashids::decode($post['transid'])[0])
+                ->get()
+            
+        ];
+
+        if($data['odontogram']->isEmpty()){
+            $data['modon'] = $data['modon'];
+        }else{
+            $data['json'] = collect($data['modon']);
+
+            foreach ($data['odontogram'] as $key => $value) {
+                $kode_explode = explode('-', $value->odon_kode);
+                $modon_kode = $kode_explode[0];
+                $modet_kode = $kode_explode[1];
+
+                $result_modon = $data['json']->where('modon_kode', $modon_kode)->all();
+                $key_modon = array_keys($result_modon)[0];
+                $modon_detail = collect($data['json'][$key_modon]['modon_detail']);
+                $result_modet = $modon_detail->where('modet_kode', $modet_kode)->all();
+                $key_modet = array_keys($result_modet)[0];
+                // push input ke modet
+                $data['modon'][$key_modon]['modon_detail'][$key_modet]['modet_warna'] = $value->jenisp_warna; //lokasi inputan di push
+                // dd($var_put, $put_modet);
+            }
+        }
+
+        return view($this->path . '.odontogram', $data);
+    }
+
+    function debugOdontogram(Request $request)
     {
         $post = $request->input();
         $data = [
@@ -1361,11 +1382,27 @@ class PasienInController extends Controller
 
         ];
 
-        return view($this->path . '.odontogram', $data);
-    }
+        $data['json'] = collect($data['modon']);
 
-    function storeOdontogram(Request $request, $psnrekdis_id)
-    {
+        foreach ($data['odontogram'] as $key => $value) {
+            $kode_explode = explode('-', $value->odon_kode);
+            $modon_kode = $kode_explode[0];
+            $modet_kode = $kode_explode[1];
+
+            $result_modon = $data['json']->where('modon_kode', $modon_kode)->all();
+            $key_modon = array_keys($result_modon)[0];
+            $modon_detail = collect($data['json'][$key_modon]['modon_detail']);
+            $result_modet = $modon_detail->where('modet_kode', $modet_kode)->all();
+            $key_modet = array_keys($result_modet)[0];
+            // push input ke modet
+            $data['modon'][$key_modon]['modon_detail'][$key_modet]['modet_warna'] = $value->jenisp_warna; //lokasi inputan di push
+            // dd($var_put, $put_modet);
+        }
+        
+        return view($this->path . '.debugOdontogram', $data);
+    }   
+
+    function storeOdontogram(Request $request, $psnrekdis_id){
         $post      = $request->input();
         $decd      = Hashids::decode($psnrekdis_id)[0];
         $getTrans  = PasienRekdis::select('psnrekdis_psntrans_id')->where('psnrekdis_id', $decd)->first();
@@ -1411,8 +1448,8 @@ class PasienInController extends Controller
             ];
 
             // if(empty($post['radio_psnrekdis_id'])){
-            Odontogram::create($data);
-            // PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '2']);
+                Odontogram::create($data);
+                // PasienTrans::where('psntrans_id', $getTrans->psnrekdis_psntrans_id)->update(['pastrans_flag' => '2']);
             // }else{
             //     Radiologi::where('radio_id', $decd)->update($data);
             // }
@@ -1421,7 +1458,7 @@ class PasienInController extends Controller
             $logTrans = [
                 'log_psntrans_id'  => $getTrans->psnrekdis_psntrans_id,
                 'log_subjek'       => 'Odontogram',
-                'log_keterangan'   => 'Dokter telah ' . (empty($psnrekdis_id) ? 'mengisi' : 'mengubah') . ' data odontogram',
+                'log_keterangan'   => 'Dokter telah '. ( empty($psnrekdis_id) ? 'mengisi' : 'mengubah' ) .' data odontogram',
                 'log_created_by'   => Auth::user()->id,
                 'log_created_date' => date('Y-m-d H:i:s'),
                 'log_ip'           => \Request::ip()
@@ -1433,7 +1470,8 @@ class PasienInController extends Controller
             DB::commit();
 
             $response['status']  = 1;
-            $response['message'] = 'Data odontogram berhasil ' . (empty($psnrekdis_id) ? 'disimpan' : 'diubah');
+            $response['message'] = 'Data odontogram berhasil ' . ( empty($psnrekdis_id) ? 'disimpan' : 'diubah' );
+
         } catch (\Exception $ex) {
             DB::rollback();
 
@@ -1441,11 +1479,10 @@ class PasienInController extends Controller
             $response['message'] = $ex->getMessage();
         }
 
-        echo json_encode($response);
+        echo json_encode($response);  
     }
 
-    function ktableOdon(Request $request, $psnrekdis_id)
-    {
+    function ktableOdon(Request $request, $psnrekdis_id){
         $post    = $request->input();
         $getData = Odontogram::selectRaw('odon_id,odon_kode,jenisp_nama,odon_keterangan,odon_status,odon_createddate')->leftJoin('kkp_jenisp_gigi', 'jenisp_id', 'odon_jenisp_id');
         $jmlData = Odontogram::selectRaw('count(*) AS jumlah')->leftJoin('kkp_jenisp_gigi', 'jenisp_id', 'odon_jenisp_id');
@@ -1453,19 +1490,19 @@ class PasienInController extends Controller
         $search  = (!empty($post['query']) ? $post['query'] : null);
         $getData = $getData->where('odon_psnrekdis_id', Hashids::decode($psnrekdis_id)[0]);
 
-        if (isset($post['sort'])) {
+        if( isset($post['sort']) ){
             $getData->orderBy($post['sort']['field'], $post['sort']['sort']);
-        } else {
+        }else{
             $getData->orderBy('odon_createddate', 'DESC');
         }
 
-        if (!empty($search)) {
+        if(!empty($search)){
             foreach ($search as $value => $param) {
-                if ($value === 'generalSearch') {
-                    $getData->whereRaw("(odon_kode LIKE '%" . $param . "%' OR jenisp_nama LIKE '%" . $param . "%')");
-                    $jmlData->whereRaw("(odon_kode LIKE '%" . $param . "%' OR jenisp_nama LIKE '%" . $param . "%')");
-                } else {
-                    if ($value !== 0) {
+                if($value === 'generalSearch'){
+                    $getData->whereRaw("(odon_kode LIKE '%".$param."%' OR jenisp_nama LIKE '%".$param."%')");
+                    $jmlData->whereRaw("(odon_kode LIKE '%".$param."%' OR jenisp_nama LIKE '%".$param."%')");
+                }else{
+                    if($value !== 0 ){
                         $getData->where($value, $param);
                         $jmlData->where($value, $param);
                     }
@@ -1487,14 +1524,14 @@ class PasienInController extends Controller
         $rowIds          = [];
         $i               = 1 + $awal;
 
-        foreach ($result as $key => $value) {
+        foreach($result as $key => $value){
             $rowIds[]          = $value->jenobat_id;
             $data['records'][] = [
                 'no'               => (string)$i,
                 'odon_kode'        => $value->odon_kode,
                 'jenisp_nama'      => $value->jenisp_nama,
                 'odon_keterangan'  => $value->odon_keterangan,
-                'odon_createddate' => date('D, d F Y H:i', strtotime($value->odon_createddate)),
+                'odon_createddate' => date('D, d F Y H:i', strtotime($value->odon_createddate)),             
             ];
 
             $i++;
@@ -1506,42 +1543,5 @@ class PasienInController extends Controller
         ];
 
         echo json_encode($encode);
-    }
-
-    function debugOdontogram(Request $request)
-    {
-        $post = $request->input();
-        $data = [
-            'cardTitle'    => 'Odontogram',
-            'cardSubTitle' => '&nbsp;',
-            'cardIcon'     => 'flaticon-file-1',
-            'route'        => $this->route,
-            'psnrekdis_id' => $post['transid'],
-            'modon'        => Modon::getModon(),
-            'odontogram'   => Odontogram::selectRaw('odon_kode,jenisp_warna')
-                ->leftJoin('kkp_jenisp_gigi', 'jenisp_id', 'odon_jenisp_id')
-                ->where('odon_psnrekdis_id', Hashids::decode($post['transid'])[0])
-                ->get()
-
-        ];
-
-        $data['json'] = collect($data['modon']);
-
-        foreach ($data['odontogram'] as $key => $value) {
-            $kode_explode = explode('-', $value->odon_kode);
-            $modon_kode = $kode_explode[0];
-            $modet_kode = $kode_explode[1];
-
-            $result_modon = $data['json']->where('modon_kode', $modon_kode)->all();
-            $key_modon = array_keys($result_modon)[0];
-            $modon_detail = collect($data['json'][$key_modon]['modon_detail']);
-            $result_modet = $modon_detail->where('modet_kode', $modet_kode)->all();
-            $key_modet = array_keys($result_modet)[0];
-            // push input ke modet
-            $data['modon'][$key_modon]['modon_detail'][$key_modet]['modet_warna'] = $value->jenisp_warna; //lokasi inputan di push
-            // dd($var_put, $put_modet);
-        }
-        dd($data['json'][0], $data);
-        return view($this->path . '.debugOdontogram', $data);
     }
 }

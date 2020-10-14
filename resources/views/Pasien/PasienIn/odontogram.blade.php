@@ -28,7 +28,7 @@
                                     @foreach($modon as $rows)
                                         <g id="{{ $rows['modon_kode'] }}" transform="{!! $rows['modon_transform'] !!}">
                                             @foreach($rows['modon_detail'] as $modets)
-                                                <polygon points="{!! $modets['modet_points'] !!}" stroke="navy" stroke-width="0.5" id="{{ $modets['modet_kode'] }}" opacity="1" style="fill: white; stroke-miterlimit: 2;"/>
+                                                <polygon points="{!! $modets['modet_points'] !!}" stroke="navy" stroke-width="0.5" id="{{ $modets['modet_kode'] }}" opacity="1" style="fill: {{ (!empty($modets['modet_warna']) ? $modets['modet_warna'] : 'white') }}; stroke-miterlimit: 2;"/>
                                             @endforeach
                                             <text style="fill: rgb(0, 0, 128); font-size: 8px; white-space: pre;" x="6" y="-5">{{ $rows['modon_no'] }}</text>
                                         </g>

@@ -114,7 +114,7 @@
                                 <span class="navi-text"> Riwayat Rekamedis </span>
                             </a>
                         </div>
-                        <div class="navi-item mb-2">
+                        <div class="navi-item mb-2" style="display: none;">
                             <a href="{{ route( $route . '.debugOdontogram' ) }}" class="navi-link py-4 asideInfoPasien" data-toggle="tooltip" title="" data-original-title="Riwayat Rekamedis" data-transid="{{ Hashids::encode($records->psnrekdis_id) }}">
                                 <span class="navi-icon mr-2">
                                     <span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Text/Article.svg-->
