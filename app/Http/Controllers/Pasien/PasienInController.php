@@ -1526,10 +1526,9 @@ class PasienInController extends Controller
         ];
 
         $data['json'] = collect($data['modon']);
-        $data['push_input'] = $data['odontogram']->toArray();
 
-        foreach ($data['push_input'] as $key => $value) {
-            $kode_explode = explode('-', $value['odon_kode']);
+        foreach ($data['odontogram'] as $key => $value) {
+            $kode_explode = explode('-', $value->odon_kode);
             $modon_kode = $kode_explode[0];
             $modet_kode = $kode_explode[1];
 
@@ -1539,10 +1538,10 @@ class PasienInController extends Controller
             $result_modet = $modon_detail->where('modet_kode', $modet_kode)->all();
             $key_modet = array_keys($result_modet)[0];
             // push input ke modet
-            $data['modon'][$key_modon]['modon_detail'][$key_modet]['detail'] = $value; //lokasi inputan di push
+            $data['modon'][$key_modon]['modon_detail'][$key_modet]['modet_warna'] = $value->jenisp_warna; //lokasi inputan di push
+            // dd($var_put, $put_modet);
         }
-        dd($data);
-        //cek data $data['modon'], data di push kesitu
+        dd($data['json'][0], $data);
         return view($this->path . '.debugOdontogram', $data);
     }
 }
