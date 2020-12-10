@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : localhost-72
  Source Server Type    : MySQL
  Source Server Version : 100134
- Source Host           : localhost:3306
+ Source Host           : localhost:3372
  Source Schema         : project_kkp
 
  Target Server Type    : MySQL
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 11/10/2020 05:32:10
+ Date: 10/12/2020 13:18:07
 */
 
 SET NAMES utf8mb4;
@@ -202,7 +202,7 @@ CREATE TABLE `kkp_log`  (
   INDEX `kkp_log_log_created_by_foreign`(`log_created_by`) USING BTREE,
   CONSTRAINT `kkp_log_log_created_by_foreign` FOREIGN KEY (`log_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_log_log_psntrans_id_foreign` FOREIGN KEY (`log_psntrans_id`) REFERENCES `kkp_pasien_trans` (`psntrans_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_log
@@ -268,6 +268,8 @@ INSERT INTO `kkp_log` VALUES (113, 28, 'Odontogram', 'Dokter telah mengubah data
 INSERT INTO `kkp_log` VALUES (114, 28, 'Pemeriksaan Penunjang - Radiologi', 'Dokter telah mengubah form radiologi', 11, '2020-10-10 17:37:49', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (115, 28, 'Surat Keterangan Sehat', 'Dokter telah membuat surat keterangan Sehat', 11, '2020-10-10 21:10:24', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (116, 28, 'Surat Keterangan Sakit', 'Dokter telah membuat surat keterangan Sakit', 11, '2020-10-10 21:10:41', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (117, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-14 22:01:54', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (118, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-14 22:02:22', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_modon
@@ -768,7 +770,7 @@ CREATE TABLE `kkp_odontogram`  (
   `odon_updatedby` int(11) DEFAULT NULL,
   `odon_ip` char(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`odon_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_odontogram
@@ -781,6 +783,8 @@ INSERT INTO `kkp_odontogram` VALUES (5, 6, 12, 'P71-B', 'sdsd', '1', 11, '2020-1
 INSERT INTO `kkp_odontogram` VALUES (6, 6, 22, 'P51-B', 'P63-R', '1', 11, '2020-10-10 17:18:45', '2020-10-10 17:18:45', NULL, '127.0.0.1');
 INSERT INTO `kkp_odontogram` VALUES (7, 6, 9, 'P51-B', 'P51-B', '1', 11, '2020-10-10 17:19:45', '2020-10-10 17:19:45', NULL, '127.0.0.1');
 INSERT INTO `kkp_odontogram` VALUES (8, 6, 13, 'P46-C', 'P46-C', '1', 11, '2020-10-10 17:20:24', '2020-10-10 17:20:24', NULL, '127.0.0.1');
+INSERT INTO `kkp_odontogram` VALUES (9, 6, 1, 'P55-L', 'P55-L', '1', 11, '2020-10-14 22:01:54', '2020-10-14 22:01:54', NULL, '127.0.0.1');
+INSERT INTO `kkp_odontogram` VALUES (10, 6, 4, 'P73-R', 'P73-R', '1', 11, '2020-10-14 22:02:22', '2020-10-14 22:02:22', NULL, '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_pasien
