@@ -25,17 +25,20 @@
                     <!-- <span class="d-block text-muted pt-2 font-size-sm">row selection and group actions</span> -->
                 </h3>
             </div>
-            <div class="card-toolbar"></div>
+            <div class="card-toolbar">
+                <button class="btn btn-sm btn-light-danger font-weight-bold">
+                    <i class="fas fa-file-pdf"></i> Cetak Resep
+                </button>
+            </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive">        
                 <table class="table table-bordered table-sm">
-                    <thead class="bckg">
+                    <thead style="background-color: papayawhip;">
                         <tr>
                             <th class="text-center" width="1%">No. </th>
                             <th class="text-center">Obat</th>
-                            <th class="text-center">Kategori Obat</th>
-                            <th class="text-center" width="10%">Jenis Obat</th>
+                            <th class="text-center" width="15%">Jenis Obat</th>
                             <th class="text-center" width="12%">Jumlah Obat</th>
                             <th class="text-center">Keterangan</th>
                         </tr>
@@ -45,8 +48,7 @@
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
                                 <td>{{ $value->obat_nama }}</td>
-                                <td>{{ $value->katobat_nama }}</td>
-                                <td class="text-center">{{ $value->jenobat_nama }}</td>
+                                <td>{{ $value->jenobat_nama }}</td>
                                 <td class="text-center">{{ $value->resep_jumlah }}</td>
                                 <td>{{ $value->resep_keterangan }}</td>
                             </tr>

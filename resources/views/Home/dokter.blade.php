@@ -158,7 +158,7 @@
                                                 <span class="text-muted font-weight-bold">{{ $rows->pasien_telp }}</span>
                                             </td>
                                             <td class="pr-0 text-center">
-                                                <a href="{{ route( 'pasienin.formPeriksaDokter', ['psntrans_id' => Hashids::encode($rows->psntrans_id)] ) }}" class="btn btn-icon btn-light btn-hover-primary btn-sm ajaxify">
+                                                <a target="_blank" href="{{ route( 'pasienin.formPeriksaDokter', ['psntrans_id' => Hashids::encode($rows->psntrans_id)] ) }}" class="btn btn-icon btn-light btn-hover-primary btn-sm ajaxify">
                                                     <span class="svg-icon svg-icon-md svg-icon-primary">
                                                         <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

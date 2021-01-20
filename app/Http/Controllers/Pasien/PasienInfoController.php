@@ -79,8 +79,17 @@ class PasienInfoController extends Controller
                 ->leftJoin('kkp_kategori_obat', 'obat_katobat_id', 'katobat_id')
                 ->leftJoin('kkp_jenis_obat', 'obat_jenobat_id', 'jenobat_id')
                 ->where('psnrekdis_psntrans_id', $decd)
-                ->where('pastrans_flag', '1')
-                ->get()
+                ->get(),
+            'getTras'      => PasienTrans::selectRaw('name,pastrans_created_date')
+                ->leftJoin('users', function($join){
+                    $join->on('users.id','pastrans_dokter_id')
+                        ->where('users.status','1');
+                })
+                ->leftJoin('kkp_pasien', function($join){
+                    $join->on('pasien_id','pastrans_pasien_id')
+                        ->where('pasien_status', '1');
+                })
+                ->first()
         ];
 
         return view( $this->path . '.showResep', $data );

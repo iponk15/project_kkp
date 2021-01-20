@@ -322,7 +322,7 @@ class PasienInController extends Controller
 
         $data['cekResep']   = PasienRekdis::leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('resep_id', '<>', NULL)->count();
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
-        $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn btn-outline-primary btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
+        $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn '.( $data['cekResep'] > 0 ? 'btn-outline-warning' : 'btn-outline-primary' ).' btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-outline-'. ( $data['records']->pastrans_flag == 3 || $data['records']->pastrans_flag == 2 ? "warning" : "primary" ) .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
@@ -563,7 +563,7 @@ class PasienInController extends Controller
             // end create log
 
             // start update status obat
-            PasienRekdis::where('psnrekdis_id', $decode)->update(['psnrekdis_resep_status' => '1']);
+            // PasienRekdis::where('psnrekdis_id', $decode)->update(['psnrekdis_resep_status' => '1']);
             // end update status obat
 
             DB::commit();
@@ -879,7 +879,7 @@ class PasienInController extends Controller
         DB::beginTransaction();
 
         try {
-            PasienTrans::where('psntrans_id', $decd)->update(['pastrans_status' => '3']);
+            PasienTrans::where('psntrans_id', $decd)->update(['pastrans_status' => '99']);
 
             // start create log
             $psnLog = [
