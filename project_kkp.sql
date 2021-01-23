@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 23/01/2021 16:39:33
+ Date: 23/01/2021 16:46:13
 */
 
 SET NAMES utf8mb4;
@@ -1371,4 +1371,15 @@ CREATE TABLE `users`  (
 -- ----------------------------
 INSERT INTO `users` VALUES (1, 'KKPADM', NULL, 'admin', 'admin@mail.com', '2020-07-26 05:59:06', '$2y$10$6KsuW7DRMtYk97kJwz4SWuHdcPZvwXuhS2SvWzxUVYHwRWhPgh7te', '1', NULL, '2020-07-26 05:59:06', '2020-07-26 05:59:06');
 INSERT INTO `users` VALUES (5, 'KKPPTG', NULL, 'nisa', 'nisa@mail.com', '2020-07-25 15:57:34', '$2y$10$u5.BdfZMSJuO5WtWuVpKmOGVx4u43DMhSOjx23A5FVYmLo8fDTCiq', '1', NULL, '2020-07-15 02:39:42', '2020-07-20 12:47:43');
-INSERT INTO `users` VALUES 
+INSERT INTO `users` VALUES (6, 'KKPAPT', NULL, 'Nana', 'nana@mail.com', '2020-07-25 15:57:34', '$2y$10$EhHTM0QmD4fl4J81I0SDzePe9ck4NVIvTkgCe4dh5cH3xwrp5tbKK', '1', NULL, '2020-07-15 02:40:09', '2020-07-22 13:17:05');
+INSERT INTO `users` VALUES (8, 'KKPSTR', NULL, 'Arti', 'arti@mail.com', '2020-07-25 15:57:34', '$2y$10$UAMLfuXdWToTW0zRobxqZ.aVdKgbeOqaG6D9JDbQUOonV9emlfCJ2', '1', NULL, '2020-07-16 17:24:40', '2020-07-20 13:28:52');
+INSERT INTO `users` VALUES (10, 'KKPDKT', 1, 'Drg. Trisnawati', 'trisna@mail.com', '2020-07-25 15:57:34', '$2y$10$ylwWQfzGKVr/8pUp93KKA.0Gnfg.hZMMIaEIv7JRC/r65cYkYjJkG', '1', NULL, '2020-07-19 06:17:31', '2020-07-19 06:17:31');
+INSERT INTO `users` VALUES (11, 'KKPDKT', 1, 'Drg. Dona Saputri', 'dona@mail.com', '2020-07-25 15:57:34', '$2y$10$DfhzGzRtFYhgvbnBeAFYyO3nNayS4tBje2DB47DNzqwh4GOdDa4rS', '1', NULL, '2020-07-19 06:18:35', '2020-07-19 06:18:35');
+INSERT INTO `users` VALUES (12, 'KKPDKT', 1, 'Drg. Lisna Marisa', 'lisna@mail.com', '2020-07-25 15:57:34', '$2y$10$rP.UTjRC.XfdBoTSIkUoMeF0LHTojYJKgC97pvtzky5NvrBmxm47m', '1', NULL, '2020-07-19 06:19:01', '2020-07-19 06:19:01');
+INSERT INTO `users` VALUES (13, 'KKPDKT', 2, 'Dr. Evi Fitriana', 'evi@mail.com', '2020-07-25 15:57:34', '$2y$10$cXK2FSQhMAGl5poKn/ef2u1cRvVieh/To.2eVnbxI9fdck4j5yCpq', '1', NULL, '2020-07-19 06:19:28', '2020-07-19 06:19:28');
+INSERT INTO `users` VALUES (14, 'KKPDKT', 2, 'Dr. Triani Hanissa', 'triani@mail.com', '2020-07-25 15:57:34', '$2y$10$WpXsECMbck69jGk9aBeJGO7zo0sFA111ovFP3IJlYPdlqvqCQbUaa', '1', NULL, '2020-07-19 06:19:58', '2020-07-19 06:19:58');
+INSERT INTO `users` VALUES (15, 'KKPDKT', 3, 'Dr. Cipuk Muhaswitri, SP.GK', 'cipuk@mail.com', '2020-10-10 18:53:57', '$2y$10$3Pccd4O2cQXaYeIjwQkY4uWCTkNe6oGNgZ9ToM3/w61kSlRHo1Qb2', '1', NULL, '2020-10-10 18:53:57', '2020-10-10 18:53:57');
+INSERT INTO `users` VALUES (16, 'KKPDKT', 3, 'Dr. Spesialis', 'spesial@mail.com', '2020-07-25 15:57:34', '$2y$10$5qn2J1An6zUsCFHEuWgaUeW5OKBThyUgzqDowo7wsLMqB36.RJmEW', '1', NULL, '2020-07-24 19:32:56', '2020-07-24 19:32:56');
+INSERT INTO `users` VALUES (17, 'KKPLBT', NULL, 'lab', 'lab@mail.com', '2020-07-25 15:57:34', '$2y$10$z8.f/y8f3XpCLvU4jL6LN.aJaB592Umy7C4IKllPmBu3WAuDOZ3h.', '1', NULL, '2020-07-25 10:29:34', '2020-07-25 10:29:34');
+
+SET FOREIGN_KEY_CHECKS = 1;
