@@ -1,7 +1,7 @@
 <table style="width: 100%; border: 1px solid black;">
     <tr>
         <td align="center">
-            <img src="assets/media/logos/kkp-log.png" alt="" style="height: 100px; text-align: center;">
+            <img src="assets/media/logos/kkp-log-min.jpg" alt="" style="height: 100px; text-align: center;">
         </td>
         <td align="center">
             <h4>
