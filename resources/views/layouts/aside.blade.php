@@ -1,7 +1,7 @@
 <!--begin::Brand-->
 <div class="brand flex-column-auto " id="kt_brand" style="background-color: #F6D55C !important;">
     <!--begin::Logo-->
-    <a href="index.html" class="brand-logo">
+    <a href="{{ URL::to('/') }}" class="brand-logo">
         <img alt="Logo" class="w-100px" src="{{ asset('assets/media/logos/kkp-log.png') }}"/>
     </a>
     <!--end::Logo-->
