@@ -11,7 +11,7 @@
  Target Server Version : 100134
  File Encoding         : 65001
 
- Date: 10/12/2020 13:18:07
+ Date: 23/01/2021 16:46:13
 */
 
 SET NAMES utf8mb4;
@@ -202,7 +202,7 @@ CREATE TABLE `kkp_log`  (
   INDEX `kkp_log_log_created_by_foreign`(`log_created_by`) USING BTREE,
   CONSTRAINT `kkp_log_log_created_by_foreign` FOREIGN KEY (`log_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_log_log_psntrans_id_foreign` FOREIGN KEY (`log_psntrans_id`) REFERENCES `kkp_pasien_trans` (`psntrans_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 128 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_log
@@ -270,6 +270,14 @@ INSERT INTO `kkp_log` VALUES (115, 28, 'Surat Keterangan Sehat', 'Dokter telah m
 INSERT INTO `kkp_log` VALUES (116, 28, 'Surat Keterangan Sakit', 'Dokter telah membuat surat keterangan Sakit', 11, '2020-10-10 21:10:41', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (117, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-14 22:01:54', '127.0.0.1');
 INSERT INTO `kkp_log` VALUES (118, 28, 'Odontogram', 'Dokter telah mengubah data odontogram', 11, '2020-10-14 22:02:22', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (119, 30, 'Pendaftaran', 'Pasien melakukan pendaftaran', 5, '2020-12-19 09:21:12', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (120, 30, 'Pengecakan suster', 'Pasien telah dicek oleh suster', 8, '2020-12-19 09:28:07', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (121, 30, 'Pengecakan Dokter', 'Pasien telah dicek oleh Dokter', 14, '2020-12-19 09:49:28', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (122, 30, 'Cek Lab', 'Hasil telah keluar, tinggal diambil oleh pasien', 14, '2020-12-19 09:50:28', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (124, 30, 'Resep Obat', 'Dokter telah membuat resep obat untuk pasien', 14, '2020-12-19 09:55:17', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (125, 30, 'Surat Keterangan Sakit', 'Dokter telah membuat surat keterangan Sakit', 14, '2020-12-19 09:56:11', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (126, 30, 'Rujukan Laboratorium', 'Dokter telah merujuk pasien ke bagian laboratorium', 14, '2020-12-19 09:56:22', '127.0.0.1');
+INSERT INTO `kkp_log` VALUES (127, 30, 'Rujukan Laboratorium', 'Dokter telah merujuk pasien ke bagian laboratorium', 14, '2020-12-19 10:03:13', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_modon
@@ -637,7 +645,7 @@ CREATE TABLE `kkp_obat`  (
 -- ----------------------------
 -- Records of kkp_obat
 -- ----------------------------
-INSERT INTO `kkp_obat` VALUES (2, 8, 6, 'Acyclovir 400 mg', 'Acyclovir 400 mg', 212, '1', 1, '2020-07-14 23:24:52', 1, '2020-07-15 06:24:52', '127.0.0.1');
+INSERT INTO `kkp_obat` VALUES (2, 8, 6, 'Acyclovir 400 mg', 'Acyclovir 400 mg', 192, '1', 1, '2020-07-14 23:24:52', 1, '2020-07-15 06:24:52', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (3, 8, 6, 'Amoksilin DS 125 mg', 'Amoksilin DS 125 mg', 140, '1', 1, '2020-07-14 23:25:10', 1, '2020-07-15 06:25:10', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (4, 8, 6, 'Amoksisilin kaplet 500 mg', 'Amoksisilin kaplet 500 mg', 50, '1', 1, '2020-07-14 23:55:20', NULL, '2020-07-15 06:55:20', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (5, 8, 6, 'Cotrimoksazol 960 mg tab', 'Cotrimoksazol 960 mg tab', 0, '1', 1, '2020-07-14 23:55:32', NULL, '2020-07-15 06:55:32', '127.0.0.1');
@@ -672,7 +680,7 @@ INSERT INTO `kkp_obat` VALUES (33, 9, 6, 'Siclidon 100', 'Siclidon 100', 0, '1',
 INSERT INTO `kkp_obat` VALUES (34, 9, 6, 'Urotractin Tablet', 'Urotractin Tablet', 0, '1', 1, '2020-07-15 00:02:10', NULL, '2020-07-15 07:02:10', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (35, 9, 6, 'Vioquin 500 mg', 'Vioquin 500 mg', 0, '1', 1, '2020-07-15 00:02:22', NULL, '2020-07-15 07:02:22', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (36, 8, 7, 'Ambroxol sirup 15 mg/5 ml', 'Ambroxol sirup 15 mg/5 ml', 119, '1', 1, '2020-07-15 00:04:25', NULL, '2020-07-15 07:04:25', '127.0.0.1');
-INSERT INTO `kkp_obat` VALUES (37, 8, 7, 'Ambroxol tablet 30 mg', 'Ambroxol tablet 30 mg', 100, '1', 1, '2020-07-15 00:04:41', NULL, '2020-07-15 07:04:41', '127.0.0.1');
+INSERT INTO `kkp_obat` VALUES (37, 8, 7, 'Ambroxol tablet 30 mg', 'Ambroxol tablet 30 mg', 90, '1', 1, '2020-07-15 00:04:41', NULL, '2020-07-15 07:04:41', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (38, 8, 7, 'CTM', 'CTM', 0, '1', 1, '2020-07-15 00:04:53', NULL, '2020-07-15 07:04:53', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (39, 8, 7, 'Gliserin Guaiacolate', 'Gliserin Guaiacolate', 0, '1', 1, '2020-07-15 00:05:07', NULL, '2020-07-15 07:05:07', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (40, 8, 7, 'OBH', 'OBH', 0, '1', 1, '2020-07-15 00:05:18', NULL, '2020-07-15 07:05:18', '127.0.0.1');
@@ -680,7 +688,7 @@ INSERT INTO `kkp_obat` VALUES (41, 8, 7, 'Paracetamol, GG,CTM, ol.anisi Syrup (B
 INSERT INTO `kkp_obat` VALUES (42, 8, 7, 'Salbutamol 2mg', 'Salbutamol 2mg', 0, '1', 1, '2020-07-15 00:05:45', NULL, '2020-07-15 07:05:45', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (43, 8, 7, 'Salbutamol 4 mg', 'Salbutamol 4 mg', 0, '1', 1, '2020-07-15 00:05:56', NULL, '2020-07-15 07:05:56', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (44, 8, 7, 'Salbutamol 1 mg; Theophylin 150 mg', 'Salbutamol 1 mg; Theophylin 150 mg', 0, '1', 1, '2020-07-15 00:06:09', NULL, '2020-07-15 07:06:09', '127.0.0.1');
-INSERT INTO `kkp_obat` VALUES (45, 9, 7, 'Alpara tablet', 'Alpara tablet', 235, '1', 1, '2020-07-15 00:09:00', NULL, '2020-07-15 07:09:00', '127.0.0.1');
+INSERT INTO `kkp_obat` VALUES (45, 9, 7, 'Alpara tablet', 'Alpara tablet', 220, '1', 1, '2020-07-15 00:09:00', NULL, '2020-07-15 07:09:00', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (46, 9, 7, 'Bisolvon elixir Sirup 60 mL', 'Bisolvon elixir Sirup 60 mL', 0, '1', 1, '2020-07-15 00:09:17', NULL, '2020-07-15 07:09:17', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (47, 9, 7, 'Bisolvon tablet', 'Bisolvon tablet', 0, '1', 1, '2020-07-15 00:09:26', NULL, '2020-07-15 07:09:26', '127.0.0.1');
 INSERT INTO `kkp_obat` VALUES (48, 9, 7, 'Obat Batuk Herbal (Herbakof Syr 60 mL)', 'Obat Batuk Herbal (Herbakof Syr 60 mL)', 0, '1', 1, '2020-07-15 00:09:35', NULL, '2020-07-15 07:09:35', '127.0.0.1');
@@ -818,7 +826,7 @@ CREATE TABLE `kkp_pasien`  (
   CONSTRAINT `kkp_pasien_pasien_golongan_id_foreign` FOREIGN KEY (`pasien_golongan_id`) REFERENCES `kkp_golongan` (`golongan_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_pasien_pasien_uker_id_foreign` FOREIGN KEY (`pasien_uker_id`) REFERENCES `kkp_unit_kerja` (`uker_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_pasien_pasien_updated_by_foreign` FOREIGN KEY (`pasien_updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_pasien
@@ -827,6 +835,7 @@ INSERT INTO `kkp_pasien` VALUES (25, 9, 7, '0001/Ditjen P2SDKP', 'Linda S', '199
 INSERT INTO `kkp_pasien` VALUES (26, 5, 4, '0002/Ditjen P. Tangk', 'Hasan', '1980-08-12', 'L', '39', 'Jln Raya Cikesal no 70', 'tidak ada', '08124565456', 'hasan@mail.com', '1', 5, '2020-07-31 21:08:56', NULL, '2020-07-31 21:08:56', '127.0.0.1');
 INSERT INTO `kkp_pasien` VALUES (27, 11, 1, '0003/BKIPM', 'Sandra', '1989-01-31', 'P', '31', 'jakarta', 'tidak ada', '089734', 'sandra@mail.com', '1', 5, '2020-10-06 20:35:09', NULL, '2020-10-06 20:35:09', '127.0.0.1');
 INSERT INTO `kkp_pasien` VALUES (28, 9, 4, '0004/Ditjen P2SDKP', 'susan', '2008-12-28', 'P', '11', '-', '-', '089734', 'susan@mail.com', '1', 5, '2020-10-07 20:17:58', NULL, '2020-10-07 20:17:58', '127.0.0.1');
+INSERT INTO `kkp_pasien` VALUES (29, 6, 1, '0005/Ditjen P. Budid', 'Annisa Rahman', '1992-07-08', 'P', '28', 'Jl. Sawo no 78, Cilandak Jakarta selatan', 'tidak ada', '081564787612', 'annisa@mail.com', '1', 5, '2020-12-19 09:21:11', NULL, '2020-12-19 09:21:11', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_pasien_rekamedis
@@ -866,7 +875,7 @@ CREATE TABLE `kkp_pasien_rekamedis`  (
   INDEX `kkp_pasien_rekamedis_psnrekdis_created_by_foreign`(`psnrekdis_created_by`) USING BTREE,
   CONSTRAINT `kkp_pasien_rekamedis_psnrekdis_created_by_foreign` FOREIGN KEY (`psnrekdis_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_pasien_rekamedis_psnrekdis_psntrans_id_foreign` FOREIGN KEY (`psnrekdis_psntrans_id`) REFERENCES `kkp_pasien_trans` (`psntrans_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_pasien_rekamedis
@@ -875,6 +884,7 @@ INSERT INTO `kkp_pasien_rekamedis` VALUES (4, 26, 'batuk', 'pilex', '-', '-', '-
 INSERT INTO `kkp_pasien_rekamedis` VALUES (5, 27, 'a', 'a', 'a', 'a', 'a', 'a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 8, '2020-08-09 11:29:44', '127.0.0.1');
 INSERT INTO `kkp_pasien_rekamedis` VALUES (6, 28, 'test', 'test skjahf', 'sdfjhsdf se`', 'sdfhsdkfj sdfsdf', 'shjf  sdf', 'sfskfj  sdf', NULL, NULL, '100 / 80', '1', '1', '36', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', 8, '2020-10-06 22:14:43', '127.0.0.1');
 INSERT INTO `kkp_pasien_rekamedis` VALUES (7, 29, 'asdasd', 'asdasdasd', 'aasd', NULL, NULL, NULL, 'sdf', 'dfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'normal', 'a', 'a', 'a', 'a', 'a`add``', 'sdf', '0', 8, '2020-10-07 20:21:33', '127.0.0.1');
+INSERT INTO `kkp_pasien_rekamedis` VALUES (8, 30, 'Batuk Filex', 'Badan pegal linu dan kepala pusing', 'migran', '-', '-', 'gatal gatal', '-', '-', '120/100', '1', '1', '36', '73', '158', '29.24', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', '0', 8, '2020-12-19 09:28:07', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_pasien_trans
@@ -884,7 +894,6 @@ CREATE TABLE `kkp_pasien_trans`  (
   `psntrans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pastrans_pasien_id` int(11) NOT NULL,
   `pastrans_status` enum('1','2','3','4','5','6','99') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '1 = Daftar, \r\n2 = Periksa Suster, \r\n3 = Periksa Dokter,\r\n99 = Selesai, \r\n',
-  `pastrans_flag` enum('1','2','3','4','5','6','7','8','9','10','11') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '1 = Resep Obat, \r\n2 = Radiologi, \r\n3 = Lab Internal, \r\n4 = Lab External, \r\n5 = Poli Gigi, \r\n6 = Poli Umum, \r\n7 = Poli Spesialis, \r\n8 = Pengantar Spesialis, \r\n9 = Pengantar RS,\r\n10 = Surat Keterangan Sakit, \r\n11 = Surat Keterangan Sehat',
   `pastrans_created_by` bigint(20) UNSIGNED NOT NULL,
   `pastrans_created_date` datetime(0) NOT NULL,
   `pastrans_updated_by` bigint(20) UNSIGNED DEFAULT NULL,
@@ -895,15 +904,16 @@ CREATE TABLE `kkp_pasien_trans`  (
   INDEX `kkp_pasien_trans_pastrans_dokter_id_foreign`(`pastrans_dokter_id`) USING BTREE,
   CONSTRAINT `kkp_pasien_trans_pastrans_created_by_foreign` FOREIGN KEY (`pastrans_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_pasien_trans_pastrans_dokter_id_foreign` FOREIGN KEY (`pastrans_dokter_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_pasien_trans
 -- ----------------------------
-INSERT INTO `kkp_pasien_trans` VALUES (26, 25, '3', '3', 5, '2020-07-31 21:03:33', NULL, '2020-08-08 23:34:14', 15);
-INSERT INTO `kkp_pasien_trans` VALUES (27, 26, '2', NULL, 5, '2020-07-31 21:08:57', NULL, '2020-08-12 20:33:23', 13);
-INSERT INTO `kkp_pasien_trans` VALUES (28, 27, '2', '10', 5, '2020-10-06 20:35:09', NULL, '2020-10-10 21:10:41', 11);
-INSERT INTO `kkp_pasien_trans` VALUES (29, 28, '4', '2', 5, '2020-10-07 20:17:59', NULL, '2020-10-07 23:38:02', 13);
+INSERT INTO `kkp_pasien_trans` VALUES (26, 25, '3', 5, '2020-07-31 21:03:33', NULL, '2020-08-08 23:34:14', 15);
+INSERT INTO `kkp_pasien_trans` VALUES (27, 26, '2', 5, '2020-07-31 21:08:57', NULL, '2020-08-12 20:33:23', 13);
+INSERT INTO `kkp_pasien_trans` VALUES (28, 27, '2', 5, '2020-10-06 20:35:09', NULL, '2020-10-10 21:10:41', 11);
+INSERT INTO `kkp_pasien_trans` VALUES (29, 28, '4', 5, '2020-10-07 20:17:59', NULL, '2020-10-07 23:38:02', 13);
+INSERT INTO `kkp_pasien_trans` VALUES (30, 29, '99', 5, '2020-12-19 09:21:12', NULL, '2020-12-19 10:03:13', 14);
 
 -- ----------------------------
 -- Table structure for kkp_pasien_uker
@@ -1006,11 +1016,16 @@ DROP TABLE IF EXISTS `kkp_resep_note`;
 CREATE TABLE `kkp_resep_note`  (
   `resnot_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `resnote_psnrekdis_id` int(10) UNSIGNED NOT NULL,
-  `resnote_keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resnote_keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`resnot_id`) USING BTREE,
   INDEX `kkp_resep_note_resnote_psnrekdis_id_foreign`(`resnote_psnrekdis_id`) USING BTREE,
   CONSTRAINT `kkp_resep_note_resnote_psnrekdis_id_foreign` FOREIGN KEY (`resnote_psnrekdis_id`) REFERENCES `kkp_pasien_rekamedis` (`psnrekdis_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of kkp_resep_note
+-- ----------------------------
+INSERT INTO `kkp_resep_note` VALUES (2, 8, NULL);
 
 -- ----------------------------
 -- Table structure for kkp_resep_obat
@@ -1036,7 +1051,14 @@ CREATE TABLE `kkp_resep_obat`  (
   CONSTRAINT `kkp_resep_obat_resep_obat_id_foreign` FOREIGN KEY (`resep_obat_id`) REFERENCES `kkp_obat` (`obat_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_resep_obat_resep_psnrekdis_id_foreign` FOREIGN KEY (`resep_psnrekdis_id`) REFERENCES `kkp_pasien_rekamedis` (`psnrekdis_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_resep_obat_resep_updated_by_foreign` FOREIGN KEY (`resep_updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of kkp_resep_obat
+-- ----------------------------
+INSERT INTO `kkp_resep_obat` VALUES (7, 8, 2, 20, 'dimakan 1 x 1 hari sebelum makan', 14, '2020-12-19 09:55:17', NULL, '2020-12-19 09:55:17', '127.0.0.1');
+INSERT INTO `kkp_resep_obat` VALUES (8, 8, 45, 15, 'dimakan 1 x 1 hari sebelum makan', 14, '2020-12-19 09:55:17', NULL, '2020-12-19 09:55:17', '127.0.0.1');
+INSERT INTO `kkp_resep_obat` VALUES (9, 8, 37, 10, 'dimakan 1 x 1 hari sebelum makan', 14, '2020-12-19 09:55:17', NULL, '2020-12-19 09:55:17', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_role
@@ -1120,12 +1142,13 @@ CREATE TABLE `kkp_rujukan_lab`  (
   CONSTRAINT `kkp_rujukan_lab_rjklab_created_by_foreign` FOREIGN KEY (`rjklab_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_rujukan_lab_rjklab_psnrekdis_id_foreign` FOREIGN KEY (`rjklab_psnrekdis_id`) REFERENCES `kkp_pasien_rekamedis` (`psnrekdis_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_rujukan_lab_rjklab_updated_by_foreign` FOREIGN KEY (`rjklab_updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_rujukan_lab
 -- ----------------------------
 INSERT INTO `kkp_rujukan_lab` VALUES (1, 7, 'hallo world pocong', '1', '1', '1', '1', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', 13, '2020-10-07 22:23:37', NULL, '2020-10-07 22:19:04', '127.0.0.1');
+INSERT INTO `kkp_rujukan_lab` VALUES (2, 8, 'ini remark diagnosa', '0', '0', '0', '0', '0', '1', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', 14, '2020-12-19 09:50:28', NULL, '2020-12-19 09:50:28', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_rujukan_spesialis
@@ -1180,12 +1203,13 @@ CREATE TABLE `kkp_surat_sakit`  (
   INDEX `kkp_surat_sakit_sskt_created_by_foreign`(`sskt_created_by`) USING BTREE,
   CONSTRAINT `kkp_surat_sakit_sskt_created_by_foreign` FOREIGN KEY (`sskt_created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `kkp_surat_sakit_sskt_psnrekdis_id_foreign` FOREIGN KEY (`sskt_psnrekdis_id`) REFERENCES `kkp_pasien_rekamedis` (`psnrekdis_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of kkp_surat_sakit
 -- ----------------------------
 INSERT INTO `kkp_surat_sakit` VALUES (1, 6, '2020-10-12 00:00:00', '2020-10-14 00:00:00', 3, 11, '2020-10-10 21:10:41', '2020-10-10 21:10:41', '127.0.0.1');
+INSERT INTO `kkp_surat_sakit` VALUES (2, 8, '2020-12-21 00:00:00', '2020-12-23 00:00:00', 3, 14, '2020-12-19 09:56:11', '2020-12-19 09:56:11', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for kkp_surat_sehat
