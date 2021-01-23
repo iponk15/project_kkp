@@ -49888,8 +49888,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! Z:\Software\instaled\xampp\htdocs\Project\kkp\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! Z:\Software\instaled\xampp\htdocs\Project\kkp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\2Freelance\project_kkp\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\2Freelance\project_kkp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

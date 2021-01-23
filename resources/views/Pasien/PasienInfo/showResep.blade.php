@@ -26,9 +26,9 @@
                 </h3>
             </div>
             <div class="card-toolbar">
-                <button class="btn btn-sm btn-light-danger font-weight-bold">
+                <a href="{{ route( $route . '.pdfResepObat', [ 'psntrans_id' => $transid ] ) }}" target="_blank" class="btn btn-sm btn-light-danger font-weight-bold">
                     <i class="fas fa-file-pdf"></i> Cetak Resep
-                </button>
+                </a>
             </div>
         </div>
         <div class="card-body">

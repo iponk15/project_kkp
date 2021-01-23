@@ -10,6 +10,7 @@ use Validator;
 use Hashids;
 use Auth;
 use DB;
+use PDF;
 
 class PasienInfoController extends Controller
 {
@@ -203,5 +204,40 @@ class PasienInfoController extends Controller
         ];
 
         return view( $this->path . '.showInfoRekamedis', $data );
+    }
+
+    function pdfResepObat($psntrans_id){
+        $decd = Hashids::decode($psntrans_id);
+        $data = [
+            'pasien'      => PasienTrans::selectRaw('pasien_norekdis,pasien_id,pasien_nama,pasien_tgllahir,pasien_umur,pasien_email,pasien_jk,pasien_telp,pasien_alamat,u.name AS nama_dokter,kpol.poli_nama,kpol.poli_kode, kprekmedis.psnrekdis_obj_sgbb as pasien_berat_badan, kprekmedis.psnrekdis_sbj_riwpktkalg as pasien_riwayat_alergi')
+                ->leftJoin('kkp_pasien', 'pastrans_pasien_id', 'pasien_id')
+                ->leftJoin('users AS u', 'pastrans_dokter_id', 'u.id')
+                ->leftJoin('kkp_poli AS kpol', 'u.poli_id', 'kpol.poli_id')
+                ->leftJoin('kkp_pasien_rekamedis AS kprekmedis', 'psntrans_id', 'kprekmedis.psnrekdis_psntrans_id')
+                ->where('psntrans_id', Hashids::decode($psntrans_id)[0])
+                ->first(),
+            'records'      => PasienRekdis::selectRaw('katobat_nama,obat_nama,jenobat_nama,resep_jumlah,resep_keterangan')
+                ->leftJoin('kkp_pasien_trans', 'psnrekdis_psntrans_id', 'psntrans_id')
+                ->leftJoin('kkp_resep_obat', 'psnrekdis_id', 'resep_psnrekdis_id')
+                ->leftJoin('kkp_obat', 'resep_obat_id', 'obat_id')
+                ->leftJoin('kkp_kategori_obat', 'obat_katobat_id', 'katobat_id')
+                ->leftJoin('kkp_jenis_obat', 'obat_jenobat_id', 'jenobat_id')
+                ->where('psnrekdis_psntrans_id', $decd)
+                ->get(),
+            'getTras'      => PasienTrans::selectRaw('name,pastrans_created_date')
+                ->leftJoin('users', function($join){
+                    $join->on('users.id','pastrans_dokter_id')
+                        ->where('users.status','1');
+                })
+                ->leftJoin('kkp_pasien', function($join){
+                    $join->on('pasien_id','pastrans_pasien_id')
+                        ->where('pasien_status', '1');
+                })
+                ->first(),
+        ];
+        // dd($data);
+        $pdf = PDF::loadView($this->path.'.pdfResepObat', $data);
+        // $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream('resep_obat_'.str_replace(' ', '_', $data['pasien']->{'pasien_nama'}).'_'.date('YmdHis', strtotime($data['getTras']->{'pastrans_created_date'})).'.pdf');
     }
 }

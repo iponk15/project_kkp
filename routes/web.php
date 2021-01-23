@@ -215,6 +215,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('infoRekamedis', 'PasienInfoController@infoRekamedis')->name('infoRekamedis');
         Route::post('ktableRekamedis/{psntrans_id}', 'PasienInfoController@ktableRekamedis')->name('ktableRekamedis');
         Route::post('showInfoRekamedis', 'PasienInfoController@showInfoRekamedis')->name('showInfoRekamedis');
+        Route::get('pdfResepObat/{psntrans_id}', 'PasienInfoController@pdfResepObat')->name('pdfResepObat');
     });
     // end routing menu resep
 
