@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PasienTrans;
 use App\User;
 use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -58,6 +59,9 @@ class HomeController extends Controller
                 ->get();
 
             return view('Home.dokter', $data);
+        }else if($user->role_kode == 'KKPADM'){
+            $data['summary'] = DB::table('v_dashadmin_summary')->get();
+            return view('Home.admin', $data);
         }else{
             return view('Home.home', $data);
         }

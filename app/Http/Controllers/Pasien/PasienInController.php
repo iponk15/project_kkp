@@ -324,7 +324,7 @@ class PasienInController extends Controller
         $data['cekRjkSps']  = PasienRekdis::leftJoin('kkp_rujukan_spesialis', 'psnrekdis_id', 'rjksps_psnrekdis_id')->where('psnrekdis_psntrans_id', Hashids::decode($psntrans_id)[0])->where('rjksps_id', '<>', NULL)->count();
         $data['subHeadBtn'] = ' <button data-route="'. route( $this->route . ( $data['cekResep'] > 0 ? '.editFormResepDok' : '.showFormResepDok' ) ) .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" type="button" class="btn '.( $data['cekResep'] > 0 ? 'btn-outline-warning' : 'btn-outline-primary' ).' btn-sm mr-3" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)"><i class="'. ( $data['cekResep'] > 0 ? 'flaticon-edit-1' : 'flaticon-background' ) .'"></i> '. ( $data['cekResep'] > 0 ? 'Edit Resep' : 'Form Resep Obat' ) .' </button>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-'. (!empty($data['records']->rjklab_id) || !empty($data['records']->radio_id) ? 'warning' : 'primary') .' btn-sm mr-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="flaticon2-map"></i> Pemeriksaan Penunjang
                                     </button>
                                     <div class="dropdown-menu">
@@ -361,7 +361,7 @@ class PasienInController extends Controller
                                         <button data-route="'. route($this->route . '.showFormSuratSehat') .'" data-psnrekdisid="'.Hashids::encode($data['records']->psnrekdis_id).'" data-toggle="modal" data-target="#formResepDoketer" onClick="return f_resepObat(this, event)" class="dropdown-item"> '. ( !empty($data['records']->ssht_id) ? 'Edit Surat Sehat' : 'Surat Sehat' ) . ' </button>
                                     </div>
                                 </div>' . 
-                                ( $data['records']->pastrans_status != '99'
+                                ( $data['records']->pastrans_status != '99' && empty($data['records']->rjklab_id)
                                     ? '<button data-route="'. route( $this->route . '.selesaiDokter' ) .'" data-psntransid="'.Hashids::encode($data['records']->psntrans_id).'" onClick="return f_selesai(this, event)" type="button" class="btn btn-outline-success btn-sm mr-3"><i class="flaticon-tea-cup"></i> Selesai </button>' 
                                     : '' 
                                 );
@@ -1186,10 +1186,7 @@ class PasienInController extends Controller
                 RujukanLab::where( 'rjklab_id', Hashids::decode($post['rjklab_id']) )->update($rjkLab);
             }
 
-            PasienTrans::where('psntrans_id', $getTrans)->update([
-                'pastrans_flag'   => '3', 
-                'pastrans_status' => '4'
-            ]);
+            PasienTrans::where('psntrans_id', $getTrans)->update(['pastrans_status' => '4']);
 
             // start input log transaksi
             $logTrans = [
