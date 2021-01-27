@@ -216,6 +216,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('ktableRekamedis/{psntrans_id}', 'PasienInfoController@ktableRekamedis')->name('ktableRekamedis');
         Route::post('showInfoRekamedis', 'PasienInfoController@showInfoRekamedis')->name('showInfoRekamedis');
         Route::get('pdfResepObat/{psntrans_id}', 'PasienInfoController@pdfResepObat')->name('pdfResepObat');
+        Route::get('demoSuratSakit/{psntrans_id}', 'PasienInfoController@demoSuratSakit')->name('demoSuratSakit');
+        Route::get('demoSuratSehat/{psntrans_id}', 'PasienInfoController@demoSuratSehat')->name('demoSuratSehat');
+        Route::get('demoSuratRadiologi/{psntrans_id}', 'PasienInfoController@demoSuratRadiologi')->name('demoSuratRadiologi');
     });
     // end routing menu resep
 

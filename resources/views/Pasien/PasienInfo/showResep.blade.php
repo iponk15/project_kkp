@@ -29,6 +29,15 @@
                 <a href="{{ route( $route . '.pdfResepObat', [ 'psntrans_id' => $transid ] ) }}" target="_blank" class="btn btn-sm btn-light-danger font-weight-bold">
                     <i class="fas fa-file-pdf"></i> Cetak Resep
                 </a>
+                <a href="{{ route( $route . '.demoSuratSehat', [ 'psntrans_id' => $transid ] ) }}" target="_blank" class="btn btn-sm btn-light-danger font-weight-bold">
+                    <i class="fas fa-file-pdf"></i> Cetak Sehat
+                </a>
+                <a href="{{ route( $route . '.demoSuratSakit', [ 'psntrans_id' => $transid ] ) }}" target="_blank" class="btn btn-sm btn-light-danger font-weight-bold">
+                    <i class="fas fa-file-pdf"></i> Cetak Sakit
+                </a>
+                <a href="{{ route( $route . '.demoSuratRadiologi', [ 'psntrans_id' => $transid ] ) }}" target="_blank" class="btn btn-sm btn-light-danger font-weight-bold">
+                    <i class="fas fa-file-pdf"></i> Cetak Radiologi
+                </a>
             </div>
         </div>
         <div class="card-body">
