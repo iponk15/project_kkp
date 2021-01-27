@@ -198,7 +198,6 @@ class PasienInfoController extends Controller
                 ->leftJoin('kkp_obat', 'resep_obat_id', 'obat_id')
                 ->leftJoin('kkp_kategori_obat', 'obat_katobat_id', 'katobat_id')
                 ->leftJoin('kkp_jenis_obat', 'obat_jenobat_id', 'jenobat_id')
-                ->where('psnrekdis_resep_status', '1')
                 ->where('psnrekdis_psntrans_id', $decd)
                 ->get()
         ];

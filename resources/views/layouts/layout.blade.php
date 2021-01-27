@@ -32,6 +32,10 @@
         <script src="{{ asset('assets/js/pages/widgets.js?v=7.0.6') }}"></script>
         <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6') }}"></script>
         <script src="{{ asset('assets/js/pages/custom/profile/profile.js?v=7.0.6') }}"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
         <!--end::Global Theme Bundle-->
 
         <!--begin::Fonts-->
