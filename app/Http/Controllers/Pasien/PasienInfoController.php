@@ -272,7 +272,7 @@ class PasienInfoController extends Controller
         ];
         $pdf = PDF::loadView($this->path.'.demoSuratSehat', $data);
         // $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream('demoSuratSehat.pdf');
+        return $pdf->stream('surat_sehat_'.str_replace(' ', '_', $data['pasien']->{'pasien_nama'}).'_'.date('YmdHis', strtotime($data['getTras']->{'pastrans_created_date'})).'.pdf');
     }
 
     function demoSuratSakit($psntrans_id){
